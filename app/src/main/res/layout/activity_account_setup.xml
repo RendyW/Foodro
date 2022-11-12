@@ -27,7 +27,11 @@
             android:layout_height="match_parent">
 
             <EditText
+<<<<<<< HEAD
                 android:id="@+id/inputUsername"
+=======
+                android:id="@+id/InputUsername"
+>>>>>>> 686de61 (Tampilan account setup +SignUp)
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -67,7 +71,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
                 app:layout_constraintTop_toBottomOf="@+id/inputUsername"  />
+=======
+                app:layout_constraintTop_toBottomOf="@+id/InputUsername"  />
+>>>>>>> 686de61 (Tampilan account setup +SignUp)
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/showpassword"

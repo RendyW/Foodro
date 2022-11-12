@@ -2,6 +2,7 @@ package com.latutslab_00000053580.foodro_home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+<<<<<<< HEAD
 import android.accounts.Account;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,10 +24,17 @@ public class Account_Setup extends AppCompatActivity {
     EditText inputPass, inputUsername;
     CheckBox showpassword;
 
+=======
+import android.os.Bundle;
+
+public class Account_Setup extends AppCompatActivity {
+
+>>>>>>> 686de61 (Tampilan account setup +SignUp)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_setup);
+<<<<<<< HEAD
 
         inputPass = findViewById(R.id.inputPass);
         inputUsername = findViewById(R.id.inputUsername);
@@ -73,5 +81,7 @@ public class Account_Setup extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+=======
+>>>>>>> 686de61 (Tampilan account setup +SignUp)
     }
 }
