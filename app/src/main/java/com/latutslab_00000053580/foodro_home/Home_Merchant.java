@@ -6,10 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import com.latutslab_00000053580.foodro_home.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class Home_Merchant extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
@@ -18,15 +19,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeNavigationFragment());
+        replaceFragment(new HomeMerchantFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home:
-                    replaceFragment(new HomeNavigationFragment());
+                    replaceFragment(new HomeMerchantFragment());
+                    NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
+                    frag1.setArguments(getIntent().getExtras());
+
+                    FragmentManager fragManager = getSupportFragmentManager();
+                    FragmentTransaction fragTransaction = fragManager.beginTransaction();
+
+                    fragTransaction.add(R.id.frameHomeMerchant, frag1);
+                    fragTransaction.commit();
                     break;
                 case R.id.order:
-                    replaceFragment(new OrderNavigationFragment());
+                    replaceFragment(new NoIncomingOrderFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileNavigationFragment());
@@ -35,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+
+        //Fragment Incoming Order
+        NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
+        frag1.setArguments(getIntent().getExtras());
+
+        FragmentManager fragManager = getSupportFragmentManager();
+        FragmentTransaction fragTransaction = fragManager.beginTransaction();
+
+        fragTransaction.add(R.id.frameHomeMerchant, frag1);
+        fragTransaction.commit();
     }
 
     private void replaceFragment(Fragment fragment){
