@@ -25,6 +25,7 @@ public class Home_Merchant extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.home:
                     replaceFragment(new HomeMerchantFragment());
+<<<<<<< HEAD
 
                     //Menampilkan fragment NoIncomingOrderFragment di home ketika button home di bottomNavBar ditekan
 //                    NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
@@ -39,15 +40,27 @@ public class Home_Merchant extends AppCompatActivity {
                     //Menampilkan fragment IncomingOrderFragment di home ketika membuka aplikasi
                     IncomingOrderFragment frag2 = new IncomingOrderFragment();
                     frag2.setArguments(getIntent().getExtras());
+=======
+                    NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
+                    frag1.setArguments(getIntent().getExtras());
+>>>>>>> a7d9234 (tampilan home-merchant)
 
                     FragmentManager fragManager = getSupportFragmentManager();
                     FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
+<<<<<<< HEAD
                     fragTransaction.add(R.id.frameHomeMerchant, frag2);
                     fragTransaction.commit();
                     break;
                 case R.id.order:
                     replaceFragment(new OrderNavigationFragment());
+=======
+                    fragTransaction.add(R.id.frameHomeMerchant, frag1);
+                    fragTransaction.commit();
+                    break;
+                case R.id.order:
+                    replaceFragment(new NoIncomingOrderFragment());
+>>>>>>> a7d9234 (tampilan home-merchant)
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileNavigationFragment());
@@ -57,6 +70,7 @@ public class Home_Merchant extends AppCompatActivity {
             return true;
         });
 
+<<<<<<< HEAD
         //Menampilkan fragment NoIncomingOrderFragment di home ketika membuka aplikasi
 //        NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
 //        frag1.setArguments(getIntent().getExtras());
@@ -70,11 +84,20 @@ public class Home_Merchant extends AppCompatActivity {
         //Menampilkan fragment IncomingOrderFragment di home ketika membuka aplikasi
         IncomingOrderFragment frag2 = new IncomingOrderFragment();
         frag2.setArguments(getIntent().getExtras());
+=======
+        //Fragment Incoming Order
+        NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
+        frag1.setArguments(getIntent().getExtras());
+>>>>>>> a7d9234 (tampilan home-merchant)
 
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
+<<<<<<< HEAD
         fragTransaction.add(R.id.frameHomeMerchant, frag2);
+=======
+        fragTransaction.add(R.id.frameHomeMerchant, frag1);
+>>>>>>> a7d9234 (tampilan home-merchant)
         fragTransaction.commit();
     }
 
