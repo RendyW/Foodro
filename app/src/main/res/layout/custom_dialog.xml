@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#2B7A0B">
+        android:background="@drawable/gradient_bg">
 
         <ImageView
             android:layout_width="50dp"
