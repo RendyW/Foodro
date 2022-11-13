@@ -7,13 +7,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/gradient_bg">
+        android:background="#FF0000">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_baseline_check_circle_24"></ImageView>
+            android:background="@drawable/ic_baseline_cancel_24"></ImageView>
 
     </RelativeLayout>
 
@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Register Success"
+            android:text="Register Failed"
             android:textAlignment="center"
             android:textSize="24sp" />
 
@@ -38,9 +38,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:background="@drawable/button_bg_success"
+            android:background="@drawable/button_bg_fail"
             android:text="Ok"
-            android:textColor="#002267"/>
+            android:textColor="#FF0000"/>
 
     </LinearLayout>
 </LinearLayout>

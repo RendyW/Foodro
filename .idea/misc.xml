@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/button_bg_fail.xml" value="0.1055" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/button_bg_success.xml" value="0.124" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/button_gradient1.xml" value="0.1" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/edit_text_bg.xml" value="0.1" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/gradient_bg.xml" value="0.1" />
+        <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.105" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.1435" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.1" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/drawable/rectangle.xml" value="0.1" />
@@ -17,6 +19,7 @@
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/activity_sign_up.xml" value="0.2028985507246377" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/activity_welcome_screen.xml" value="0.2028985507246377" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/custom_dialog.xml" value="0.22826086956521738" />
+        <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/custom_dialog_fail.xml" value="0.2" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/fragment_home_merchant.xml" value="0.2028985507246377" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/fragment_order_navigation.xml" value="0.2028985507246377" />
         <entry key="..\:/SEMESTER3/Mobileappsanddevelopment/Foodro/app/src/main/res/layout/fragment_profile_navigation.xml" value="0.2028985507246377" />
