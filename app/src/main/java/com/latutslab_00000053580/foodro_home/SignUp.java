@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignUp extends AppCompatActivity {
@@ -16,16 +17,31 @@ public class SignUp extends AppCompatActivity {
     AlertDialog.Builder builderdialog;
     AlertDialog alertDialog;
 
+    EditText uname , password;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        uname = (EditText)findViewById(R.id.inputUsername1);
+        password = (EditText)findViewById(R.id.inputPass3);
+
         signupBTN = (AppCompatButton) findViewById(R.id.signupBtn2page);
         signupBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlertDialog(R.layout.custom_dialog);
+                if( uname.length() ==0 )
+                {
+                    uname.setError("Enter you username!");
+                }else if(password.length() ==0){
+                    password.setError("Please enter your password!");
+                }
+                else{
+                    showAlertDialog(R.layout.custom_dialog);
+                }
+                //showAlertDialog(R.layout.custom_dialog_fail);
             }
         });
     }
@@ -49,5 +65,6 @@ public class SignUp extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
     }
 }

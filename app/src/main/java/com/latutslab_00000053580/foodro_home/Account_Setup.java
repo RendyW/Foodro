@@ -22,7 +22,7 @@ public class Account_Setup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_setup);
 
-        inputPass = findViewById(R.id.inputPass);
+        inputPass = findViewById(R.id.inputPass2);
         showpassword = findViewById(R.id.showpassword);
 
         showpassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
