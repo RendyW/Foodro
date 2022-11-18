@@ -7,4 +7,46 @@
     android:orientation="vertical"
     tools:context=".userpage">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="20dp"
+        android:background="@drawable/gradient_bg_user">
+
+        <ImageView
+            android:id="@+id/profileimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Christopher Darren"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_toRightOf="@+id/profileimage"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            android:includeFontPadding="false"
+            android:layout_marginLleft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi, There"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_toRightOf="@+id/profileimage"
+            android:layout_below="@+id/fullname"
+            android:textColor="#FFFFFF"
+            android:includeFontPadding="false"
+            android:layout_marginLleft="10dp"/>
+
+
+
+    </RelativeLayout>
+
 </LinearLayout>
