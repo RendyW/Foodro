@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodro_Home">
         <activity
-            android:name=".userpage"
+            android:name=".MainActivity"
             android:exported="false" />
-        <activity android:name=".MainActivity"
+        <activity android:name=".userpage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
