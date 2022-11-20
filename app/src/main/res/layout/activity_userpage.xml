@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             android:text="Edit"
             android:fontFamily="sans-serif-medium"
-            android:backgroundTint="#002267"
+            android:backgroundTint="#002267"/>
 
 
     </LinearLayout>
