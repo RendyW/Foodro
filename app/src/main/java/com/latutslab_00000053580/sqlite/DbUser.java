@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.latutslab_00000053580.foodro.User;
 
@@ -39,6 +40,7 @@ public class DbUser {
         database.insert(db.TABLE_USERS, null, values);
     }
 
+    //Check whether account existed or not
     public User Authenticate() {
 
         String sql = "SELECT EXISTS (SELECT * FROM '" + db.TABLE_USERS + "' LIMIT 1)";
@@ -54,6 +56,15 @@ public class DbUser {
             cursor.close();
             return null;
         }
+    }
+
+    public Cursor getUser(){
+        Cursor cursor = this.database.query(db.TABLE_USERS, new String[]{db.USER_ID, db.USER_NAME}, null, null, null, null, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        return cursor;
     }
 
     public void logout(){
