@@ -22,7 +22,7 @@ public class Account_Setup extends AppCompatActivity {
 
     EditText inputPass, inputUsername;
     CheckBox showpassword;
-
+    APIHandler handler = new APIHandler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +55,17 @@ public class Account_Setup extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = 1;
+                User user = handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
 
-                User user = new User(inputUsername.getText().toString(), id);
                 DbUser dbUser = new DbUser(Account_Setup.this);
                 dbUser.open();
                 dbUser.addUser(user);
 
 
-                Cursor cursor = dbUser.getUser();
-                cursor.moveToFirst();
-                Log.e("User", cursor.getString(1));
+
+//                Cursor cursor = dbUser.getUser();
+//                cursor.moveToFirst();
+//                Log.e("User", cursor.getString(1));
             }
         });
     }
