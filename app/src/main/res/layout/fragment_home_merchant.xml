@@ -118,7 +118,8 @@
                         android:layout_height="80dp"
                         android:background="@drawable/rounded_corner"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_baseline_dining_50" />
+                        android:src="@drawable/ic_baseline_dining_50"
+                        android:contentDescription="@null"/>
 
                     <TextView
                         android:id="@+id/TextView6"
