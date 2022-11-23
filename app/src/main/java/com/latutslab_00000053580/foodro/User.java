@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class User {
 
-    int user_id;
-    String firstname;
-    String lastname;
-    String email;
-    int role;
-    int active;
+    private int user_id;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private int role;
+    private int active;
 
     public int getUser_id() {
         return user_id;

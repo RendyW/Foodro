@@ -76,4 +76,63 @@ public class APIHandler {
         queue.add(sr);
         return user;
     }
+
+    public User register(Context context, int role, String firstname, String lastname, String password, String email){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        User user = new User();
+
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "login.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
+                try{
+                    JSONObject respObj = new JSONObject(response);
+
+                    String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+                        user.setUser_id(a.getInt("user_id"));
+                        user.setFirstname(a.getString("firstname"));
+                        user.setLastname(a.getString("lastname"));
+                        user.setEmail(a.getString("email"));
+                        user.setRole(a.getInt("role_id"));
+                        user.setActive(a.getInt("active"));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("role", String.format("%d",role));
+                params.put("firstname",firstname);
+                params.put("lastname",lastname);
+                params.put("email",email);
+                params.put("password",password);
+
+
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+        return user;
+    }
+
+
 }
