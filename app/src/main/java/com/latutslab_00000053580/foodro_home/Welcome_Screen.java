@@ -2,7 +2,6 @@ package com.latutslab_00000053580.foodro_home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-<<<<<<< HEAD
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,9 +10,6 @@ import android.widget.Button;
 
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.sqlite.DbUser;
-=======
-import android.os.Bundle;
->>>>>>> fdeafa9 (welcome screen login gw masukkin)
 
 public class Welcome_Screen extends AppCompatActivity {
 
@@ -21,7 +17,6 @@ public class Welcome_Screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
-<<<<<<< HEAD
 
         Button ButtonGET = findViewById(R.id.buttonGTS);
         ButtonGET.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +35,5 @@ public class Welcome_Screen extends AppCompatActivity {
                 }
             }
         });
-=======
->>>>>>> fdeafa9 (welcome screen login gw masukkin)
     }
 }

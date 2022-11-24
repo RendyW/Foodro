@@ -6,13 +6,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.latutslab_00000053580.foodro_home.databinding.ActivityMainBinding;
 
 public class Home_Merchant extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    ImageButton btnMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class Home_Merchant extends AppCompatActivity {
 //                    fragTransaction.add(R.id.frameHomeMerchant, frag1);
 //                    fragTransaction.commit();
 
-                    //Menampilkan fragment IncomingOrderFragment di home ketika membuka aplikasi
+                    //Menampilkan fragment IncomingOrderFragment di home ketika button home di bottomNavBar ditekan
                     IncomingOrderFragment frag2 = new IncomingOrderFragment();
                     frag2.setArguments(getIntent().getExtras());
 
@@ -47,7 +51,7 @@ public class Home_Merchant extends AppCompatActivity {
                     fragTransaction.commit();
                     break;
                 case R.id.order:
-                    replaceFragment(new OrderNavigationFragment());
+                    replaceFragment(new MerchantOrder());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileNavigationFragment());
@@ -56,6 +60,8 @@ public class Home_Merchant extends AppCompatActivity {
 
             return true;
         });
+
+
 
         //Menampilkan fragment NoIncomingOrderFragment di home ketika membuka aplikasi
 //        NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
