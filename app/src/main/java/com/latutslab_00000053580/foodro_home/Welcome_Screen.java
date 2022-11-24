@@ -26,6 +26,7 @@ public class Welcome_Screen extends AppCompatActivity {
 //                User user = dbUser.Authenticate();
 
                 dbUser.open();
+                dbUser.logout();
                 if(dbUser.getUser().getCount() > 0){
                     startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

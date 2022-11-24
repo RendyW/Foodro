@@ -35,8 +35,8 @@ public class DbUser {
         //create content values to insert
         ContentValues values = new ContentValues();
 
-        values.put(db.USER_ID, user.getUserID());
-        values.put(db.USER_NAME, user.getName());
+        values.put(db.USER_ID, user.getUser_id());
+        values.put(db.USER_NAME, user.getFirstname());
         database.insert(db.TABLE_USERS, null, values);
     }
 
@@ -50,8 +50,8 @@ public class DbUser {
         // cursor.getInt(0) is 1 if column with value exists
         if (cursor.getInt(0) == 1) {
             cursor.close();
-            User user = new User(cursor.getString(0), cursor.getInt(1));
-            return user;
+//            User user = new User(cursor.getString(0), cursor.getInt(1));
+            return null;
         } else {
             cursor.close();
             return null;
