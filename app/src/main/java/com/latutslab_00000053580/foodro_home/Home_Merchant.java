@@ -61,14 +61,7 @@ public class Home_Merchant extends AppCompatActivity {
             return true;
         });
 
-//        btnMenu = (ImageButton)findViewById(R.id.imageMenu);
-//
-//        btnMenu.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                replaceFragment(new MenuMerchantFragment());
-//            }
-//        });
+
 
         //Menampilkan fragment NoIncomingOrderFragment di home ketika membuka aplikasi
 //        NoIncomingOrderFragment frag1 = new NoIncomingOrderFragment();
