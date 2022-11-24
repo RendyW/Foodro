@@ -182,6 +182,105 @@ public class APIHandler {
         return foods[0];
     }
 
+    public Food getFoodById(Context context, int id){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        Food food = new Food();
+
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodById.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject respObj = new JSONObject(response);
+
+                    String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+                        food.setId(a.getInt("food_id"));
+                        food.setName(a.getString("name"));
+                        food.setId(a.getInt("food_price"));
+                        food.setName(a.getString("food_image"));
+                        food.setId(a.getInt("merchant_id"));
+                        food.setId(a.getInt("listed"));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(context, "getFoodById Success", Toast.LENGTH_SHORT).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(error.networkResponse.statusCode == 400){
+                    Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                }else if(error.networkResponse.statusCode == 401){
+                    Toast.makeText(context, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Uknown Error:" + error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("food_id", Integer.toString(id));
+
+
+                return params;
+            }
+        };
+        return food;
+    }
+
+    public Food[] getFoodByMerchant(Context context, int merchant_id){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        final Food[][] foods = new Food[1][1];
+
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
+                try{
+                    JSONObject respObj = new JSONObject(response);
+                    String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    foods[0] = new Food[data.length()];
+
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+                        foods[0][i].setId(a.getInt("food_id"));
+                        foods[0][i].setName(a.getString("name"));
+                        foods[0][i].setId(a.getInt("food_price"));
+                        foods[0][i].setName(a.getString("food_image"));
+                        foods[0][i].setId(a.getInt("merchant_id"));
+                        foods[0][i].setId(a.getInt("listed"));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("merchant_id", Integer.toString(merchant_id));
+
+                return params;
+            }
+        };
+        queue.add(sr);
+        return foods[0];
+    } 
 }
 
 
