@@ -50,7 +50,7 @@ public class DbUser {
         // cursor.getInt(0) is 1 if column with value exists
         if (cursor.getInt(0) == 1) {
             cursor.close();
-            User user = new User(cursor.getString(0), cursor.getInt(1));
+            User user = new User(cursor.getString(0), cursor.getString(1) ,cursor.getInt(2));
             return user;
         } else {
             cursor.close();

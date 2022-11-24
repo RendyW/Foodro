@@ -156,7 +156,7 @@
                     android:text="Edit Menu" />
 
                 <Button
-                    android:id="@+id/buttonConfirm"
+                    android:id="@+id/btnReady"
                     android:backgroundTint="@color/red"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
