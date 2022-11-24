@@ -57,7 +57,7 @@ public class Account_Setup extends AppCompatActivity {
             public void onClick(View v) {
                 int id = 1;
 
-                User user = new User(inputUsername.getText().toString(), id);
+                User user = new User(inputUsername.getText().toString(),"stackoverflow.com", id);
                 DbUser dbUser = new DbUser(Account_Setup.this);
                 dbUser.open();
                 dbUser.addUser(user);
