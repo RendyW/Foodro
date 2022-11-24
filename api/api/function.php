@@ -171,7 +171,7 @@ function getPaymentById($connection, $payment_id)
         $payment = array();
         $payment["payment_id"] = $r["payment_id"];
         $payment["totalPayment"] = $r["totalPayment"];
-        $payment["total"] = $r["total"];
+        $payment["proofImage"] = $r["proofImage"];
         array_push($response["data"], $payment);
         $response["success"] = 1;
         $response["message"] = "OK";
@@ -338,7 +338,7 @@ function createFood($connection, $food_name, $food_price, $food_image, $merchant
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
         $response["success"] = 1;
         $response["message"] = "Success";
-        $response["code"] = "200";
+        $response["code"] = "200";  
         http_response_code(200);
         return json_encode($response);
     } catch (Exception $e) {

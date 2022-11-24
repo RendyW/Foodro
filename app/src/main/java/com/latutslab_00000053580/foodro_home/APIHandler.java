@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.latutslab_00000053580.foodro.Food;
+import com.latutslab_00000053580.foodro.Payment;
 import com.latutslab_00000053580.foodro.User;
 
 import org.json.JSONArray;
@@ -38,7 +39,7 @@ public class APIHandler {
                 try{
                     JSONObject respObj = new JSONObject(response);
 
-                    String success = respObj.getString("success");
+                    //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = data.getJSONObject(i);
@@ -98,7 +99,7 @@ public class APIHandler {
                 try{
                     JSONObject respObj = new JSONObject(response);
 
-                    String success = respObj.getString("success");
+                    //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = data.getJSONObject(i);
@@ -154,7 +155,7 @@ public class APIHandler {
                 Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                 try{
                     JSONObject respObj = new JSONObject(response);
-                    String success = respObj.getString("success");
+                    //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     foods[0] = new Food[data.length()];
 
@@ -193,7 +194,7 @@ public class APIHandler {
                 try{
                     JSONObject respObj = new JSONObject(response);
 
-                    String success = respObj.getString("success");
+                    //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = data.getJSONObject(i);
@@ -245,7 +246,7 @@ public class APIHandler {
                 Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                 try{
                     JSONObject respObj = new JSONObject(response);
-                    String success = respObj.getString("success");
+                    //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     foods[0] = new Food[data.length()];
 
@@ -281,6 +282,50 @@ public class APIHandler {
         queue.add(sr);
         return foods[0];
     } 
+
+    public Payment getPaymentById(Context context, int payment_id){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        Payment payment = new Payment();
+
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
+                try{
+                    JSONObject respObj = new JSONObject(response);
+                    String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+                        payment.setPayment_id(a.getInt("payment_id"));
+                        payment.setTotalPayment(a.getInt("totalPayment"));
+                        payment.setProofImage(a.getString("proofImage"));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("payment_id", Integer.toString(payment_id));
+
+                return params;
+            }
+        };
+        queue.add(sr);
+        return payment;
+    }
+
 }
 
 
