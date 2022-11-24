@@ -51,7 +51,7 @@ public class Home_Merchant extends AppCompatActivity {
                     fragTransaction.commit();
                     break;
                 case R.id.order:
-                    replaceFragment(new OrderNavigationFragment());
+                    replaceFragment(new MerchantOrder());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileNavigationFragment());

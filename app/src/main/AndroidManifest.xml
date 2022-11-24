@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodro_Home">
-        <activity android:name=".IncomingOrderFragment"></activity>
+        <activity android:name=".OrderHistory"></activity>
+        <activity android:name=".NoOrderHistory" />
+        <activity android:name=".MerchantOrder" />
+        <activity android:name=".UserMenu" />
+        <activity android:name=".IncomingOrderFragment" />
         <activity android:name=".NoIncomingOrderFragment" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Home_Merchant">

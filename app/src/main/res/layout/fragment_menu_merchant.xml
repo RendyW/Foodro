@@ -147,7 +147,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/buttonReject"
+                    android:id="@+id/buttonEditMenu"
                     android:backgroundTint="@color/blue"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                     android:text="Edit Menu" />
 
                 <Button
-                    android:id="@+id/buttonConfirm"
+                    android:id="@+id/buttonDelete"
                     android:backgroundTint="@color/red"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
