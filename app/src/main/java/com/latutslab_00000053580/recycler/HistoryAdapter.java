@@ -14,7 +14,7 @@ import com.latutslab_00000053580.foodro_home.R;
 import java.util.ArrayList;
 
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private final ArrayList<Order> orderArrayList;
 
@@ -33,16 +33,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             super(view);
             // Define click listener for the ViewHolder's View
 
-            orderBuyer = (TextView) view.findViewById(R.id.orderBuyer);
-            orderItem = (TextView) view.findViewById(R.id.orderItem);
+            orderBuyer = (TextView) view.findViewById(R.id.historyNama);
+            orderItem = (TextView) view.findViewById(R.id.historyItem);
             orderID = (TextView) view.findViewById(R.id.historyId);
-            orderTotal = (TextView) view.findViewById(R.id.orderTotal);
-            btnReady = (Button) view.findViewById(R.id.btnReady);
-
+            orderTotal = (TextView) view.findViewById(R.id.historyTotal);
+            btnReady = (Button) view.findViewById(R.id.btnEdit);
         }
     }
 
-    public OrderAdapter(ArrayList<Order> orderArrayList) {
+    public HistoryAdapter(ArrayList<Order> orderArrayList) {
         this.orderArrayList = orderArrayList;
     }
 
@@ -51,7 +50,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_layout_incoming_order, viewGroup, false);
+                .inflate(R.layout.card_layout_history, viewGroup, false);
 
         return new ViewHolder(view);
     }

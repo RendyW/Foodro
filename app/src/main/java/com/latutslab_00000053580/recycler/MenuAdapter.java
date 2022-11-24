@@ -1,49 +1,49 @@
 package com.latutslab_00000053580.recycler;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
-    private final ArrayList<Order> orderArrayList;
+    private final ArrayList<Food> foodArrayList;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView orderBuyer;
-        private final TextView orderItem;
-        private final TextView orderID;
-        private final TextView orderTotal;
-        private final Button btnReady;
+        private final TextView menuNama;
+        private final TextView menuHarga;
+        private final ImageView menuImage;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
 
-            orderBuyer = (TextView) view.findViewById(R.id.orderBuyer);
-            orderItem = (TextView) view.findViewById(R.id.orderItem);
-            orderID = (TextView) view.findViewById(R.id.historyId);
-            orderTotal = (TextView) view.findViewById(R.id.orderTotal);
-            btnReady = (Button) view.findViewById(R.id.btnReady);
-
+            menuNama = (TextView) view.findViewById(R.id.orderBuyer);
+            menuHarga = (TextView) view.findViewById(R.id.menuHarga);
+            menuImage = (ImageView) view.findViewById(R.id.menuImage);
         }
     }
 
-    public OrderAdapter(ArrayList<Order> orderArrayList) {
-        this.orderArrayList = orderArrayList;
+    public MenuAdapter(ArrayList<Food> foodArrayList) {
+        this.foodArrayList = foodArrayList;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,7 +51,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_layout_incoming_order, viewGroup, false);
+                .inflate(R.layout.card_layout_menu_merchant, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -62,17 +62,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Order model = orderArrayList.get(position);
-        viewHolder.orderBuyer.setText(model.getUser().getUsername());
-        viewHolder.orderItem.setText(model.getAllFood());
-        viewHolder.orderTotal.setText("Total: Rp" + model.getTotal());
-        viewHolder.orderID.setText(model.getId());
+        Food model = foodArrayList.get(position);
+        viewHolder.menuNama.setText(model.getName());
+        viewHolder.menuHarga.setText(model.getPrice());
+
+        Uri uri = Uri.parse(model.getImage());
+        viewHolder.menuImage.setImageURI(uri);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return orderArrayList.size();
+        return foodArrayList.size();
     }
 }
 

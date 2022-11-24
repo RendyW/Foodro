@@ -5,12 +5,14 @@ public class Food {
     String name;
     int price;
     int quantity;
+    String image;
 
-    public Food(String id, String name, int price, int quantity) {
+    public Food(String id, String name, int price, int quantity, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.image=image;
     }
 
     public String foodToString(){
@@ -47,6 +49,14 @@ public class Food {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 
