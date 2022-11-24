@@ -78,7 +78,7 @@ VALUES (
         NULL,
         "customer1",
         "last",
-        "pass",
+        "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a.com",
         1,
         TRUE
@@ -88,7 +88,7 @@ VALUES (
         NULL,
         "Customer2",
         "last2",
-        "pass",
+        "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a1.com",
         1,
         TRUE
@@ -98,7 +98,7 @@ VALUES (
         NULL,
         "Customer3",
         "last3",
-        "pass",
+        "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a2.com",
         1,
         TRUE

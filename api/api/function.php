@@ -291,7 +291,7 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 {
     $password = password_hash($password, PASSWORD_DEFAULT);
     try {
-        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?)");
+        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?, TRUE)");
         $q->bind_param("ssssi", $firstname, $lastname, $password, $email, $role);
         $q->execute();
         return getUserById($connection, $q->insert_id);

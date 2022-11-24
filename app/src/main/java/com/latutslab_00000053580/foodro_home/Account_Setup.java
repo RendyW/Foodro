@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.sqlite.DbUser;
 
@@ -22,7 +23,7 @@ public class Account_Setup extends AppCompatActivity {
 
     EditText inputPass, inputUsername;
     CheckBox showpassword;
-    APIHandler handler = new APIHandler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +56,32 @@ public class Account_Setup extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
+<<<<<<< Updated upstream
+                int id = 1;
 
+                User user = new User(inputUsername.getText().toString(), id);
+=======
+                User user = handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
+                Log.i("USER", user.getEmail());
+                Log.i("USER", user.getFirstname());
+                Log.i("USER", user.getLastname());
+                Log.i("USER", Integer.toString(user.getUser_id()));
+                Log.i("USER", Integer.toString(user.getActive()));
+                Log.i("USER", Integer.toString(user.getRole()));
+
+                Food[] foods = handler.getAllFood(getBaseContext());
+                Log.i("FOODS", foods[0].getName());
+                Log.i("FOODS", foods[1].getName());
+                Log.i("FOODS", foods[2].getName());
+>>>>>>> Stashed changes
                 DbUser dbUser = new DbUser(Account_Setup.this);
                 dbUser.open();
                 dbUser.addUser(user);
 
 
-
-//                Cursor cursor = dbUser.getUser();
-//                cursor.moveToFirst();
-//                Log.e("User", cursor.getString(1));
+                Cursor cursor = dbUser.getUser();
+                cursor.moveToFirst();
+                Log.e("User", cursor.getString(1));
             }
         });
     }
