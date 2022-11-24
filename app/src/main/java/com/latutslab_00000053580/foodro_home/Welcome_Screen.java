@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.sqlite.DbUser;
-
-import java.util.Arrays;
 
 public class Welcome_Screen extends AppCompatActivity {
 
@@ -29,7 +26,6 @@ public class Welcome_Screen extends AppCompatActivity {
 //                User user = dbUser.Authenticate();
 
                 dbUser.open();
-                dbUser.logout();
                 if(dbUser.getUser().getCount() > 0){
                     startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
