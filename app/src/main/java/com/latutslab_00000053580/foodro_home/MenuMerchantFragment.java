@@ -3,10 +3,17 @@ package com.latutslab_00000053580.foodro_home;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.latutslab_00000053580.foodro.Food;
+import com.latutslab_00000053580.recycler.MenuAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +66,20 @@ public class MenuMerchantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_merchant, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_merchant, container, false);
+
+        RecyclerView menuRV = view.findViewById(R.id.menuMerchantRV);
+        ArrayList<Food> foodArrayList = new ArrayList<Food>();
+
+        foodArrayList.add(new Food("1", "Nasi Goreng", 15000, 0, null ));
+        foodArrayList.add(new Food("2", "Nasi Bakar", 21000, 0, null ));
+
+        MenuAdapter menuAdapter = new MenuAdapter(foodArrayList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext() , LinearLayoutManager.VERTICAL, false);
+        menuRV.setLayoutManager(linearLayoutManager);
+        menuRV.setAdapter(menuAdapter);
+
+        return view;
     }
 }

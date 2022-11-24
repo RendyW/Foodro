@@ -79,5 +79,10 @@
                 android:backgroundTint="#47C169"/>
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuMerchantRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </FrameLayout>

@@ -47,7 +47,7 @@ public class Home_Merchant extends AppCompatActivity {
                     FragmentManager fragManager = getSupportFragmentManager();
                     FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
-                    fragTransaction.add(R.id.frameHomeMerchant, frag2);
+//                    fragTransaction.add(R.id.frameHomeMerchant, frag2);
                     fragTransaction.commit();
                     break;
                 case R.id.order:
@@ -80,7 +80,7 @@ public class Home_Merchant extends AppCompatActivity {
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragTransaction = fragManager.beginTransaction();
 
-        fragTransaction.add(R.id.frameHomeMerchant, frag2);
+//        fragTransaction.add(R.id.frameHomeMerchant, frag2);
         fragTransaction.commit();
     }
 
