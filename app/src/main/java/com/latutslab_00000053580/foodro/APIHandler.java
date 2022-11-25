@@ -225,7 +225,11 @@ public class APIHandler {
                         foods.get(i).setListed(a.getInt("listed"));
 
                         int merchid = a.getInt("merchant_id");
-                        // TODO: search class in a list using its property
+                        for (User users1 : users){
+                            if (users1.getId() == merchid){
+                                foods.get(i).setMerchant(users1);
+                            }
+                        }
 
                     }
                 } catch (JSONException e) {
