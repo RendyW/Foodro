@@ -35,7 +35,7 @@ public class DbUser {
         //create content values to insert
         ContentValues values = new ContentValues();
 
-        values.put(db.USER_ID, user.getUser_id());
+        values.put(db.USER_ID, user.getId());
         values.put(db.USER_NAME, user.getFirstname());
         database.insert(db.TABLE_USERS, null, values);
     }

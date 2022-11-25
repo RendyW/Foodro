@@ -5,7 +5,7 @@ public class Food {
     private String name;
     private int price;
     private String image;
-    private int merchant;
+    private User merchant;
     private int listed;
 
     public int getId() {
@@ -40,11 +40,11 @@ public class Food {
         this.image = image;
     }
 
-    public int getMerchant() {
+    public User getMerchant() {
         return merchant;
     }
 
-    public void setMerchant(int merchant) {
+    public void setMerchant(User merchant) {
         this.merchant = merchant;
     }
 

@@ -2,7 +2,6 @@ package com.latutslab_00000053580.foodro_home;
 
         import androidx.appcompat.app.AppCompatActivity;
 
-        import android.accounts.Account;
         import android.content.Intent;
         import android.database.Cursor;
         import android.os.Bundle;
@@ -15,6 +14,7 @@ package com.latutslab_00000053580.foodro_home;
         import android.widget.CompoundButton;
         import android.widget.EditText;
 
+        import com.latutslab_00000053580.foodro.APIHandler;
         import com.latutslab_00000053580.foodro.Food;
         import com.latutslab_00000053580.foodro.User;
         import com.latutslab_00000053580.sqlite.DbUser;
@@ -29,6 +29,8 @@ public class Account_Setup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_setup);
+
+
 
         inputPass = findViewById(R.id.inputPass);
         inputUsername = findViewById(R.id.inputUsername);
@@ -60,17 +62,17 @@ public class Account_Setup extends AppCompatActivity {
                 int id = 1;
 
                 User user = handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
-                Log.i("USER", user.getEmail());
-                Log.i("USER", user.getFirstname());
-                Log.i("USER", user.getLastname());
-                Log.i("USER", Integer.toString(user.getUser_id()));
-                Log.i("USER", Integer.toString(user.getActive()));
-                Log.i("USER", Integer.toString(user.getRole()));
-
-                Food[] foods = handler.getAllFood(getBaseContext());
-                Log.i("FOODS", foods[0].getName());
-                Log.i("FOODS", foods[1].getName());
-                Log.i("FOODS", foods[2].getName());
+//                Log.i("USER", user.getEmail());
+//                Log.i("USER", user.getFirstname());
+//                Log.i("USER", user.getLastname());
+//                Log.i("USER", Integer.toString(user.getUser_id()));
+//                Log.i("USER", Integer.toString(user.getActive()));
+//                Log.i("USER", Integer.toString(user.getRole()));
+//
+//                Food[] foods = handler.getAllFood(getBaseContext());
+//                Log.i("FOODS", foods[0].getName());
+//                Log.i("FOODS", foods[1].getName());
+//                Log.i("FOODS", foods[2].getName());
 
                 DbUser dbUser = new DbUser(Account_Setup.this);
                 dbUser.open();
