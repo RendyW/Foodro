@@ -372,6 +372,66 @@ public class APIHandler {
         };
         queue.add(sr);
     }
+
+    public void createOrder(Context context, int userid, int[] foodsid, int[] quantity, String proof) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createOrder.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject a = data.getJSONObject(0);
+//                    TODO: Ga tau ini data diapain
+//                        a.getInt("order_id")
+//                        a.getInt("merchant_id")
+//                        a.getInt("food_id")
+//                        a.getString("food_name")
+//                        a.getInt("food_price")
+//                        a.getInt("quantity")
+//                        a.getInt("total")
+//                        a.getInt("status_id")
+//                        a.getInt("user_id")
+//                        a.getInt("orderDate")
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                        Date birthDate = sdf.parse(a.getString("orderDate"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", Integer.toString(userid));
+                for(int i = 0; i < foodsid.length;i++){
+                    params.put("food_id[]", Integer.toString(foodsid[i]));
+                    params.put("quantity[]", Integer.toString(quantity[i]));
+                }
+                params.put("proof", proof);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
 //    public List<User> getAllUser(Context context) {
 //        RequestQueue queue = Volley.newRequestQueue(context);
 //        List<User> users = new ArrayList<>();
