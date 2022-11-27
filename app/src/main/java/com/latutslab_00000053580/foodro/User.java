@@ -9,15 +9,10 @@ public class User {
     private String firstname;
     private String lastname;
     private String email;
-    private Role role;
+    private int role;
     private int active;
-    public enum Role{
-        CUSTOMER,
-        MERCHANT,
-        ADMIN
-    }
 
-    public User(int id, String firstname, String lastname, String email, Role role, int active){
+    public User(int id, String firstname, String lastname, String email, int role, int active){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -42,7 +37,7 @@ public class User {
         return email;
     }
 
-    public Role getRole() {
+    public int getRole() {
         return role;
     }
 
