@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,22 +19,28 @@ public class Welcome_Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
+        DbUser dbUser = new DbUser(getApplicationContext());
+        dbUser.open();
+
+        User user = dbUser.Authenticate();
+
+//                dbUser.logout();
+        if(user != null){
+            if(user.getRole() == 1) {
+                startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }else if(user.getRole() == 2) {
+                startActivity(new Intent(Welcome_Screen.this, Home_Merchant.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        }
+
         Button ButtonGET = findViewById(R.id.buttonGTS);
         ButtonGET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbUser dbUser = new DbUser(getApplicationContext());
-//                User user = dbUser.Authenticate();
-
-                dbUser.open();
-                dbUser.logout();
-                if(dbUser.getUser().getCount() > 0){
-                    startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else {
-                    startActivity(new Intent(Welcome_Screen.this, Account_Setup.class));
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+                startActivity(new Intent(Welcome_Screen.this, Account_Setup.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }

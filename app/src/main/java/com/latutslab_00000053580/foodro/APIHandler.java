@@ -219,11 +219,55 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    //TODO: Integrate getOrderMerchant & getOrderByUser
     public void getOrderMerchant(Context context, int merchant_id){
         RequestQueue queue = Volley.newRequestQueue(context);
-        List<User> users = new ArrayList<>();
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+
+//                        TODO: put these into adapter for recycler
+//                        a.getInt("order_id")
+//                        a.getInt("merchant_id")
+//                        a.getInt("food_id")
+//                        a.getString("food_name")
+//                        a.getInt("food_price")
+//                        a.getInt("quantity")
+//                        a.getInt("total")
+//                        a.getInt("status_id")
+//                        a.getInt("user_id")
+//                        a.getInt("orderDate")
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                        Date birthDate = sdf.parse(a.getString("orderDate"));
+//
+                    }
+                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                    Log.i("VOLLEYDONE", "DONE");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.i("VOLLEYERROCATCH", e.toString());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(sr);
+    }
+
+    public void getOrderByUser(Context context, int user_id){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderByUser.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();

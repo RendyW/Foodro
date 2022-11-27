@@ -61,7 +61,7 @@ public class Account_Setup extends AppCompatActivity {
             public void onClick(View v) {
                 int id = 1;
 
-                User user = handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
+                handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
 //                Log.i("USER", user.getEmail());
 //                Log.i("USER", user.getFirstname());
 //                Log.i("USER", user.getLastname());
@@ -74,14 +74,7 @@ public class Account_Setup extends AppCompatActivity {
 //                Log.i("FOODS", foods[1].getName());
 //                Log.i("FOODS", foods[2].getName());
 
-                DbUser dbUser = new DbUser(Account_Setup.this);
-                dbUser.open();
-                dbUser.addUser(user);
 
-
-                Cursor cursor = dbUser.getUser();
-                cursor.moveToFirst();
-                Log.e("User", cursor.getString(1));
             }
         });
     }

@@ -13,17 +13,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "foodro";
 
     //DATABASE VERSION
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     //USERS TABLE
     //TABLE NAME
     public static final String TABLE_USERS = "users";
     public static final String USER_ID = "id";
-    public static final String USER_NAME = "username";
+    public static final String USER_EMAIL = "email";
+    public static final String USER_FIRSTNAME = "firstname";
+    public static final String USER_LASTNAME = "lastname";
+    public static final String USER_ROLE = "role_id";
     public static final String SQL_TABLE_USERS = " CREATE TABLE " + TABLE_USERS
             + " ( "
             + USER_ID + " INTEGER PRIMARY KEY, "
-            + USER_NAME + " TEXT"
+            + USER_EMAIL + " TEXT,"
+            + USER_FIRSTNAME + " TEXT,"
+            + USER_LASTNAME + " TEXT,"
+            + USER_ROLE + " INTEGER"
             + " ) ";
 
     //CART TABLE
@@ -57,4 +63,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.setVersion(oldVersion);
+    }
 }

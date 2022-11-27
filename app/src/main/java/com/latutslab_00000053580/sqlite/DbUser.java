@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.latutslab_00000053580.foodro.User;
 
@@ -25,7 +26,7 @@ public class DbUser {
         return this;
     }
 
-    public void close(){
+    public void close() {
         db.close();
     }
 
@@ -36,38 +37,49 @@ public class DbUser {
         ContentValues values = new ContentValues();
 
         values.put(db.USER_ID, user.getId());
-        values.put(db.USER_NAME, user.getFirstname());
+        values.put(db.USER_EMAIL, user.getEmail());
+        values.put(db.USER_FIRSTNAME, user.getFirstname());
+        values.put(db.USER_LASTNAME, user.getLastname());
+        values.put(db.USER_ROLE, user.getRole());
         database.insert(db.TABLE_USERS, null, values);
     }
 
     //Check whether account existed or not
     public User Authenticate() {
 
-        String sql = "SELECT EXISTS (SELECT * FROM '" + db.TABLE_USERS + "' LIMIT 1)";
+        String sql = "SELECT * FROM '" + db.TABLE_USERS + "' LIMIT 1";
         Cursor cursor = database.rawQuery(sql, null);
-        cursor.moveToFirst();
+        Log.i("SQLITE", cursor.toString());
 
-        // cursor.getInt(0) is 1 if column with value exists
-        if (cursor.getInt(0) == 1) {
+        if (cursor != null && cursor.getCount() > 0) {
+
+            for(String a : cursor.getColumnNames()){
+                Log.i("SQLITE", a);
+            }
+            cursor.moveToFirst();
+
+
+//            Log.i("SQLITE", "START");
+//            Log.i("SQLITE", Integer.toString(cursor.getInt(0)));
+            User user = new User(cursor.getInt(0), cursor.getString(2), cursor.getString(3), cursor.getString(1),cursor.getInt(4), 1);
             cursor.close();
-//            User user = new User(cursor.getString(0), cursor.getInt(1));
-            return null;
+            return user;
         } else {
             cursor.close();
             return null;
         }
     }
 
-    public Cursor getUser(){
-        Cursor cursor = this.database.query(db.TABLE_USERS, new String[]{db.USER_ID, db.USER_NAME}, null, null, null, null, null);
-        if(cursor != null){
+    public Cursor getUser() {
+        Cursor cursor = this.database.query(db.TABLE_USERS, new String[]{db.USER_ID, db.USER_EMAIL, db.USER_FIRSTNAME, db.USER_LASTNAME, db.USER_ROLE}, null, null, null, null, null);
+        if (cursor != null) {
             cursor.moveToFirst();
         }
 
         return cursor;
     }
 
-    public void logout(){
+    public void logout() {
         String sql = "DELETE FROM " + db.TABLE_USERS;
         database.execSQL(sql);
     }
