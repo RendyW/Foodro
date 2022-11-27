@@ -345,14 +345,14 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 function createOrder($connection, $userid, $food, $quantity, $proof)
 {
     try {
-        mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, 1, NOW())");
+        mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, NOW())");
         $totalPrice = 0;
         for ($i = 0; $i < count($food); $i++) {
             $price = (int)json_decode(getFoodById($connection, (int)$food[$i]))->data[0]->food_price;
             mysqli_query($connection, "INSERT INTO OrderDetail VALUES (LAST_INSERT_ID(), 1, $food[$i], $quantity[$i], $price*$quantity[$i])");
             $totalPrice = $price * $quantity[$i];
         }
-        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, ${proof})");
+        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${proof}')");
 
         return getOrderByUser($connection, $userid);
     } catch (Exception $e) {
