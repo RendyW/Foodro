@@ -41,8 +41,43 @@ function getAllFood($connection)
             $food = array();
             $food["food_id"] = $r["food_id"];
             $food["food_name"] = $r["food_name"];
+            $food["food_price"] = $r["food_price"];
             $food["food_image"] = $r["food_image"];
+            $food["merchant_id"] = $r["merchant_id"];
             $food["listed"] = $r["listed"];
+            array_push($response["data"], $food);
+        }
+        $response["success"] = 1;
+        $response["message"] = "OK";
+        http_response_code(200);
+        return json_encode($response);
+    }
+    $response["success"] = 0;
+    $response["message"] = "No data available";
+    http_response_code(404);
+    return json_encode($response);
+}
+
+function getAllFoodMerchant($connection)
+{
+    $result = mysqli_query($connection, "SELECT food_id, food_name, food_price, food_image, merchant_id, listed, firstname, lastname, email, active FROM Food 
+    INNER JOIN Users ON Food.merchant_id = Users.user_id");
+    $response = array();
+
+    if (mysqli_num_rows($result) > 0) {
+        $response["data"] = array();
+        while ($r = mysqli_fetch_array($result)) {
+            $food = array();
+            $food["food_id"] = $r["food_id"];
+            $food["food_name"] = $r["food_name"];
+            $food["food_price"] = $r["food_price"];
+            $food["food_image"] = $r["food_image"];
+            $food["merchant_id"] = $r["merchant_id"];
+            $food["listed"] = $r["listed"];
+            $food["firstname"] = $r["firstname"];
+            $food["lastname"] = $r["lastname"];
+            $food["email"] = $r["email"];
+            $food["active"] = $r["active"];
             array_push($response["data"], $food);
         }
         $response["success"] = 1;
@@ -58,7 +93,7 @@ function getAllFood($connection)
 
 function getUserById($connection, $user_id)
 {
-    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,role_id FROM Users WHERE user_id=$user_id");
+    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,role_id,active FROM Users WHERE user_id=$user_id");
     $response = array();
     if (mysqli_num_rows($result) > 0) {
         $response["data"] = array();
