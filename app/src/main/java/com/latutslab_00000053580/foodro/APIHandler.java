@@ -25,6 +25,7 @@ import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.Payment;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.Account_Setup;
+import com.latutslab_00000053580.foodro_home.Home_Merchant;
 import com.latutslab_00000053580.foodro_home.MainActivity;
 import com.latutslab_00000053580.foodro_home.R;
 import com.latutslab_00000053580.foodro_home.Welcome_Screen;
@@ -73,15 +74,13 @@ public class APIHandler {
 
 //                    Cursor cursor = dbUser.getUser();
 //                    cursor.moveToFirst();
-
-                    // TODO: Pindah activity
-                    if(user.getRole() == 1){
-                        Intent i = new Intent().setClass(context, MainActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                        context.startActivity(i);
-
-                    }else if(user.getRole() == 2){
+                    // pindah activity
+                    if (user.getRole() == 1) {
+                        // TODO: Pindah activity
+                        getAllFoodMerchant(context, true);
+                    } else if (user.getRole() == 2) {
                         //pinda ke tampilan merchant
+                        getOrderMerchant(context, user.getId(), true);
                     }
 //                    Log.i("LOGIN", cursor.getString(1));
                 } catch (JSONException e) {
@@ -179,7 +178,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getAllFoodMerchant(Context context){
+    public void getAllFoodMerchant(Context context, boolean isInit) {
         RequestQueue queue = Volley.newRequestQueue(context);
         List<User> users = new ArrayList<>();
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllFoodMerchant.php", new Response.Listener<String>() {
@@ -201,6 +200,12 @@ public class APIHandler {
 //                                    User.Role.MERCHANT,
 //                                    a.getInt("active")
                     }
+                    if(isInit){
+                        Intent i = new Intent().setClass(context, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        context.startActivity(i);
+                    }
+
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {
@@ -219,7 +224,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getOrderMerchant(Context context, int merchant_id){
+    public void getOrderMerchant(Context context, int merchant_id, boolean isInit) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
             @Override
@@ -245,7 +250,12 @@ public class APIHandler {
 //                        a.getInt("orderDate")
 //                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                        Date birthDate = sdf.parse(a.getString("orderDate"));
-//
+
+                    }
+                    if(isInit){
+                        Intent i = new Intent().setClass(context, Home_Merchant.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        context.startActivity(i);
                     }
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
@@ -265,7 +275,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getOrderByUser(Context context, int user_id){
+    public void getOrderByUser(Context context, int user_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderByUser.php", new Response.Listener<String>() {
             @Override
@@ -311,6 +321,57 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    public void createFood(Context context, int role, String name, int price, String image, int merchant_id) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createFood.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject a = data.getJSONObject(0);
+//                    TODO: Ga tau ini data diapain
+//                    a.getInt("food_id"),
+//                            a.getString("food_name"),
+//                            a.getInt("food_price"),
+//                            a.getString("food_image"),
+//                            a.getInt("merchant_id"),
+//                    a.getInt("listed")
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("food_name", name);
+                params.put("food_price", Integer.toString(price));
+                params.put("food_image", image);
+                params.put("merchant_id", Integer.toString(merchant_id));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
 //    public List<User> getAllUser(Context context) {
 //        RequestQueue queue = Volley.newRequestQueue(context);
 //        List<User> users = new ArrayList<>();
@@ -407,49 +468,6 @@ public class APIHandler {
 //        queue.add(sr);
 //        return foods;
 //    }
-
-    public Payment getPaymentById(Context context, int payment_id) {
-        RequestQueue queue = Volley.newRequestQueue(context);
-        Payment payment = new Payment();
-
-        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
-                try {
-                    JSONObject respObj = new JSONObject(response);
-                    String success = respObj.getString("success");
-                    JSONArray data = respObj.getJSONArray("data");
-
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject a = data.getJSONObject(i);
-                        payment.setPayment_id(a.getInt("payment_id"));
-                        payment.setTotalPayment(a.getInt("totalPayment"));
-                        payment.setProofImage(a.getString("proofImage"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("payment_id", Integer.toString(payment_id));
-
-                return params;
-            }
-        };
-        queue.add(sr);
-        return payment;
-    }
 
 }
 

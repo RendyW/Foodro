@@ -24,12 +24,12 @@ public class Welcome_Screen extends AppCompatActivity {
 
         User user = dbUser.Authenticate();
 
-//                dbUser.logout();
-        if(user != null){
-            if(user.getRole() == 1) {
+//        dbUser.logout();
+        if (user != null) {
+            if (user.getRole() == 1) {
                 startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }else if(user.getRole() == 2) {
+            } else if (user.getRole() == 2) {
                 startActivity(new Intent(Welcome_Screen.this, Home_Merchant.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
