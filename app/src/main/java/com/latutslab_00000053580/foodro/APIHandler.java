@@ -65,8 +65,9 @@ public class APIHandler {
                             a.getString("lastname"),
                             a.getString("email"),
                             a.getInt("role_id"),
-                            a.getInt("active")
-                    );
+                            a.getInt("active"),
+                            a.getString("image")
+                            );
 
                     DbUser dbUser = new DbUser(context);
                     dbUser.open();
