@@ -15,6 +15,7 @@ function getAllUser($connection)
             $user["firstname"] = $r["firstname"];
             $user["lastname"] = $r["lastname"];
             $user["email"] = $r["email"];
+            $user["image"] = $r["image"];
             $user["role_id"] = $r["role_id"];
             $user["active"] = $r["active"];
             array_push($response["data"], $user);
@@ -60,7 +61,7 @@ function getAllFood($connection)
 
 function getAllFoodMerchant($connection)
 {
-    $result = mysqli_query($connection, "SELECT food_id, food_name, food_price, food_image, merchant_id, listed, firstname, lastname, email, active FROM Food 
+    $result = mysqli_query($connection, "SELECT food_id, food_name, food_price, food_image, merchant_id, listed, firstname, lastname, email, image, active FROM Food 
     INNER JOIN Users ON Food.merchant_id = Users.user_id");
     $response = array();
 
@@ -77,6 +78,7 @@ function getAllFoodMerchant($connection)
             $food["firstname"] = $r["firstname"];
             $food["lastname"] = $r["lastname"];
             $food["email"] = $r["email"];
+            $food["image"] = $r["image"];
             $food["active"] = $r["active"];
             array_push($response["data"], $food);
         }
@@ -93,7 +95,7 @@ function getAllFoodMerchant($connection)
 
 function getUserById($connection, $user_id)
 {
-    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,role_id,active FROM Users WHERE user_id=$user_id");
+    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,image,role_id,active FROM Users WHERE user_id=$user_id");
     $response = array();
     if (mysqli_num_rows($result) > 0) {
         $response["data"] = array();
@@ -103,6 +105,7 @@ function getUserById($connection, $user_id)
         $user["firstname"] = $r["firstname"];
         $user["lastname"] = $r["lastname"];
         $user["email"] = $r["email"];
+        $user["image"] = $r["image"];
         $user["role_id"] = $r["role_id"];
         $user["active"] = $r["active"];
         array_push($response["data"], $user);
@@ -325,12 +328,20 @@ function login($connection, $email, $password)
 //////////////////////////////   INSERT   //////////////////////////////
 */
 
-function register($connection, $role, $firstname, $lastname, $password, $email)
+function register($connection, $role, $firstname, $lastname, $password, $email, $image)
 {
+    $result = mysqli_query($connection, "SELECT MAX(user_id) FROM Users");
+
+    if($res = mysqli_fetch_array($result)){
+        $id = $res["MAX(user_id)"]+1;
+    }else{
+        $id=1;
+    }
+    $serverdir = processImage($image, "/userimage", $id);
     $password = password_hash($password, PASSWORD_DEFAULT);
     try {
-        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?, TRUE)");
-        $q->bind_param("ssssi", $firstname, $lastname, $password, $email, $role);
+        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?, ?, TRUE)");
+        $q->bind_param("sssssi", $firstname, $lastname, $password, $email, $serverdir, $role);
         $q->execute();
         return getUserById($connection, $q->insert_id);
     } catch (Exception $e) {
@@ -344,15 +355,13 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 
 function createOrder($connection, $userid, $food, $quantity, $proof)
 {
-    $dir = $_SERVER["DOCUMENT_ROOT"] . "/proof";
-    if(!file_exists($dir)){
-        mkdir($dir, 0777, true);
-    }    
-    list($type, $proof) = explode(';', $proof);
-    list(, $proof) = explode(',', $proof);
-    $img = str_replace(' ', '+', $proof);
-    echo $img;
-    $dir = $dir . "/" . "1" . "," . time() . ".jpg";
+    $result = mysqli_query($connection, "SELECT MAX(order_id) FROM Orders");
+    if($res = mysqli_fetch_array($result)){
+        $id = $res["MAX(order_id)"]+1;
+    }else{
+        $id=1;
+    }
+    $serverdir = processImage($proof, "/proof", $id);
 
     try {
         mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, NOW())");
@@ -362,8 +371,7 @@ function createOrder($connection, $userid, $food, $quantity, $proof)
             mysqli_query($connection, "INSERT INTO OrderDetail VALUES (LAST_INSERT_ID(), 1, $food[$i], $quantity[$i], $price*$quantity[$i])");
             $totalPrice = $price * $quantity[$i];
         }
-        file_put_contents($dir,  base64_decode($img));
-        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${dir}')");
+        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${serverdir}')");
         return getOrderByUser($connection, $userid);
     } catch (Exception $e) {
         $response["success"] = 0;
@@ -376,9 +384,16 @@ function createOrder($connection, $userid, $food, $quantity, $proof)
 
 function createFood($connection, $food_name, $food_price, $food_image, $merchant_id)
 {
+    $result = mysqli_query($connection, "SELECT MAX(food_id) FROM Food");
+    if($res = mysqli_fetch_array($result)){
+        $id = $res["MAX(food_id)"]+1;
+    }else{
+        $id=1;
+    }
+    $serverdir = processImage($food_image, "/foodimage", $id);
     try {
         $q = $connection->prepare("INSERT INTO Food VALUES (NULL, ?, ?, ?, ?, TRUE)");
-        $q->bind_param("sisi", $food_name, $food_price, $food_image, $merchant_id);
+        $q->bind_param("sisi", $food_name, $food_price, $serverdir, $merchant_id);
         $q->execute();
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
 
@@ -417,13 +432,14 @@ function updateOrderStatus($connection, $order_id, $food_id, $newStatus)
 
 function updateFood($connection, $food_id, $food_name, $food_price, $food_image)
 {
+    $serverdir = processImage($food_image, "/foodimage", $food_id);
     try {
         $q = $connection->prepare("UPDATE Food SET
         food_name = ?,
         food_price = ?,
         food_image = ?,
         WHERE food_id = ?");
-        $q->bind_param("sisi", $food_name, $food_price, $food_image, $food_id);
+        $q->bind_param("sisi", $food_name, $food_price, $serverdir, $food_id);
         $q->execute();
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
         if ($q->affected_rows > 0) {
@@ -445,7 +461,7 @@ function reactivateUser($connection, $user_id)
     try {
         mysqli_query($connection, "UPDATE users SET active = TRUE WHERE user_id = $user_id AND active = FALSE");
         if (mysqli_affected_rows($connection)) {
-            return getFoodById($connection, $user_id);
+            return getUserById($connection, $user_id);
         } else {
             throw new Exception("No data updated", 404);
         }
@@ -504,4 +520,19 @@ function deleteFood($connection, $food_id)
         http_response_code($e->getCode());
         return json_encode($response);
     }
+}
+
+function processImage($image, $path, $name){
+    $dir = $_SERVER["DOCUMENT_ROOT"] . $path;
+    if (!file_exists($dir)) {
+        mkdir($dir, 0777, true);
+    }
+    list($type, $image) = explode(';', $image);
+    list(, $image) = explode(',', $image);
+    $img = str_replace(' ', '+', $image);
+    $filename = $name . ".jpg";
+    $dir = $dir . "/" . $filename;
+    $serverdir = $path . "/" . $filename;
+    file_put_contents($dir,  base64_decode($img));
+    return $serverdir;
 }
