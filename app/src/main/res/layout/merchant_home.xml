@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeMerchantFragment">
+    tools:context="com.latutslab_00000053580.foodro_merchant.HomeMerchant">
 
 
     <ScrollView

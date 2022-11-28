@@ -3,11 +3,9 @@ package com.latutslab_00000053580.foodro_home;
         import androidx.appcompat.app.AppCompatActivity;
 
         import android.content.Intent;
-        import android.database.Cursor;
         import android.os.Bundle;
         import android.text.method.HideReturnsTransformationMethod;
         import android.text.method.PasswordTransformationMethod;
-        import android.util.Log;
         import android.view.View;
         import android.widget.Button;
         import android.widget.CheckBox;
@@ -15,9 +13,6 @@ package com.latutslab_00000053580.foodro_home;
         import android.widget.EditText;
 
         import com.latutslab_00000053580.foodro.APIHandler;
-        import com.latutslab_00000053580.foodro.Food;
-        import com.latutslab_00000053580.foodro.User;
-        import com.latutslab_00000053580.sqlite.DbUser;
 
 public class Account_Setup extends AppCompatActivity {
 
@@ -28,7 +23,7 @@ public class Account_Setup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_setup);
+        setContentView(R.layout.home_account_setup);
 
 
 
