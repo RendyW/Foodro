@@ -63,10 +63,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Order model = orderArrayList.get(position);
-        viewHolder.orderBuyer.setText(model.getUser().getUsername());
-        viewHolder.orderItem.setText(model.getAllFood());
-        viewHolder.orderTotal.setText("Total: Rp" + model.getTotal());
-        viewHolder.orderID.setText(model.getId());
+        viewHolder.orderBuyer.setText(model.getCustomer().getFullName());
+        viewHolder.orderItem.setText(model.getOrderDetailStr());
+        viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
+        viewHolder.orderID.setText(Integer.toString(model.getId()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

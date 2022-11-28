@@ -8,6 +8,15 @@ public class Food {
     private User merchant;
     private int listed;
 
+    public Food(int id, String name, int price, String image, User merchant, int listed) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.merchant = merchant;
+        this.listed = listed;
+    }
+
     public int getId() {
         return id;
     }

@@ -62,9 +62,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Order model = orderArrayList.get(position);
-        viewHolder.orderBuyer.setText(model.getUser().getUsername());
-        viewHolder.orderItem.setText(model.getAllFood());
-        viewHolder.orderTotal.setText("Total: Rp" + model.getTotal());
+        viewHolder.orderBuyer.setText(model.getCustomer().getFirstname() + " " + model.getCustomer().getLastname());
+        viewHolder.orderItem.setText(model.getOrderDetailStr());
+        viewHolder.orderTotal.setText("Total: Rp" + model.getOrderDetailTotal());
         viewHolder.orderID.setText(model.getId());
     }
 

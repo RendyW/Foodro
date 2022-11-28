@@ -11,14 +11,16 @@ public class User {
     private String email;
     private int role;
     private int active;
+    private String image;
 
-    public User(int id, String firstname, String lastname, String email, int role, int active){
+    public User(int id, String firstname, String lastname, String email, int role, int active, String image){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
         this.active = active;
+        this.image = image;
     }
 
     public int getId() {
@@ -43,6 +45,18 @@ public class User {
 
     public int getActive() {
         return active;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getFullName(){
+        return String.format("%s %s", this.firstname, this.lastname);
     }
 
 }

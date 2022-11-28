@@ -61,7 +61,7 @@ public class DbUser {
 
 //            Log.i("SQLITE", "START");
 //            Log.i("SQLITE", Integer.toString(cursor.getInt(0)));
-            User user = new User(cursor.getInt(0), cursor.getString(2), cursor.getString(3), cursor.getString(1),cursor.getInt(4), 1);
+            User user = new User(cursor.getInt(0), cursor.getString(2), cursor.getString(3), cursor.getString(1),cursor.getInt(4), 1, null);
             cursor.close();
             return user;
         } else {

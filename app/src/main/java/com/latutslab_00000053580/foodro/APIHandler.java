@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 public class APIHandler {
-    private String endpoint = "https://rajasaweek11.000webhostapp.com/api/";
+        private String endpoint = "https://rajasaweek11.000webhostapp.com/api/";
 
 
     public void login(Context context, String email, String password) {
@@ -65,7 +65,9 @@ public class APIHandler {
                             a.getString("lastname"),
                             a.getString("email"),
                             a.getInt("role_id"),
-                            a.getInt("active")
+                            a.getInt("active"),
+                            //Ini get image string URL
+                            null
                     );
 
                     DbUser dbUser = new DbUser(context);

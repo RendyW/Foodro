@@ -61,8 +61,8 @@ public class MerchantAdapter extends RecyclerView.Adapter<MerchantAdapter.ViewHo
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         User model = userArrList.get(position);
-        viewHolder.merchantName.setText(model.getUsername());
-        Uri imageURI = Uri.parse(model.getImageURL());
+        viewHolder.merchantName.setText(model.getFullName());
+        Uri imageURI = Uri.parse(model.getImage());
         viewHolder.merchantImg.setImageURI(imageURI);
     }
 

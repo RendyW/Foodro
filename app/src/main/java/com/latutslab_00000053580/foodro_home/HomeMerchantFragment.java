@@ -1,8 +1,10 @@
 package com.latutslab_00000053580.foodro_home;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,13 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.recycler.MerchantAdapter;
 import com.latutslab_00000053580.recycler.OrderAdapter;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +82,7 @@ public class HomeMerchantFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,20 +91,28 @@ public class HomeMerchantFragment extends Fragment {
 
         RecyclerView merchantRV = view.findViewById(R.id.orderRV);
 
+        APIHandler api = new APIHandler();
+
+
         //nyimpen semua order
         ArrayList<Order> orderArrayList = new ArrayList<Order>();
 
         //nah disini lu nanti untuk setiap order, lu loop data makannya + quantity yang dipesen
         ArrayList<Food> foodArrayList = new ArrayList<Food>();
-        foodArrayList.add(new Food("1", "nasi goreng", 15000, 4));
-        foodArrayList.add(new Food("2", "nasi Bakar", 12000, 5));
+        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
+        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
+
+        int[] quantity = new int[] {1, 2};
 
         //disini ambil data buyer atau user yang beli
-        User user = new User("yanto", "https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg", 2);
+        User user = new User(1, "Uccok", "Siregar", "12", 1, 1, "https://tinypng.com/images/social/website.jpg");
 
 
         //diakhir loop masukin data order kedalem array list order
-        orderArrayList.add(new Order("1", foodArrayList, user, "2"));
+
+//        Locale locale = new Locale("id", "ID");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss OOOO", locale);
+        orderArrayList.add(new Order(1, user, "15/10/2003", foodArrayList, quantity));
 
         //ini gk usah disentuh sih yang kebawah mah
         OrderAdapter orderAdapter = new OrderAdapter(orderArrayList);

@@ -75,15 +75,11 @@
                 </LinearLayout>
             </LinearLayout>
 
-
-
-            <FrameLayout
-                android:id="@+id/frameHomeMerchant"
-                android:layout_marginTop="40dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10sp"
+                android:id="@+id/orderRV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
