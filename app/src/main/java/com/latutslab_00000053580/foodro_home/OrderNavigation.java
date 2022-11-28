@@ -3,24 +3,17 @@ package com.latutslab_00000053580.foodro_home;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.latutslab_00000053580.foodro.Food;
-import com.latutslab_00000053580.recycler.MenuAdapter;
-
-import java.util.ArrayList;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MenuMerchantFragment#newInstance} factory method to
+ * Use the {@link OrderNavigation#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MenuMerchantFragment extends Fragment {
+public class OrderNavigation extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +24,7 @@ public class MenuMerchantFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MenuMerchantFragment() {
+    public OrderNavigation() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class MenuMerchantFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuMerchantFragment.
+     * @return A new instance of fragment OrderNavigationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MenuMerchantFragment newInstance(String param1, String param2) {
-        MenuMerchantFragment fragment = new MenuMerchantFragment();
+    public static OrderNavigation newInstance(String param1, String param2) {
+        OrderNavigation fragment = new OrderNavigation();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,26 +53,14 @@ public class MenuMerchantFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_menu_merchant, container, false);
-
-        RecyclerView menuRV = view.findViewById(R.id.menuMerchantRV);
-        ArrayList<Food> foodArrayList = new ArrayList<Food>();
-
-        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
-        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
-
-        MenuAdapter menuAdapter = new MenuAdapter(foodArrayList);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext() , LinearLayoutManager.VERTICAL, false);
-        menuRV.setLayoutManager(linearLayoutManager);
-        menuRV.setAdapter(menuAdapter);
-
-        return view;
+        return inflater.inflate(R.layout.home_order_navigation, container, false);
     }
 }

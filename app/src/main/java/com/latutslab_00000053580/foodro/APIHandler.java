@@ -1,43 +1,27 @@
 package com.latutslab_00000053580.foodro;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.latutslab_00000053580.foodro.Food;
-import com.latutslab_00000053580.foodro.Payment;
-import com.latutslab_00000053580.foodro.User;
-import com.latutslab_00000053580.foodro_home.Account_Setup;
-import com.latutslab_00000053580.foodro_home.Home_Merchant;
 import com.latutslab_00000053580.foodro_home.MainActivity;
-import com.latutslab_00000053580.foodro_home.R;
-import com.latutslab_00000053580.foodro_home.Welcome_Screen;
 import com.latutslab_00000053580.sqlite.DbUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,6 +224,7 @@ public class APIHandler {
                         JSONObject a = data.getJSONObject(i);
 
 //                        TODO: put these into adapter for recycler
+
 //                        a.getInt("order_id")
 //                        a.getInt("merchant_id")
 //                        a.getInt("food_id")
@@ -255,7 +240,7 @@ public class APIHandler {
 
                     }
                     if(isInit){
-                        Intent i = new Intent().setClass(context, Home_Merchant.class);
+                        Intent i = new Intent().setClass(context, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                         context.startActivity(i);
                     }
@@ -290,8 +275,11 @@ public class APIHandler {
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = data.getJSONObject(i);
 
+
+
 //                        TODO: put these into adapter for recycler
-//                        a.getInt("order_id")
+//                        Order order = new Order(a.getInt("order_id"), )
+//
 //                        a.getInt("merchant_id")
 //                        a.getInt("food_id")
 //                        a.getString("food_name")

@@ -1,4 +1,4 @@
-package com.latutslab_00000053580.foodro_home;
+package com.latutslab_00000053580.foodro_merchant;
 
 import android.content.Context;
 import android.os.Build;
@@ -17,23 +17,17 @@ import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro.User;
-import com.latutslab_00000053580.recycler.MerchantAdapter;
+import com.latutslab_00000053580.foodro_home.R;
 import com.latutslab_00000053580.recycler.OrderAdapter;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeMerchantFragment#newInstance} factory method to
+ * Use the {@link HomeMerchant#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeMerchantFragment extends Fragment {
+public class HomeMerchant extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +39,7 @@ public class HomeMerchantFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomeMerchantFragment() {
+    public HomeMerchant() {
         // Required empty public constructor
     }
 
@@ -64,8 +58,8 @@ public class HomeMerchantFragment extends Fragment {
      * @return A new instance of fragment HomeMerchantFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeMerchantFragment newInstance(String param1, String param2) {
-        HomeMerchantFragment fragment = new HomeMerchantFragment();
+    public static HomeMerchant newInstance(String param1, String param2) {
+        HomeMerchant fragment = new HomeMerchant();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -87,7 +81,7 @@ public class HomeMerchantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home_merchant, container, false);
+        View view = inflater.inflate(R.layout.merchant_home, container, false);
 
         RecyclerView merchantRV = view.findViewById(R.id.orderRV);
 

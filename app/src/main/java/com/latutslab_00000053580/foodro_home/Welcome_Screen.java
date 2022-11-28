@@ -3,9 +3,7 @@ package com.latutslab_00000053580.foodro_home;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +15,7 @@ public class Welcome_Screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen);
+        setContentView(R.layout.home_welcome_screen);
 
         DbUser dbUser = new DbUser(getApplicationContext());
         dbUser.open();
@@ -26,13 +24,18 @@ public class Welcome_Screen extends AppCompatActivity {
 
 //        dbUser.logout();
         if (user != null) {
-            if (user.getRole() == 1) {
-                startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (user.getRole() == 2) {
-                startActivity(new Intent(Welcome_Screen.this, Home_Merchant.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
+            int role = user.getRole();
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.putExtra("ROLE", role);
+            startActivity(intent);
+
+//            if (user.getRole() == 1) {
+//                startActivity(new Intent(Welcome_Screen.this, MainActivity.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            } else if (user.getRole() == 2) {
+//                startActivity(new Intent(Welcome_Screen.this, Home_Merchant.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            }
         }
 
         Button ButtonGET = findViewById(R.id.buttonGTS);

@@ -1,4 +1,4 @@
-package com.latutslab_00000053580.foodro_home;
+package com.latutslab_00000053580.foodro_user;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.latutslab_00000053580.foodro_home.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileNavigationFragment#newInstance} factory method to
+ * Use the {@link HomeUser#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileNavigationFragment extends Fragment {
+public class HomeUser extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class ProfileNavigationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProfileNavigationFragment() {
+    public HomeUser() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class ProfileNavigationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileNavigationFragment.
+     * @return A new instance of fragment HomeNavigationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileNavigationFragment newInstance(String param1, String param2) {
-        ProfileNavigationFragment fragment = new ProfileNavigationFragment();
+    public static HomeUser newInstance(String param1, String param2) {
+        HomeUser fragment = new HomeUser();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class ProfileNavigationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_navigation, container, false);
+        return inflater.inflate(R.layout.user_home, container, false);
     }
 }

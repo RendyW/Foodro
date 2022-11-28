@@ -12,22 +12,18 @@
         <activity android:name=".OrderHistory"></activity>
         <activity android:name=".NoOrderHistory" />
         <activity android:name=".MerchantOrder" />
-        <activity android:name=".UserMenu" />
         <activity android:name=".IncomingOrderFragment" />
         <activity android:name=".NoIncomingOrderFragment" />
         <activity android:name=".Account_Setup" />
         <activity android:name=".Welcome_Screen">
-
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".Home_Merchant">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 
