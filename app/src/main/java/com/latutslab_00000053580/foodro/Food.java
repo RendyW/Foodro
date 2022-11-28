@@ -1,29 +1,18 @@
 package com.latutslab_00000053580.foodro;
 
 public class Food {
-    String id;
-    String name;
-    int price;
-    int quantity;
-    String image;
+    private int id;
+    private String name;
+    private int price;
+    private String image;
+    private User merchant;
+    private int listed;
 
-    public Food(String id, String name, int price, int quantity, String image) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.image=image;
-    }
-
-    public String foodToString(){
-        return String.format("%dx %s\n", price, name);
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,14 +32,6 @@ public class Food {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public String getImage() {
         return image;
     }
@@ -58,6 +39,20 @@ public class Food {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public User getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(User merchant) {
+        this.merchant = merchant;
+    }
+
+    public int getListed() {
+        return listed;
+    }
+
+    public void setListed(int listed) {
+        this.listed = listed;
+    }
 }
-
-

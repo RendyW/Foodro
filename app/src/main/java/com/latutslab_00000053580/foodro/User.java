@@ -1,44 +1,48 @@
 package com.latutslab_00000053580.foodro;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
-    String username;
-    String imageURL;
-    int userID;
+    private int id;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private int role;
+    private int active;
 
-    public User(String username, String imageURL, int userID) {
-        this.username = username;
-        this.imageURL = imageURL;
-        this.userID = userID;
+    public User(int id, String firstname, String lastname, String email, int role, int active){
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.role = role;
+        this.active = active;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public int getRole() {
+        return role;
     }
 
-    public String getName() {
-        return username;
+    public int getActive() {
+        return active;
     }
 
-    public int getUserID() {
-        return userID;
-    }
 }

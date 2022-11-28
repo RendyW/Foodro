@@ -1,74 +1,40 @@
 package com.latutslab_00000053580.foodro;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Order {
-    String id;
-    ArrayList<Food> foodArrayList;
-    User user;
-    String statusID;
+    private int id;
+    private User customer;
+    private LocalDateTime dateTime;
+    private OrderDetail[] orderDetails;
 
-    public Order(String id, ArrayList<Food> foodArrayList, User user, String statusID) {
+    public Order(int id, User customer, LocalDateTime dateTime, Food[] foods, int[] quantity){
         this.id = id;
-        this.foodArrayList = foodArrayList;
-        this.user = user;
-        this.statusID = statusID;
+        this.customer = customer;
+        this.dateTime = dateTime;
+        OrderDetail[] orderDetails1 = new OrderDetail[foods.length];
+
+        for(int i = 0; i < foods.length; i++){
+            orderDetails1[i] = new OrderDetail(id, foods[i], quantity[i]);
+        }
+        this.orderDetails = orderDetails1;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getAllFood(){
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(Food food: foodArrayList){
-            stringBuilder.append(food.foodToString());
-        }
-
-        return stringBuilder.toString();
+    public User getCustomer() {
+        return customer;
     }
 
-    public double getTotal(){
-        double total = 0;
-
-        for(Food food: foodArrayList){
-            total += (double) food.getPrice() * food.getQuantity();
-        }
-
-        return total;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ArrayList<Food> getFoodArrayList() {
-        return foodArrayList;
-    }
-
-    public void setFoodArrayList(ArrayList<Food> foodArrayList) {
-        this.foodArrayList = foodArrayList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getStatusID() {
-        return statusID;
-    }
-
-    public void setStatusID(String statusID) {
-        this.statusID = statusID;
+    public OrderDetail[] getOrderDetails() {
+        return orderDetails;
     }
 }
+
+
