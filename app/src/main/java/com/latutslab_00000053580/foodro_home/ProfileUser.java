@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.latutslab_00000053580.sqlite.DbUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +61,22 @@ public class ProfileUser extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.home_profile_user, container, false);
+
+        Button btnLogout = (Button) view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbUser dbUser = new DbUser(view.getContext());
+                dbUser.open();
+                dbUser.logout();
+                dbUser.close();
+                getActivity().finish();
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.home_profile_user, container, false);
+        return view;
     }
 }

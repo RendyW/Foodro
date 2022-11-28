@@ -22,7 +22,7 @@ public class Welcome_Screen extends AppCompatActivity {
 
         User user = dbUser.Authenticate();
 
-//        dbUser.logout();
+        dbUser.logout();
         if (user != null) {
             int role = user.getRole();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
