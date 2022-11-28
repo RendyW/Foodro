@@ -344,6 +344,16 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 
 function createOrder($connection, $userid, $food, $quantity, $proof)
 {
+    $dir = $_SERVER["DOCUMENT_ROOT"] . "/proof";
+    if(!file_exists($dir)){
+        mkdir($dir, 0777, true);
+    }    
+    list($type, $proof) = explode(';', $proof);
+    list(, $proof) = explode(',', $proof);
+    $img = str_replace(' ', '+', $proof);
+    echo $img;
+    $dir = $dir . "/" . "1" . "," . time() . ".jpg";
+
     try {
         mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, NOW())");
         $totalPrice = 0;
@@ -352,8 +362,8 @@ function createOrder($connection, $userid, $food, $quantity, $proof)
             mysqli_query($connection, "INSERT INTO OrderDetail VALUES (LAST_INSERT_ID(), 1, $food[$i], $quantity[$i], $price*$quantity[$i])");
             $totalPrice = $price * $quantity[$i];
         }
-        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${proof}')");
-
+        file_put_contents($dir,  base64_decode($img));
+        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${dir}')");
         return getOrderByUser($connection, $userid);
     } catch (Exception $e) {
         $response["success"] = 0;
