@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodro_Home">
-        <activity android:name=".IncomingOrderFragment"></activity>
-        <activity android:name=".NoIncomingOrderFragment" />
+        <activity android:name=".OurWebsite"></activity>
+        <activity
+            android:name=".AboutUs"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
         <activity android:name=".Account_Setup" />
         <activity android:name=".Welcome_Screen">
             <intent-filter>
@@ -23,12 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".Home_Merchant">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

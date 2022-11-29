@@ -40,8 +40,8 @@ public class OrderDetail {
     }
 
 
-    public int calculateTotalPayment(int quantity, int price){
-        return quantity*price;
+    public int calculateTotalPayment(){
+        return quantity* this.getFood().getPrice();
     }
 }
 
