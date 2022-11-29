@@ -223,11 +223,12 @@ function getPaymentById($connection, $payment_id)
     return json_encode($response);
 }
 
-function getOrderByUser($connection, $user_id)
+function getOrderByCustomer($connection, $user_id)
 {
     $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
     Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
-    Orders.user_id, Orders.orderDate FROM Orders
+    Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.active FROM Orders
+    INNER JOIN Users ON Orders.user_id = Users.user_id
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
     INNER JOIN Food ON OrderDetail.food_id = Food.food_id WHERE Orders.user_id = $user_id");
 
@@ -246,6 +247,10 @@ function getOrderByUser($connection, $user_id)
             $order["total"] = $r["total"];
             $order["status_id"] = $r["status_id"];
             $order["user_id"] = $r["user_id"];
+            $order["firstname"] = $r["firstname"];
+            $order["lastname"] = $r["lastname"];
+            $order["email"] = $r["email"];
+            $order["active"] = $r["active"];
             $order["orderDate"] = $r["orderDate"];
             array_push($response["data"], $order);
         }
@@ -265,7 +270,8 @@ function getOrderMerchant($connection, $merchant_id)
 {
     $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
     Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
-    Orders.user_id, Orders.orderDate FROM Orders
+    Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.active FROM Orders
+    INNER JOIN Users ON Orders.user_id = Users.user_id
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
     INNER JOIN Food ON OrderDetail.food_id = Food.food_id WHERE Food.merchant_id = $merchant_id");
 
@@ -284,6 +290,10 @@ function getOrderMerchant($connection, $merchant_id)
             $order["total"] = $r["total"];
             $order["status_id"] = $r["status_id"];
             $order["user_id"] = $r["user_id"];
+            $order["firstname"] = $r["firstname"];
+            $order["lastname"] = $r["lastname"];
+            $order["email"] = $r["email"];
+            $order["active"] = $r["active"];
             $order["orderDate"] = $r["orderDate"];
             array_push($response["data"], $order);
         }
@@ -372,7 +382,7 @@ function createOrder($connection, $userid, $food, $quantity, $proof)
             $totalPrice = $price * $quantity[$i];
         }
         mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${serverdir}')");
-        return getOrderByUser($connection, $userid);
+        return getOrderByCustomer($connection, $userid);
     } catch (Exception $e) {
         $response["success"] = 0;
         $response["message"] = $e->getMessage();

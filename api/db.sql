@@ -153,7 +153,7 @@ VALUES (
         "Tempe Mendoan",
         "2000",
         "images/1.jpg",
-        1,
+        4,
         TRUE
     );
 INSERT INTO Food
@@ -162,7 +162,7 @@ VALUES (
         "Bakso kiloan",
         "9000",
         "images/2.jpg",
-        2,
+        5,
         TRUE
     );
 INSERT INTO Food
@@ -171,7 +171,7 @@ VALUES (
         "Nasi Rebus",
         "15000",
         "images/3.jpg",
-        2,
+        4,
         TRUE
     );
 

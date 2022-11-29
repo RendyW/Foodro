@@ -248,6 +248,10 @@ public class APIHandler {
 //                        a.getInt("total")
 //                        a.getInt("status_id")
 //                        a.getInt("user_id")
+//                        a.getString("firstname")
+//                        a.getString("lastname")
+//                        a.getString("email")
+//                        a.getInt("active")
 //                        a.getInt("orderDate")
 //                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                        Date birthDate = sdf.parse(a.getString("orderDate"));
@@ -276,9 +280,9 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getOrderByUser(Context context, int user_id) {
+    public void getOrderByCustomer(Context context, int user_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderByUser.php", new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderByCustomer.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
@@ -299,6 +303,10 @@ public class APIHandler {
 //                        a.getInt("total")
 //                        a.getInt("status_id")
 //                        a.getInt("user_id")
+//                        a.getString("firstname")
+//                        a.getString("lastname")
+//                        a.getString("email")
+//                        a.getInt("active")
 //                        a.getInt("orderDate")
 //                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                        Date birthDate = sdf.parse(a.getString("orderDate"));
