@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeNavigationFragment());
                     break;
                 case R.id.order:
-                    replaceFragment(new OrderNavigationFragment());
+                    replaceFragment(new UploadFragment());
+//                    replaceFragment(new OrderNavigationFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileNavigationFragment());
