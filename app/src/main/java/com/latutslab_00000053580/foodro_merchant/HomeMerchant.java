@@ -1,6 +1,7 @@
 package com.latutslab_00000053580.foodro_merchant;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.R;
 import com.latutslab_00000053580.recycler.OrderAdapter;
+import com.latutslab_00000053580.sqlite.DbUser;
 
 import java.util.ArrayList;
 
@@ -85,7 +87,13 @@ public class HomeMerchant extends Fragment {
 
         RecyclerView merchantRV = view.findViewById(R.id.orderRV);
 
+        DbUser dbuser = new DbUser(getContext());
+        Cursor cursor = dbuser.getUser();
+
+        int userid = cursor.getInt(0);
+
         APIHandler api = new APIHandler();
+        api.getOrderMerchant(getContext(), userid, false);
 
 
         //nyimpen semua order

@@ -148,6 +148,8 @@ public class APIHandler {
                 params.put("lastname", lastname);
                 params.put("email", email);
                 params.put("password", password);
+                params.put("image", "");
+
 
 
                 return params;
@@ -209,7 +211,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getOrderMerchant(Context context, int merchant_id, boolean isInit) {
+    public List<> getOrderMerchant(Context context, int merchant_id, boolean isInit) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
             @Override
