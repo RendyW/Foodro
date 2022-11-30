@@ -41,8 +41,43 @@ function getAllFood($connection)
             $food = array();
             $food["food_id"] = $r["food_id"];
             $food["food_name"] = $r["food_name"];
+            $food["food_price"] = $r["food_price"];
             $food["food_image"] = $r["food_image"];
+            $food["merchant_id"] = $r["merchant_id"];
             $food["listed"] = $r["listed"];
+            array_push($response["data"], $food);
+        }
+        $response["success"] = 1;
+        $response["message"] = "OK";
+        http_response_code(200);
+        return json_encode($response);
+    }
+    $response["success"] = 0;
+    $response["message"] = "No data available";
+    http_response_code(404);
+    return json_encode($response);
+}
+
+function getAllFoodMerchant($connection)
+{
+    $result = mysqli_query($connection, "SELECT food_id, food_name, food_price, food_image, merchant_id, listed, firstname, lastname, email, active FROM Food 
+    INNER JOIN Users ON Food.merchant_id = Users.user_id");
+    $response = array();
+
+    if (mysqli_num_rows($result) > 0) {
+        $response["data"] = array();
+        while ($r = mysqli_fetch_array($result)) {
+            $food = array();
+            $food["food_id"] = $r["food_id"];
+            $food["food_name"] = $r["food_name"];
+            $food["food_price"] = $r["food_price"];
+            $food["food_image"] = $r["food_image"];
+            $food["merchant_id"] = $r["merchant_id"];
+            $food["listed"] = $r["listed"];
+            $food["firstname"] = $r["firstname"];
+            $food["lastname"] = $r["lastname"];
+            $food["email"] = $r["email"];
+            $food["active"] = $r["active"];
             array_push($response["data"], $food);
         }
         $response["success"] = 1;
@@ -58,7 +93,7 @@ function getAllFood($connection)
 
 function getUserById($connection, $user_id)
 {
-    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,role_id FROM Users WHERE user_id=$user_id");
+    $result = mysqli_query($connection, "SELECT user_id,firstname,lastname,email,role_id,active FROM Users WHERE user_id=$user_id");
     $response = array();
     if (mysqli_num_rows($result) > 0) {
         $response["data"] = array();
@@ -144,6 +179,7 @@ function getOrderDetailById($connection, $order_id)
         while ($r = mysqli_fetch_array($result)) {
             $detail = array();
             $detail["order_id"] = $r["order_id"];
+            $detail["status_id"] = $r["status_id"];
             $detail["food_id"] = $r["food_id"];
             $detail["quantity"] = $r["quantity"];
             $detail["total"] = $r["total"];
@@ -171,7 +207,7 @@ function getPaymentById($connection, $payment_id)
         $payment = array();
         $payment["payment_id"] = $r["payment_id"];
         $payment["totalPayment"] = $r["totalPayment"];
-        $payment["total"] = $r["total"];
+        $payment["proofImage"] = $r["proofImage"];
         array_push($response["data"], $payment);
         $response["success"] = 1;
         $response["message"] = "OK";
@@ -186,7 +222,7 @@ function getPaymentById($connection, $payment_id)
 
 function getOrderByUser($connection, $user_id)
 {
-    $result = mysqli_query($connection, "SELECT Food.merchant_id, Food.food_id, Food.food_name, 
+    $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
     Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
     Orders.user_id, Orders.orderDate FROM Orders
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
@@ -198,6 +234,7 @@ function getOrderByUser($connection, $user_id)
         $response["data"] = array();
         while ($r = mysqli_fetch_array($result)) {
             $order = array();
+            $order["order_id"] = $r["order_id"];
             $order["merchant_id"] = $r["merchant_id"];
             $order["food_id"] = $r["food_id"];
             $order["food_name"] = $r["food_name"];
@@ -223,7 +260,7 @@ function getOrderByUser($connection, $user_id)
 // To get all order received by a merchant
 function getOrderMerchant($connection, $merchant_id)
 {
-    $result = mysqli_query($connection, "SELECT Food.merchant_id, Food.food_id, Food.food_name, 
+    $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
     Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
     Orders.user_id, Orders.orderDate FROM Orders
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
@@ -235,6 +272,7 @@ function getOrderMerchant($connection, $merchant_id)
         $response["data"] = array();
         while ($r = mysqli_fetch_array($result)) {
             $order = array();
+            $order["order_id"] = $r["order_id"];
             $order["merchant_id"] = $r["merchant_id"];
             $order["food_id"] = $r["food_id"];
             $order["food_name"] = $r["food_name"];
@@ -291,7 +329,7 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 {
     $password = password_hash($password, PASSWORD_DEFAULT);
     try {
-        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?)");
+        $q = $connection->prepare("INSERT INTO Users VALUES (NULL, ?, ?, ?, ?, ?, TRUE)");
         $q->bind_param("ssssi", $firstname, $lastname, $password, $email, $role);
         $q->execute();
         return getUserById($connection, $q->insert_id);
@@ -307,19 +345,16 @@ function register($connection, $role, $firstname, $lastname, $password, $email)
 function createOrder($connection, $userid, $food, $quantity, $proof)
 {
     try {
-        mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, 1, NOW())");
+        mysqli_query($connection, "INSERT INTO Orders VALUES (NULL, ${userid}, NOW())");
         $totalPrice = 0;
         for ($i = 0; $i < count($food); $i++) {
             $price = (int)json_decode(getFoodById($connection, (int)$food[$i]))->data[0]->food_price;
             mysqli_query($connection, "INSERT INTO OrderDetail VALUES (LAST_INSERT_ID(), 1, $food[$i], $quantity[$i], $price*$quantity[$i])");
             $totalPrice = $price * $quantity[$i];
         }
-        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, ${proof})");
-        $response["success"] = 1;
-        $response["message"] = "Success";
-        $response["code"] = "200";
-        http_response_code(200);
-        return json_encode($response);
+        mysqli_query($connection, "INSERT INTO Payment VALUES (LAST_INSERT_ID(), ${totalPrice}, '${proof}')");
+
+        return getOrderByUser($connection, $userid);
     } catch (Exception $e) {
         $response["success"] = 0;
         $response["message"] = $e->getMessage();
@@ -336,11 +371,8 @@ function createFood($connection, $food_name, $food_price, $food_image, $merchant
         $q->bind_param("sisi", $food_name, $food_price, $food_image, $merchant_id);
         $q->execute();
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
-        $response["success"] = 1;
-        $response["message"] = "Success";
-        $response["code"] = "200";
-        http_response_code(200);
-        return json_encode($response);
+
+        return getFoodById($connection, $q->insert_id);
     } catch (Exception $e) {
         $response["success"] = 0;
         $response["message"] = $e->getMessage();
@@ -360,11 +392,7 @@ function updateOrderStatus($connection, $order_id, $food_id, $newStatus)
         mysqli_query($connection, "UPDATE OrderDetail SET status_id = $newStatus 
         WHERE order_id = $order_id AND food_id = $food_id AND status_id = ($newStatus-1)");
         if (mysqli_affected_rows($connection)) {
-            $response["success"] = 1;
-            $response["message"] = "OK";
-            $response["code"] = "200";
-            http_response_code(200);
-            return json_encode($response);
+            return getOrderDetailById($connection, $order_id);
         } else {
             throw new Exception("No data updated", 404);
         }
@@ -389,11 +417,7 @@ function updateFood($connection, $food_id, $food_name, $food_price, $food_image)
         $q->execute();
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
         if ($q->affected_rows > 0) {
-            $response["success"] = 1;
-            $response["message"] = "Success";
-            $response["code"] = "200";
-            http_response_code(200);
-            return json_encode($response);
+            return getFoodById($connection, $food_id);
         } else {
             throw new Exception("No data updated", 520);
         }
@@ -411,11 +435,7 @@ function reactivateUser($connection, $user_id)
     try {
         mysqli_query($connection, "UPDATE users SET active = TRUE WHERE user_id = $user_id AND active = FALSE");
         if (mysqli_affected_rows($connection)) {
-            $response["success"] = 1;
-            $response["message"] = "OK";
-            $response["code"] = "200";
-            http_response_code(200);
-            return json_encode($response);
+            return getFoodById($connection, $user_id);
         } else {
             throw new Exception("No data updated", 404);
         }
