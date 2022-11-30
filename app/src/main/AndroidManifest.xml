@@ -11,12 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodro_Home">
-        <activity android:name=".OurWebsite"></activity>
+        <activity android:name="com.latutslab_00000053580.foodro_user.BasketUser"></activity>
+        <activity android:name="com.latutslab_00000053580.foodro_user.DetailMenuUser" />
+        <activity android:name="com.latutslab_00000053580.foodro_user.MenuUser" />
+        <activity android:name=".OurWebsite" />
         <activity
             android:name=".AboutUs"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".Account_Setup" />
         <activity android:name=".Welcome_Screen">
             <intent-filter>
