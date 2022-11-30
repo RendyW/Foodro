@@ -64,6 +64,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardLocation"
                 android:layout_width="0dp"
                 android:layout_height="125dp"
                 android:layout_margin="12dp"
@@ -79,7 +80,7 @@
                         android:layout_width="70dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/ic_baseline_explore_24" />
 
                     <TextView
@@ -96,6 +97,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardAbout"
                 android:layout_width="0dp"
                 android:layout_height="125dp"
                 android:layout_margin="12dp"
@@ -111,7 +113,7 @@
                         android:layout_width="70dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:src="@drawable/ic_baseline_supervised_user_circle_24" />
 
                     <TextView

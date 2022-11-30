@@ -93,7 +93,7 @@ public class HomeMerchant extends Fragment {
         int userid = cursor.getInt(0);
 
         APIHandler api = new APIHandler();
-        api.getOrderMerchant(getContext(), userid, false);
+        //api.getOrderMerchant(getContext(), userid, false);
 
 
         //nyimpen semua order

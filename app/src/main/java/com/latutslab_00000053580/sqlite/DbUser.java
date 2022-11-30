@@ -41,6 +41,7 @@ public class DbUser {
         values.put(db.USER_FIRSTNAME, user.getFirstname());
         values.put(db.USER_LASTNAME, user.getLastname());
         values.put(db.USER_ROLE, user.getRole());
+        values.put(db.USER_IMG, user.getImage());
         database.insert(db.TABLE_USERS, null, values);
     }
 
@@ -71,7 +72,9 @@ public class DbUser {
     }
 
     public Cursor getUser() {
-        Cursor cursor = this.database.query(db.TABLE_USERS, new String[]{db.USER_ID, db.USER_EMAIL, db.USER_FIRSTNAME, db.USER_LASTNAME, db.USER_ROLE}, null, null, null, null, null);
+
+        // TODO add image
+        Cursor cursor = this.database.query(db.TABLE_USERS, new String[]{db.USER_ID, db.USER_EMAIL, db.USER_FIRSTNAME, db.USER_LASTNAME, db.USER_ROLE, db.USER_IMG}, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }

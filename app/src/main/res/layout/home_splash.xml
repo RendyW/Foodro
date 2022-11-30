@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OurWebsite">
+    tools:context=".SplashActivity">
 
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="236dp"
-        tools:layout_editor_absoluteY="257dp" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/splash_screen" />
 </androidx.constraintlayout.widget.ConstraintLayout>

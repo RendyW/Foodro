@@ -23,13 +23,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String USER_FIRSTNAME = "firstname";
     public static final String USER_LASTNAME = "lastname";
     public static final String USER_ROLE = "role_id";
+    public static final String USER_IMG = "image";
     public static final String SQL_TABLE_USERS = " CREATE TABLE " + TABLE_USERS
             + " ( "
             + USER_ID + " INTEGER PRIMARY KEY, "
             + USER_EMAIL + " TEXT,"
             + USER_FIRSTNAME + " TEXT,"
             + USER_LASTNAME + " TEXT,"
-            + USER_ROLE + " INTEGER"
+            + USER_ROLE + " INTEGER,"
+            + USER_IMG + " TEXT"
             + " ) ";
 
     //CART TABLE
