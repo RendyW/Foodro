@@ -2,7 +2,6 @@ package com.latutslab_00000053580.foodro;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -179,8 +178,6 @@ public class APIHandler {
                     //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     ArrayList<User> users = new ArrayList<User>();
-                    SharedPreferences sp = context.getSharedPreferences("merchantList", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor myEdit = sp.edit();
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = data.getJSONObject(i);
 
@@ -324,40 +321,128 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getOrderByCustomer(Context context, int user_id) {
+    public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
+
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderByCustomer.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+                ArrayList<Order> orders = new ArrayList<Order>();
+                try {
+                    Log.i("JALAN", "2");
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject a = data.getJSONObject(i);
+
+                        ArrayList<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+                        JSONArray details = a.getJSONArray("orderDetail");
+
+                        for (int j = 0; j < details.length(); j++) {
+                            JSONObject detail = details.getJSONObject(j);
+                            JSONObject foodJson = detail.getJSONObject("food");
+                            Food food = new Food(
+                                    foodJson.getInt("food_id"),
+                                    foodJson.getString("food_name"),
+                                    foodJson.getInt("food_price"),
+                                    foodJson.getString("food_image"),
+                                    foodJson.getInt("merchant_id"),
+                                    foodJson.getInt("listed")
+                            );
+                            orderDetails.add(new OrderDetail(
+                                    a.getInt("order_id"),
+                                    food,
+                                    detail.getInt("quantity")
+                            ));
+                        }
+                        JSONObject user = a.getJSONObject("user");
+                        User customer = new User(
+                                user.getInt("user_id"),
+                                user.getString("firstname"),
+                                user.getString("lastname"),
+                                user.getString("email"),
+                                1,
+                                user.getInt("active"),
+                                null
+                        );
+
+                        orders.add(new Order(a.getInt("order_id"),
+                                customer,
+                                a.getString("orderDate"),
+                                orderDetails
+                        ));
+                    }
+//                    if(isInit){
+//                        Intent i = new Intent().setClass(context, MainActivity.class);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//                        context.startActivity(i);
+//                    }
+                    OrderAdapter orderAdapter = new OrderAdapter(orders);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                    orderRV.setLayoutManager(linearLayoutManager);
+                    orderRV.setAdapter(orderAdapter);
+
+                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                    Log.i("VOLLEYDONE", "DONE");
+                } catch (JSONException e) {
+                    Log.i("JALAN", "3");
+                    e.printStackTrace();
+                    Log.i("VOLLEYERROCATCH", e.toString());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(sr);
+    }
+
+    public void getFoodByMerchant(Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
                     //String success = respObj.getString("success");
-                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject data = respObj.getJSONObject("data");
+                    JSONArray foodJson = data.getJSONArray("food");
+                    JSONObject merchantJson = respObj.getJSONObject("merchant");
+                    ArrayList<Food> foods  = new ArrayList<Food>();
                     for (int i = 0; i < data.length(); i++) {
-                        JSONObject a = data.getJSONObject(i);
+                        JSONObject a = foodJson.getJSONObject(i);
 
-
-//                        TODO: put these into adapter for recycler
-//                        Order order = new Order(a.getInt("order_id"), )
-//
-//                        a.getInt("merchant_id")
-//                        a.getInt("food_id")
-//                        a.getString("food_name")
-//                        a.getInt("food_price")
-//                        a.getInt("quantity")
-//                        a.getInt("total")
-//                        a.getInt("status_id")
-//                        a.getInt("user_id")
-//                        a.getString("firstname")
-//                        a.getString("lastname")
-//                        a.getString("email")
-//                        a.getInt("active")
-//                        a.getInt("orderDate")
-//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                        Date birthDate = sdf.parse(a.getString("orderDate"));
-//
+//                        TODO: masukin ke adapter recyclerview
+                        foods.add(
+                                new Food(
+                                        a.getInt("food_id"),
+                                        a.getString("food_name"),
+                                        a.getInt("food_price"),
+                                        a.getString("food_image"),
+                                        a.getInt("merchant_id"),
+                                        a.getInt("listed")
+                                )
+                        );
                     }
+                    // klo butu aja
+                    User merchant = new User(
+                            merchantJson.getInt("user_id"),
+                            merchantJson.getString("firstname"),
+                            merchantJson.getString("lastname"),
+                            merchantJson.getString("email"),
+                            2,
+                            merchantJson.getInt("active"),
+                            merchantJson.getString("image")
+                    );
+                    
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {
@@ -375,6 +460,7 @@ public class APIHandler {
         });
         queue.add(sr);
     }
+
 
     public void createFood(Context context, int role, String name, int price, String image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -487,102 +573,6 @@ public class APIHandler {
         };
         queue.add(sr);
     }
-//    public List<User> getAllUser(Context context) {
-//        RequestQueue queue = Volley.newRequestQueue(context);
-//        List<User> users = new ArrayList<>();
-//        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllUser.php", new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
-//                try {
-//                    JSONObject respObj = new JSONObject(response);
-//                    //String success = respObj.getString("success");
-//                    JSONArray data = respObj.getJSONArray("data");
-//                    for (int i = 0; i < data.length(); i++) {
-//                        JSONObject a = data.getJSONObject(i);
-//
-//                        if(a.getInt("role_id") == 1){
-//                            users.add(new User(
-//                                    a.getInt("user_id"),
-//                                    a.getString("firstname"),
-//                                    a.getString("lastname"),
-//                                    a.getString("email"),
-//                                    User.Role.CUSTOMER,
-//                                    a.getInt("active")
-//                            ));
-//                        }else if (a.getInt("role_id") == 2){
-//                            users.add(new User(
-//                                    a.getInt("user_id"),
-//                                    a.getString("firstname"),
-//                                    a.getString("lastname"),
-//                                    a.getString("email"),
-//                                    User.Role.MERCHANT,
-//                                    a.getInt("active")
-//                            ));
-//                        }
-//                    }
-//                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-//                    Log.i("VOLLEYDONE", users.get(0).getFirstname());
-//                    Log.i("VOLLEYDONE", "DONE");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Log.i("VOLLEYERROCATCH", e.toString());
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        queue.add(sr);
-//        return users;
-//    }
-//
-//    public List<Food> getAllFood(Context context, List<User> users) {
-//        RequestQueue queue = Volley.newRequestQueue(context);
-//        List<Food> foods = new ArrayList<>();
-//        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllFood.php", new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Toast.makeText(context, "Loading Food", Toast.LENGTH_SHORT).show();
-//                try {
-//                    JSONObject respObj = new JSONObject(response);
-//                    //String success = respObj.getString("success");
-//                    JSONArray data = respObj.getJSONArray("data");
-//                    for (int i = 0; i < data.length(); i++) {
-//                        JSONObject a = data.getJSONObject(i);
-//                        foods.add(new Food());
-//                        foods.get(i).setId(a.getInt("food_id"));
-//                        foods.get(i).setName(a.getString("food_name"));
-//                        foods.get(i).setPrice(a.getInt("food_price"));
-//                        foods.get(i).setImage(a.getString("food_image"));
-//                        foods.get(i).setListed(a.getInt("listed"));
-//
-//                        int merchid = a.getInt("merchant_id");
-//                        for (User users1 : users){
-//                            if (users1.getId() == merchid){
-//                                foods.get(i).setMerchant(users1);
-//                            }
-//                        }
-//
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        queue.add(sr);
-//        return foods;
-//    }
 
 }
 
