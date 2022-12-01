@@ -86,41 +86,40 @@ public class HomeMerchant extends Fragment {
         View view = inflater.inflate(R.layout.merchant_home, container, false);
 
         RecyclerView merchantRV = view.findViewById(R.id.orderRV);
+        APIHandler handler = new APIHandler();
+        handler.getOrderMerchant(getContext(), 5, merchantRV);
+//        DbUser dbuser = new DbUser(getContext());
+//        Cursor cursor = dbuser.getUser();
+//
+//        int userid = cursor.getInt(0);
 
-        DbUser dbuser = new DbUser(getContext());
-        Cursor cursor = dbuser.getUser();
-
-        int userid = cursor.getInt(0);
-
-        APIHandler api = new APIHandler();
-        //api.getOrderMerchant(getContext(), userid, false);
 
 
         //nyimpen semua order
-        ArrayList<Order> orderArrayList = new ArrayList<Order>();
+//        ArrayList<Order> orderArrayList = new ArrayList<Order>();
 
         //nah disini lu nanti untuk setiap order, lu loop data makannya + quantity yang dipesen
-        ArrayList<Food> foodArrayList = new ArrayList<Food>();
-        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
-        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
+//        ArrayList<Food> foodArrayList = new ArrayList<Food>();
+//        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", 0 ));
+//        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", 0 ));
 
-        int[] quantity = new int[] {1, 2};
+//        int[] quantity = new int[] {1, 2};
 
         //disini ambil data buyer atau user yang beli
-        User user = new User(1, "Uccok", "Siregar", "12", 1, 1, "https://tinypng.com/images/social/website.jpg");
+//        User user = new User(1, "Uccok", "Siregar", "12", 1, 1, "https://tinypng.com/images/social/website.jpg");
 
 
         //diakhir loop masukin data order kedalem array list order
 
 //        Locale locale = new Locale("id", "ID");
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss OOOO", locale);
-        orderArrayList.add(new Order(1, user, "15/10/2003", foodArrayList, quantity));
+//        orderArrayList.add(new Order(1, user, "15/10/2003", foodArrayList, quantity));
 
         //ini gk usah disentuh sih yang kebawah mah
-        OrderAdapter orderAdapter = new OrderAdapter(orderArrayList);
-        LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        merchantRV.setLayoutManager(linearLayoutManager);
-        merchantRV.setAdapter(orderAdapter);
+//        OrderAdapter orderAdapter = new OrderAdapter(orderArrayList);
+//        LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+//        merchantRV.setLayoutManager(linearLayoutManager);
+//        merchantRV.setAdapter(orderAdapter);
 
         // Inflate the layout for this fragment
         return view;

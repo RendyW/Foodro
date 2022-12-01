@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import com.latutslab_00000053580.foodro_home.databinding.HomeMainBinding;
 import com.latutslab_00000053580.foodro_merchant.HomeMerchant;
@@ -28,15 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            DbUser dbuser = new DbUser(getBaseContext());
-            dbuser.open();
-            Cursor cursor = dbuser.getUser();
-
-            int role = cursor.getInt(4);
             switch (item.getItemId()){
                 case R.id.home:
-                    DbUser dbUser = new DbUser(getBaseContext());
-                    switch(role){
+                    int id = intent.getIntExtra("ROLE", -1);
+                    id = 2; // TODO: REMOVE after
+                    switch(id){
                         case 1:
                             replaceFragment(new HomeUser());
                             break;
@@ -44,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                             replaceFragment(new HomeMerchant());
                             break;
                         default:
+                            DbUser dbUser = new DbUser(getBaseContext());
                             dbUser.logout();
                     }
                     break;

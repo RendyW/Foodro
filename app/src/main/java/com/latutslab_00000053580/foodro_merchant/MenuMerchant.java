@@ -72,8 +72,8 @@ public class MenuMerchant extends Fragment {
         RecyclerView menuRV = view.findViewById(R.id.menuMerchantRV);
         ArrayList<Food> foodArrayList = new ArrayList<Food>();
 
-        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
-        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
+//        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
+//        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
 
         MenuAdapter menuAdapter = new MenuAdapter(foodArrayList);
 

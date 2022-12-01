@@ -55,7 +55,6 @@ public class Account_Setup extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = 1;
 
                 handler.login(getBaseContext(),inputUsername.getText().toString(), inputPass.getText().toString());
 //                Log.i("USER", user.getEmail());

@@ -19,6 +19,7 @@ CREATE TABLE Users (
     lastname VARCHAR(100) NOT NULL,
     password CHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    image VARCHAR(255),
     role_id INT NOT NULL,
     active BOOLEAN NOT NULL,
     PRIMARY KEY (user_id),
@@ -80,6 +81,7 @@ VALUES (
         "last",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a.com",
+        NULL,
         1,
         TRUE
     );
@@ -90,6 +92,7 @@ VALUES (
         "last2",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a1.com",
+        NULL,
         1,
         TRUE
     );
@@ -100,6 +103,7 @@ VALUES (
         "last3",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a2.com",
+        NULL,
         1,
         TRUE
     );
@@ -110,6 +114,7 @@ VALUES (
         "last4",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@merchant.com",
+        NULL,
         2,
         TRUE
     );
@@ -120,6 +125,7 @@ VALUES (
         "last5",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@merchant2.com",
+        NULL,
         2,
         TRUE
     );
@@ -130,6 +136,7 @@ VALUES (
         "last12",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@admin.com",
+        NULL,
         3,
         TRUE
     );
@@ -146,7 +153,7 @@ VALUES (
         "Tempe Mendoan",
         "2000",
         "images/1.jpg",
-        1,
+        4,
         TRUE
     );
 INSERT INTO Food
@@ -155,7 +162,7 @@ VALUES (
         "Bakso kiloan",
         "9000",
         "images/2.jpg",
-        2,
+        5,
         TRUE
     );
 INSERT INTO Food
@@ -164,7 +171,7 @@ VALUES (
         "Nasi Rebus",
         "15000",
         "images/3.jpg",
-        2,
+        4,
         TRUE
     );
 
