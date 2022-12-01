@@ -31,6 +31,35 @@ function getAllUser($connection)
     return json_encode($response);
 }
 
+function getAllMerchant($connection)
+{
+    $result = mysqli_query($connection, "SELECT * FROM Users WHERE role_id = 2");
+    $response = array();
+
+    if (mysqli_num_rows($result) > 0) {
+        $response["data"] = array();
+        while ($r = mysqli_fetch_array($result)) {
+            $user = array();
+            $user["user_id"] = $r["user_id"];
+            $user["firstname"] = $r["firstname"];
+            $user["lastname"] = $r["lastname"];
+            $user["email"] = $r["email"];
+            $user["image"] = $r["image"];
+            $user["role_id"] = $r["role_id"];
+            $user["active"] = $r["active"];
+            array_push($response["data"], $user);
+        }
+        $response["success"] = 1;
+        $response["message"] = "OK";
+        http_response_code(200);
+        return json_encode($response);
+    }
+    $response["success"] = 0;
+    $response["message"] = "No data available";
+    http_response_code(404);
+    return json_encode($response);
+}
+
 function getAllFood($connection)
 {
     $result = mysqli_query($connection, "SELECT * FROM Food");
@@ -108,6 +137,7 @@ function getUserById($connection, $user_id)
         $user["image"] = $r["image"];
         $user["role_id"] = $r["role_id"];
         $user["active"] = $r["active"];
+
         array_push($response["data"], $user);
         $response["success"] = 1;
         $response["message"] = "OK";
@@ -226,34 +256,60 @@ function getPaymentById($connection, $payment_id)
 function getOrderByCustomer($connection, $user_id)
 {
     $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
-    Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
-    Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.active FROM Orders
-    INNER JOIN Users ON Orders.user_id = Users.user_id
+    Food.food_price, Food.listed, Food.food_image, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
+    Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.image, Users.active FROM Orders
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
-    INNER JOIN Food ON OrderDetail.food_id = Food.food_id WHERE Orders.user_id = $user_id");
+    INNER JOIN Food ON OrderDetail.food_id = Food.food_id 
+    INNER JOIN Users ON Food.merchant_id = Users.user_id WHERE Orders.user_id = $user_id");
 
     $response = array();
 
     if (mysqli_num_rows($result) > 0) {
         $response["data"] = array();
+        $id = array();
+        $order = array();
         while ($r = mysqli_fetch_array($result)) {
-            $order = array();
-            $order["order_id"] = $r["order_id"];
-            $order["merchant_id"] = $r["merchant_id"];
-            $order["food_id"] = $r["food_id"];
-            $order["food_name"] = $r["food_name"];
-            $order["food_price"] = $r["food_price"];
-            $order["quantity"] = $r["quantity"];
-            $order["total"] = $r["total"];
-            $order["status_id"] = $r["status_id"];
-            $order["user_id"] = $r["user_id"];
-            $order["firstname"] = $r["firstname"];
-            $order["lastname"] = $r["lastname"];
-            $order["email"] = $r["email"];
-            $order["active"] = $r["active"];
-            $order["orderDate"] = $r["orderDate"];
-            array_push($response["data"], $order);
+            if (!in_array($r["order_id"], $id)) {
+                array_push($id, $r["order_id"]);
+                if (count($id) > 1) {
+                    array_push($response["data"], $order);
+                }
+                $order = array();
+                $order["order_id"] = $r["order_id"];
+                $order["orderDate"] = $r["orderDate"];
+                $order["merchant"] = [
+                    "user_id" => $r["user_id"],
+                    "firstname" => $r["firstname"],
+                    "lastname" => $r["lastname"],
+                    "email" => $r["email"],
+                    "active" => $r["active"],
+                    "image" => $r["image"]
+                ];
+                $order["orderDetail"] = array();
+            }
+            $orderDetail = array();
+            $orderDetail["food"] = [
+                "merchant_id"  => $r["merchant_id"],
+                "food_id" => $r["food_id"],
+                "food_name" => $r["food_name"],
+                "food_price" => $r["food_price"],
+                "food_image" => $r["food_image"],
+                "listed" => $r["listed"],
+
+            ];
+            $orderDetail["quantity"] = $r["quantity"];
+            $orderDetail["total"] = $r["total"];
+            $orderDetail["status_id"] = $r["status_id"];
+
+            array_push($order["orderDetail"], $orderDetail);
+            // array_push($response["data"], $order);
+
+
+            // array_push($response["data"], $temp);
+
         }
+        array_push($response["data"], $order);
+
         $response["success"] = 1;
         $response["message"] = "OK";
         http_response_code(200);
@@ -269,7 +325,7 @@ function getOrderByCustomer($connection, $user_id)
 function getOrderMerchant($connection, $merchant_id)
 {
     $result = mysqli_query($connection, "SELECT Orders.order_id, Food.merchant_id, Food.food_id, Food.food_name, 
-    Food.food_price, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
+    Food.food_price, Food.listed, Food.food_image, OrderDetail.quantity, OrderDetail.total, OrderDetail.status_id,  
     Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.active FROM Orders
     INNER JOIN Users ON Orders.user_id = Users.user_id
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
@@ -279,24 +335,49 @@ function getOrderMerchant($connection, $merchant_id)
 
     if (mysqli_num_rows($result) > 0) {
         $response["data"] = array();
+        $id = array();
+        $order = array();
         while ($r = mysqli_fetch_array($result)) {
-            $order = array();
-            $order["order_id"] = $r["order_id"];
-            $order["merchant_id"] = $r["merchant_id"];
-            $order["food_id"] = $r["food_id"];
-            $order["food_name"] = $r["food_name"];
-            $order["food_price"] = $r["food_price"];
-            $order["quantity"] = $r["quantity"];
-            $order["total"] = $r["total"];
-            $order["status_id"] = $r["status_id"];
-            $order["user_id"] = $r["user_id"];
-            $order["firstname"] = $r["firstname"];
-            $order["lastname"] = $r["lastname"];
-            $order["email"] = $r["email"];
-            $order["active"] = $r["active"];
-            $order["orderDate"] = $r["orderDate"];
-            array_push($response["data"], $order);
+            if (!in_array($r["order_id"], $id)) {
+                array_push($id, $r["order_id"]);
+                if (count($id) > 1) {
+                    array_push($response["data"], $order);
+                }
+                $order = array();
+                $order["order_id"] = $r["order_id"];
+                $order["orderDate"] = $r["orderDate"];
+                $order["user"] = [
+                    "user_id" => $r["user_id"],
+                    "firstname" => $r["firstname"],
+                    "lastname" => $r["lastname"],
+                    "email" => $r["email"],
+                    "active" => $r["active"],
+                ];
+                $order["orderDetail"] = array();
+            }
+            $orderDetail = array();
+            $orderDetail["food"] = [
+                "merchant_id"  => $r["merchant_id"],
+                "food_id" => $r["food_id"],
+                "food_name" => $r["food_name"],
+                "food_price" => $r["food_price"],
+                "food_image" => $r["food_image"],
+                "listed" => $r["listed"],
+
+            ];
+            $orderDetail["quantity"] = $r["quantity"];
+            $orderDetail["total"] = $r["total"];
+            $orderDetail["status_id"] = $r["status_id"];
+
+            array_push($order["orderDetail"], $orderDetail);
+            // array_push($response["data"], $order);
+
+
+            // array_push($response["data"], $temp);
+
         }
+        array_push($response["data"], $order);
+
         $response["success"] = 1;
         $response["message"] = "OK";
         http_response_code(200);
@@ -342,10 +423,10 @@ function register($connection, $role, $firstname, $lastname, $password, $email, 
 {
     $result = mysqli_query($connection, "SELECT MAX(user_id) FROM Users");
 
-    if($res = mysqli_fetch_array($result)){
-        $id = $res["MAX(user_id)"]+1;
-    }else{
-        $id=1;
+    if ($res = mysqli_fetch_array($result)) {
+        $id = $res["MAX(user_id)"] + 1;
+    } else {
+        $id = 1;
     }
     $serverdir = processImage($image, "/userimage", $id);
     $password = password_hash($password, PASSWORD_DEFAULT);
@@ -366,10 +447,10 @@ function register($connection, $role, $firstname, $lastname, $password, $email, 
 function createOrder($connection, $userid, $food, $quantity, $proof)
 {
     $result = mysqli_query($connection, "SELECT MAX(order_id) FROM Orders");
-    if($res = mysqli_fetch_array($result)){
-        $id = $res["MAX(order_id)"]+1;
-    }else{
-        $id=1;
+    if ($res = mysqli_fetch_array($result)) {
+        $id = $res["MAX(order_id)"] + 1;
+    } else {
+        $id = 1;
     }
     $serverdir = processImage($proof, "/proof", $id);
 
@@ -395,10 +476,10 @@ function createOrder($connection, $userid, $food, $quantity, $proof)
 function createFood($connection, $food_name, $food_price, $food_image, $merchant_id)
 {
     $result = mysqli_query($connection, "SELECT MAX(food_id) FROM Food");
-    if($res = mysqli_fetch_array($result)){
-        $id = $res["MAX(food_id)"]+1;
-    }else{
-        $id=1;
+    if ($res = mysqli_fetch_array($result)) {
+        $id = $res["MAX(food_id)"] + 1;
+    } else {
+        $id = 1;
     }
     $serverdir = processImage($food_image, "/foodimage", $id);
     try {
@@ -532,7 +613,8 @@ function deleteFood($connection, $food_id)
     }
 }
 
-function processImage($image, $path, $name){
+function processImage($image, $path, $name)
+{
     $dir = $_SERVER["DOCUMENT_ROOT"] . $path;
     if (!file_exists($dir)) {
         mkdir($dir, 0777, true);
