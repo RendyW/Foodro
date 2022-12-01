@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.home:
                     int id = intent.getIntExtra("ROLE", -1);
+                    id = 2; // TODO: REMOVE after
                     switch(id){
                         case 1:
                             replaceFragment(new HomeUser());

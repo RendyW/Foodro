@@ -5,15 +5,15 @@ public class Food {
     private String name;
     private int price;
     private String image;
-    private User merchant;
+    private int merchant_id;
     private int listed;
 
-    public Food(int id, String name, int price, String image, User merchant, int listed) {
+    public Food(int id, String name, int price, String image, int merchant_id, int listed) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
-        this.merchant = merchant;
+        this.merchant_id = merchant_id;
         this.listed = listed;
     }
 
@@ -49,12 +49,12 @@ public class Food {
         this.image = image;
     }
 
-    public User getMerchant() {
-        return merchant;
+    public int getMerchant_id() {
+        return merchant_id;
     }
 
-    public void setMerchant(User merchant) {
-        this.merchant = merchant;
+    public void setMerchant_id(int merchant_id) {
+        this.merchant_id = merchant_id;
     }
 
     public int getListed() {

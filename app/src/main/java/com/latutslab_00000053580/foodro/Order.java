@@ -7,18 +7,13 @@ public class Order {
     private int id;
     private User customer;
     private String dateTime;
-    private OrderDetail[] orderDetails;
+    private ArrayList<OrderDetail> orderDetails;
 
-    public Order(int id, User customer, String dateTime, ArrayList<Food> foods, int[] quantity){
+    public Order(int id, User customer, String dateTime, ArrayList<OrderDetail> orderDetails){
         this.id = id;
         this.customer = customer;
         this.dateTime = dateTime;
-        OrderDetail[] orderDetails1 = new OrderDetail[foods.size()];
-
-        for(int i = 0; i < foods.size(); i++){
-            orderDetails1[i] = new OrderDetail(id, foods.get(i), quantity[i]);
-        }
-        this.orderDetails = orderDetails1;
+        this.orderDetails = orderDetails;
     }
 
     public int getId() {
@@ -33,15 +28,15 @@ public class Order {
         return dateTime;
     }
 
-    public OrderDetail[] getOrderDetails() {
+    public ArrayList<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
 
     public String getOrderDetailStr(){
 
         StringBuilder orderStr = new StringBuilder();
-        for(int i=0; i<orderDetails.length; i++){
-            String orderDetail = String.format("%dx %s \n", orderDetails[i].getQuantity(), orderDetails[i].getFood().getName());
+        for(int i=0; i<orderDetails.size(); i++){
+            String orderDetail = String.format("%dx %s \n", orderDetails.get(i).getQuantity(), orderDetails.get(i).getFood().getName());
             orderStr.append(orderDetail);
         }
 
@@ -51,8 +46,8 @@ public class Order {
     public int getOrderDetailTotal(){
 
         int total=0;
-        for(int i=0; i<orderDetails.length; i++){
-            total += orderDetails[i].calculateTotalPayment();
+        for(int i=0; i<orderDetails.size(); i++){
+            total += orderDetails.get(i).calculateTotalPayment();
         }
 
         return total;
