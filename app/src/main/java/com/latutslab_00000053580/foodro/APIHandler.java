@@ -529,7 +529,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void createOrder(Context context, int userid, int[] foodsid, int[] quantity, String proof) {
+    public void createOrder(Context context, int userid, ArrayList<Integer> foodsid, ArrayList<Integer> quantity, String proof) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createOrder.php", new Response.Listener<String>() {
@@ -571,11 +571,62 @@ public class APIHandler {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", Integer.toString(userid));
-                for (int i = 0; i < foodsid.length; i++) {
-                    params.put("food_id[]", Integer.toString(foodsid[i]));
-                    params.put("quantity[]", Integer.toString(quantity[i]));
+                for (int i = 0; i < foodsid.size(); i++) {
+                    params.put("food_id[]", Integer.toString(foodsid.get(i)));
+                    params.put("quantity[]", Integer.toString(quantity.get(i)));
                 }
                 params.put("proof", proof);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
+
+    public void updateStatus(Context context, int order_id, int food_id, int newStatus) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "updateOrderStatus.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject a = data.getJSONObject(0);
+//                    TODO: Ga tau ini data diapain
+//                      $detail = array();
+//                      $detail["order_id"] = $r["order_id"];
+//                      $detail["status_id"] = $r["status_id"];
+//                      $detail["food_id"] = $r["food_id"];
+//                      $detail["quantity"] = $r["quantity"];
+//                      $detail["total"] = $r["total"];
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("order_id", Integer.toString(order_id));
+                params.put("food_id", Integer.toString(food_id));
+                params.put("status", Integer.toString(newStatus));
                 return params;
             }
 
