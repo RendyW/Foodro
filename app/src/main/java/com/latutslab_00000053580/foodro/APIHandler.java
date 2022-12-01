@@ -442,7 +442,7 @@ public class APIHandler {
                             merchantJson.getInt("active"),
                             merchantJson.getString("image")
                     );
-                    
+
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {

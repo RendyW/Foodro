@@ -19,10 +19,11 @@ public class Welcome_Screen extends AppCompatActivity {
 
         DbUser dbUser = new DbUser(getApplicationContext());
         dbUser.open();
+        // TODO: TESTING PURPOSE ONLY, buat nge log out
+        dbUser.logout();
 
         User user = dbUser.Authenticate();
 
-        dbUser.logout();
         if (user != null) {
             int role = user.getRole();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
