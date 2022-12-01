@@ -400,7 +400,22 @@ public class APIHandler {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
                 Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", Integer.toString(user_id));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
         queue.add(sr);
     }
 
@@ -462,7 +477,7 @@ public class APIHandler {
     }
 
 
-    public void createFood(Context context, int role, String name, int price, String image, int merchant_id) {
+    public void createFood(Context context, String name, int price, String image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createFood.php", new Response.Listener<String>() {
