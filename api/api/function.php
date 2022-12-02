@@ -152,19 +152,37 @@ function getUserById($connection, $user_id)
 
 function getFoodByMerchant($connection, $merchant_id)
 {
-    $result = mysqli_query($connection, "SELECT * FROM Food WHERE merchant_id='${merchant_id}'");
+    $result = mysqli_query($connection, "SELECT Food.*, user_id, firstname, lastname, email, image, active FROM Food 
+    INNER JOIN Users ON Food.merchant_id = Users.user_id WHERE merchant_id = $merchant_id");
     $response = array();
 
     if (mysqli_num_rows($result) > 0) {
-        $response["data"] = array();
+        $data = array();
         while ($r = mysqli_fetch_array($result)) {
-            $food = array();
-            $food["food_id"] = $r["food_id"];
-            $food["food_name"] = $r["food_name"];
-            $food["food_image"] = $r["food_image"];
-            $food["listed"] = $r["listed"];
-            array_push($response["data"], $food);
+            $food = [
+                "food_id" => $r["food_id"],
+                "food_name" => $r["food_name"],
+                "food_price" => $r["food_price"],
+                "food_image" => $r["food_image"],
+                "merchant_id" => $r["merchant_id"],
+                "listed" => $r["listed"],
+            ];
+            $user = [
+                "user_id" => $r["user_id"],
+                "firstname" => $r["firstname"],
+                "lastname" => $r["lastname"],
+                "email" => $r["email"],
+                "active" => $r["active"],
+                "image" => $r["image"]
+            ];
+            array_push($data, $food);
         }
+        
+        $response["data"] = [
+            "food" => $data,
+            "merchant" => $user,
+        ];
+
         $response["success"] = 1;
         $response["message"] = "OK";
         http_response_code(200);

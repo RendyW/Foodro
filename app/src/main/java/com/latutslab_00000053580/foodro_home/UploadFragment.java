@@ -54,6 +54,7 @@ public class UploadFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(photo!=null){
+                    //TODO: seting mau ngapain klo tombol upload dipencet
 //                    handler.createOrder(getContext(), userid, foods[], quantity[], encodeImage(photo));
 
                 }
