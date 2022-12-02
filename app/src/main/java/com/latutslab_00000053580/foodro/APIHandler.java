@@ -167,6 +167,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // list semua merchant
     public void getAllMerchant(Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllMerchant.php", new Response.Listener<String>() {
@@ -221,6 +222,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // list semua incoming order (diliat sama merchant)
     public void getOrderMerchant(Context context, int merchant_id, RecyclerView merchantRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
         Log.i("JALAN", "1");
@@ -322,6 +324,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // list semua order yang dibikin oleh customer (diliat sama customer)
     public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -420,6 +423,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // list semua makanan yg ada dijual merchant tertentu (diliat sama customer)
     public void getFoodByMerchant(Context context, int merchant_id, RecyclerView foodRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php?merchant_id="+merchant_id, new Response.Listener<String>() {
@@ -482,6 +486,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // bikin listing makanan baru (diliat sama merchant)
     public void createFood(Context context, String name, int price, String image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -534,6 +539,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // bikin orderan  baru (diliat sama customer)
     public void createOrder(Context context, int userid, ArrayList<Integer> foodsid, ArrayList<Integer> quantity, String proof) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -594,6 +600,10 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // update status makanan  (diliat sama merchant)
+    // 1 = pending (otomatis 1 waktu ada order masuk)
+    // 2 = ready
+    // 3 = finished
     public void updateStatus(Context context, int order_id, int food_id, int newStatus) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
