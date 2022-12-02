@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeUser());
 
-        Intent intent = getIntent();
+//        Intent intent = getIntent();
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             DbUser dbuser = new DbUser(getBaseContext());

@@ -41,7 +41,10 @@ public class APIHandler {
                 Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
-
+                    int isSuccess = respObj.getInt("success");
+                    if (isSuccess == 1){
+                        Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
+                    }
                     //String success = respObj.getString("success");
                     JSONArray data = respObj.getJSONArray("data");
                     JSONObject a = data.getJSONObject(0);
@@ -60,6 +63,7 @@ public class APIHandler {
                     dbUser.open();
                     dbUser.addUser(user);
                     Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
 
 //                    Cursor cursor = dbUser.getUser();
@@ -118,13 +122,15 @@ public class APIHandler {
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "register.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
-
+                    int isSuccess = respObj.getInt("success");
+                    if (isSuccess == 1){
+                        Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
+                    }
                     //String success = respObj.getString("success");
-                    JSONArray data = respObj.getJSONArray("data");
-                    JSONObject a = data.getJSONObject(0);
+//                    JSONArray data = respObj.getJSONArray("data");
+//                    JSONObject a = data.getJSONObject(0);
 //                    TODO: Put these data into sqlite
 //                            a.getInt("user_id"),
 //                            a.getString("firstname"),
@@ -132,6 +138,10 @@ public class APIHandler {
 //                            a.getString("email"),
 //                            a.getInt("role_id"),
 //                            a.getInt("active")
+
+                    if (isSuccess == 1){
+
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
