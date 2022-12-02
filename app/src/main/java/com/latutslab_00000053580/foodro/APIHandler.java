@@ -226,6 +226,7 @@ public class APIHandler {
         Log.i("JALAN", "1");
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
             ArrayList<Order> orders = new ArrayList<Order>();
+
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
@@ -302,7 +303,7 @@ public class APIHandler {
 //                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
                 Toast.makeText(context, "Fail to get response = " + error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() {
@@ -400,7 +401,7 @@ public class APIHandler {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
                 Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() {
@@ -419,9 +420,11 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void getFoodByMerchant(Context context) {
+    public void getFoodByMerchant(Context context, int merchant_id, RecyclerView foodRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php", new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php?merchant_id="+merchant_id, new Response.Listener<String>() {
+            ArrayList<Food> foods = new ArrayList<Food>();
+
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
@@ -431,7 +434,6 @@ public class APIHandler {
                     JSONObject data = respObj.getJSONObject("data");
                     JSONArray foodJson = data.getJSONArray("food");
                     JSONObject merchantJson = respObj.getJSONObject("merchant");
-                    ArrayList<Food> foods  = new ArrayList<Food>();
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = foodJson.getJSONObject(i);
 
@@ -464,7 +466,11 @@ public class APIHandler {
                     e.printStackTrace();
                     Log.i("VOLLEYERROCATCH", e.toString());
                 }
-
+                // TODO: seting recyclerviewnya
+//                OrderAdapter orderAdapter = new OrderAdapter(foods);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//                foodRV.setLayoutManager(linearLayoutManager);
+//                foodRV.setAdapter(orderAdapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -475,7 +481,6 @@ public class APIHandler {
         });
         queue.add(sr);
     }
-
 
     public void createFood(Context context, String name, int price, String image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
