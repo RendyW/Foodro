@@ -71,6 +71,18 @@ public class DbUser {
         }
     }
 
+    public String getName(){
+        String query = String.format("SELECT %s, %s FROM %S LIMIT 1", db.USER_FIRSTNAME, db.USER_LASTNAME, db.TABLE_USERS);
+        Cursor cursor = database.rawQuery(query, null);
+        return String.format("%s %s",cursor.getString(0), cursor.getString(1));
+    }
+
+    public int getRole(){
+        String query = String.format("SELECT %s FROM %S LIMIT 1", db.USER_ROLE, db.TABLE_USERS);
+        Cursor cursor = database.rawQuery(query, null);
+        return cursor.getInt(0);
+    }
+
     public Cursor getUser() {
 
         // TODO add image

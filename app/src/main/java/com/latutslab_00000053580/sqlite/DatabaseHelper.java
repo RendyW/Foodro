@@ -38,11 +38,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //TABLE NAME
     public static final String TABLE_CART = "carts";
     public static final String CART_ITEM_ID = "itemID";
+    public static final String CART_ITEM_NAME = "name";
+    public static final String CART_ITEM_PRICE = "price";
     public static final String CART_QUANTITY = "quantity";
+    public static final String CART_IMAGE = "image";
     public static final String SQL_TABLE_CART = " CREATE TABLE " + TABLE_CART
             + " ( "
             + CART_ITEM_ID + " INTEGER PRIMARY KEY, "
-            + CART_QUANTITY + " INTEGER "
+            + CART_QUANTITY + " INTEGER, "
+            + CART_ITEM_NAME + " TEXT, "
+            + CART_ITEM_PRICE + "INTEGER, "
+            + CART_IMAGE + "TEXT "
             + " ) ";
 
 

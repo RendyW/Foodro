@@ -61,7 +61,7 @@
                     android:background="@drawable/ic_baseline_remove_circle_24" />
 
                 <TextView
-                    android:id="@+id/txtQuantity"
+                    android:id="@+id/basketQty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
