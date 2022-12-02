@@ -1,7 +1,9 @@
 package com.latutslab_00000053580.foodro_home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -73,6 +75,22 @@ public class ProfileUser extends Fragment {
                 dbUser.logout();
                 dbUser.close();
                 getActivity().finish();
+            }
+        });
+
+        CardView cardAbout = (CardView) view.findViewById(R.id.cardAbout);
+        cardAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AboutUs.class));
+            }
+        });
+
+        CardView cardLoc = (CardView) view.findViewById(R.id.cardLocation);
+        cardLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MapsLocation.class));
             }
         });
 

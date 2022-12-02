@@ -28,7 +28,7 @@ public class Account_Setup extends AppCompatActivity {
 
 
         inputPass = findViewById(R.id.inputPass);
-        inputUsername = findViewById(R.id.inputUsername);
+        inputUsername = findViewById(R.id.txtFirst);
         showpassword = findViewById(R.id.showpassword);
 
         showpassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -41,11 +41,12 @@ public class Account_Setup extends AppCompatActivity {
                 }
             }
         });
+
         Button btnsignup = findViewById(R.id.signupBtn);
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Account_Setup.this, SignUp.class));
+                startActivity(new Intent(Account_Setup.this, SignUpMenu.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
