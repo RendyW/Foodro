@@ -27,7 +27,7 @@ public class Welcome_Screen extends AppCompatActivity {
         if (user != null) {
             int role = user.getRole();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
-            intent.putExtra("ROLE", role);
+//            intent.putExtra("ROLE", role);
             startActivity(intent);
 
 //            if (user.getRole() == 1) {

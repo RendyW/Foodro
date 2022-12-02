@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             DbUser dbuser = new DbUser(getBaseContext());
             dbuser.open();

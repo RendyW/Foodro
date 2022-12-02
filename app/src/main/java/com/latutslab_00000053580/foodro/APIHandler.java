@@ -59,17 +59,18 @@ public class APIHandler {
                     DbUser dbUser = new DbUser(context);
                     dbUser.open();
                     dbUser.addUser(user);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
 
 //                    Cursor cursor = dbUser.getUser();
 //                    cursor.moveToFirst();
                     // pindah activity
-                    if (user.getRole() == 1) {
-                        // TODO: Pindah activity
-                        getAllMerchant(context);
-                    } else if (user.getRole() == 2) {
-                        //pinda ke tampilan merchant
-                        getOrderMerchant(context, user.getId(), null);
-                    }
+//                    if (user.getRole() == 1) {
+//                        getAllMerchant(context);
+//                    } else if (user.getRole() == 2) {
+//                        //pinda ke tampilan merchant
+//                        getOrderMerchant(context, user.getId(), null);
+//                    }
 //                    Log.i("LOGIN", cursor.getString(1));
                 } catch (JSONException e) {
                     e.printStackTrace();
