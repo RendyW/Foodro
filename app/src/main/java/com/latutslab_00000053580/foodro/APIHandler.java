@@ -666,6 +666,7 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // delete makanan (untuk merchant)
     public void deleteFood(Context context, int food_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
