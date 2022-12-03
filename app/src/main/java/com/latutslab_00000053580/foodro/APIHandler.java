@@ -472,7 +472,7 @@ public class APIHandler {
                     JSONObject data = respObj.getJSONObject("data");
                     JSONArray foodJson = data.getJSONArray("food");
                     JSONObject merchantJson = data.getJSONObject("merchant");
-                    for (int i = 0; i < data.length(); i++) {
+                    for (int i = 0; i < foodJson.length(); i++) {
                         JSONObject a = foodJson.getJSONObject(i);
 
 //                        TODO: masukin ke adapter recyclerview
