@@ -44,7 +44,7 @@ public class APIHandler {
                 try {
                     JSONObject respObj = new JSONObject(response);
                     int isSuccess = respObj.getInt("success");
-                    if (isSuccess == 1){
+                    if (isSuccess == 1) {
                         Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                     }
                     //String success = respObj.getString("success");
@@ -65,7 +65,7 @@ public class APIHandler {
                     dbUser.open();
                     dbUser.addUser(user);
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
 
 //                    Cursor cursor = dbUser.getUser();
@@ -127,7 +127,7 @@ public class APIHandler {
                 try {
                     JSONObject respObj = new JSONObject(response);
                     int isSuccess = respObj.getInt("success");
-                    if (isSuccess == 1){
+                    if (isSuccess == 1) {
                         Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
                     }
                     //String success = respObj.getString("success");
@@ -141,7 +141,7 @@ public class APIHandler {
 //                            a.getInt("role_id"),
 //                            a.getInt("active")
 
-                    if (isSuccess == 1){
+                    if (isSuccess == 1) {
 
                     }
                 } catch (JSONException e) {
@@ -460,7 +460,7 @@ public class APIHandler {
     // list semua makanan yg ada dijual merchant tertentu (diliat sama customer)
     public void getFoodByMerchant(Context context, int merchant_id, RecyclerView foodRV) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php?merchant_id="+merchant_id, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php?merchant_id=" + merchant_id, new Response.Listener<String>() {
             ArrayList<Food> foods = new ArrayList<Food>();
 
             @Override
@@ -476,16 +476,19 @@ public class APIHandler {
                         JSONObject a = foodJson.getJSONObject(i);
 
 //                        TODO: masukin ke adapter recyclerview
-                        foods.add(
-                                new Food(
-                                        a.getInt("food_id"),
-                                        a.getString("food_name"),
-                                        a.getInt("food_price"),
-                                        a.getString("food_image"),
-                                        a.getInt("merchant_id"),
-                                        a.getInt("listed")
-                                )
-                        );
+                        if (a.getInt("listed") == 1) {
+                            foods.add(
+                                    new Food(
+                                            a.getInt("food_id"),
+                                            a.getString("food_name"),
+                                            a.getInt("food_price"),
+                                            a.getString("food_image"),
+                                            a.getInt("merchant_id"),
+                                            a.getInt("listed")
+                                    )
+                            );
+                        }
+
                     }
                     // klo butu aja
                     User merchant = new User(

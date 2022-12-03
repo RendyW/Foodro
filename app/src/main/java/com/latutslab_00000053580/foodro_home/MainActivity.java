@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                             replaceFragment(new HomeMerchant());
                             break;
                         default:
+                            dbUser.open();
                             dbUser.logout();
                     }
                     break;
