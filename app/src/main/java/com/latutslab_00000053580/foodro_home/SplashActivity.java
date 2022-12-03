@@ -21,7 +21,6 @@ public class SplashActivity extends AppCompatActivity {
 
         DbUser dbUser = new DbUser(getApplicationContext());
         dbUser.open();
-
         User user = dbUser.Authenticate();
 
         new Handler().postDelayed(new Runnable(){

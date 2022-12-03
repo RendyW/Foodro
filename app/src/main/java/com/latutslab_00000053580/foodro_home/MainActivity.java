@@ -29,13 +29,12 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             DbUser dbuser = new DbUser(getBaseContext());
             dbuser.open();
-            Cursor cursor = dbuser.getUser();
+            int user_role = dbuser.getRole();
 
-            int role = cursor.getInt(4);
             switch (item.getItemId()){
                 case R.id.home:
                     DbUser dbUser = new DbUser(getBaseContext());
-                    switch(role){
+                    switch(user_role){
                         case 1:
                             replaceFragment(new HomeUser());
                             break;

@@ -2,6 +2,7 @@ package com.latutslab_00000053580.foodro;
 
 public class Cart {
 
+    int merchantID;
     int itemID;
     int quantity;
     String name;

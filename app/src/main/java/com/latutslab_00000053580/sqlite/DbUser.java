@@ -48,7 +48,7 @@ public class DbUser {
     //Check whether account existed or not
     public User Authenticate() {
 
-        String sql = "SELECT * FROM '" + db.TABLE_USERS + "' LIMIT 1";
+        String sql = "SELECT * FROM " + db.TABLE_USERS + " LIMIT 1";
         Cursor cursor = database.rawQuery(sql, null);
         Log.i("SQLITE", cursor.toString());
 
@@ -72,15 +72,22 @@ public class DbUser {
     }
 
     public String getName(){
-        String query = String.format("SELECT %s, %s FROM %S LIMIT 1", db.USER_FIRSTNAME, db.USER_LASTNAME, db.TABLE_USERS);
+        String query = String.format("SELECT %s, %s FROM %s LIMIT 1", db.USER_FIRSTNAME, db.USER_LASTNAME, db.TABLE_USERS);
         Cursor cursor = database.rawQuery(query, null);
         return String.format("%s %s",cursor.getString(0), cursor.getString(1));
     }
 
     public int getRole(){
-        String query = String.format("SELECT %s FROM %S LIMIT 1", db.USER_ROLE, db.TABLE_USERS);
-        Cursor cursor = database.rawQuery(query, null);
-        return cursor.getInt(0);
+        String query = String.format("SELECT %s FROM %s LIMIT 1", db.USER_ROLE, db.TABLE_USERS);
+        Cursor cursor = database.query(db.TABLE_USERS, new String[] {db.USER_ROLE}, null, null, null, null, null, null);
+
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                return cursor.getInt(0);
+            }
+        }
+
+        return -1;
     }
 
     public Cursor getUser() {
