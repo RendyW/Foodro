@@ -15,12 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.latutslab_00000053580.foodro.APIHandler;
-import com.latutslab_00000053580.foodro.Food;
-import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.R;
-import com.latutslab_00000053580.recycler.OrderAdapter;
-import com.latutslab_00000053580.sqlite.DbUser;
+
 
 import java.util.ArrayList;
 
@@ -88,40 +85,7 @@ public class HomeMerchant extends Fragment {
         RecyclerView merchantRV = view.findViewById(R.id.orderRV);
         APIHandler handler = new APIHandler();
         handler.getOrderMerchant(getContext(), 5, merchantRV);
-//        DbUser dbuser = new DbUser(getContext());
-//        Cursor cursor = dbuser.getUser();
-//
-//        int userid = cursor.getInt(0);
-        //api.getOrderMerchant(getContext(), userid, false);
 
-
-        //nyimpen semua order
-//        ArrayList<Order> orderArrayList = new ArrayList<Order>();
-
-        //nah disini lu nanti untuk setiap order, lu loop data makannya + quantity yang dipesen
-//        ArrayList<Food> foodArrayList = new ArrayList<Food>();
-//        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", 0 ));
-//        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", 0 ));
-
-//        int[] quantity = new int[] {1, 2};
-
-        //disini ambil data buyer atau user yang beli
-//        User user = new User(1, "Uccok", "Siregar", "12", 1, 1, "https://tinypng.com/images/social/website.jpg");
-
-
-        //diakhir loop masukin data order kedalem array list order
-
-//        Locale locale = new Locale("id", "ID");
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss OOOO", locale);
-//        orderArrayList.add(new Order(1, user, "15/10/2003", foodArrayList, quantity));
-
-        //ini gk usah disentuh sih yang kebawah mah
-//        OrderAdapter orderAdapter = new OrderAdapter(orderArrayList);
-//        LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-//        merchantRV.setLayoutManager(linearLayoutManager);
-//        merchantRV.setAdapter(orderAdapter);
-
-        // Inflate the layout for this fragment
         return view;
     }
 }

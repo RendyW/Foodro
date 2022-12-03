@@ -31,11 +31,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsLocation"
+            android:name="MapsLocation"
             android:label="@string/title_activity_maps_location"></activity>
-        <activity android:name=".Location" />
-        <activity android:name=".SignUpMenu" />
-        <activity android:name=".SplashActivity">
+        <activity android:name="Location" />
+        <activity android:name="SignUpMenu" />
+        <activity android:name="MenuUser" />
+        <activity android:name="SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,10 +44,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AboutUs"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".Account_Setup" />
-        <activity android:name=".MainActivity" />
+            android:name="AboutUs"
+            android:parentActivityName="MainActivity" />
+        <activity android:name="Account_Setup" />
+        <activity android:name="MainActivity" />
     </application>
 
 </manifest>

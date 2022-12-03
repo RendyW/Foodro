@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.latutslab_00000053580.foodro.APIHandler;
+import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +21,8 @@ import com.latutslab_00000053580.foodro_home.R;
  * create an instance of this fragment.
  */
 public class HomeUser extends Fragment {
+
+    static final public ArrayList<User> userArrayList= new ArrayList<User>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

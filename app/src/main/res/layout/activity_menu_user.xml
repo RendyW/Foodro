@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.latutslab_00000053580.foodro_user.MenuUser">
+    tools:context=".MenuUser">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/menuRestoGambar"
                     android:layout_width="wrap_content"
                     android:layout_height="140dp"
                     android:layout_marginTop="5dp"
@@ -37,7 +37,7 @@
                     app:srcCompat="@drawable/nasigorengayam" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/menuResto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -62,6 +62,11 @@
             android:textStyle="bold"
             android:textColor="#000000"
             android:text="Menus" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menuUserRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>

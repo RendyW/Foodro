@@ -17,15 +17,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     private final ArrayList<Cart> cartArrayList;
-
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView basketNama;
         private final TextView basketHarga;
         private final ImageView basketImage;
@@ -41,6 +36,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             basketImage = (ImageView) view.findViewById(R.id.basketImage);
             basketTotal = (TextView) view.findViewById(R.id.basketTotal);
             basketQty = (TextView) view.findViewById(R.id.basketQty);
+
+        }
+
+        @Override
+        public void onClick(View v){
 
         }
     }

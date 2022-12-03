@@ -29,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class APIHandler {
@@ -210,10 +209,25 @@ public class APIHandler {
                         );
                     }
 
-                    MerchantAdapter merchantAdapter = new MerchantAdapter(users);
+
+                    MerchantAdapter adapter = new MerchantAdapter(users, context);
+
+//                    adapter.setOnItemClickListener(new MerchantAdapter.ClickListener() {
+//                        @Override
+//                        public void onItemClick(int position, View v) {
+//                            Log.i("TESTON", "position: " + position);
+//                            User user = users.get(position);
+//                            Intent intent = new Intent(context, MenuUser.class);
+//                            intent.putExtra("id", user.getId());
+//                            intent.putExtra("name", user.getFullName());
+//                            intent.putExtra("image", user.getImage());
+//                            context.startActivity(intent);
+//                        }
+//                    });
+
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);
-                    recyclerView.setAdapter(merchantAdapter);
+                    recyclerView.setAdapter(adapter);
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
@@ -488,6 +502,7 @@ public class APIHandler {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     foodRV.setLayoutManager(new GridLayoutManager(context, 2));
                     foodRV.setAdapter(menuUserAdapter);
+
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
