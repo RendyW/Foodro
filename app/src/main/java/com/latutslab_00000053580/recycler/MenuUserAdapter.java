@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro_home.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -61,8 +62,7 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
         viewHolder.menuAddNama.setText(model.getName());
         viewHolder.menuAddHarga.setText(model.getPrice());
 
-        Uri uri = Uri.parse(model.getImage());
-        viewHolder.menuAddImg.setImageURI(uri);
+        Picasso.get().load(model.getImage()).into(viewHolder.menuAddImg);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

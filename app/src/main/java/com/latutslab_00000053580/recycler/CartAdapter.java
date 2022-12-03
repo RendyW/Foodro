@@ -13,6 +13,7 @@ import com.latutslab_00000053580.foodro.Cart;
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.OrderDetail;
 import com.latutslab_00000053580.foodro_home.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,8 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         viewHolder.basketQty.setText(model.getQuantity());
         viewHolder.basketTotal.setText(model.getTotal());
 
-        Uri uri = Uri.parse(model.getImage());
-        viewHolder.basketImage.setImageURI(uri);
+        Picasso.get().load(model.getImage()).into(viewHolder.basketImage);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

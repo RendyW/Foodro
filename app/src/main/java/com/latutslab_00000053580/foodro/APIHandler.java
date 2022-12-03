@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.latutslab_00000053580.foodro_home.MainActivity;
+import com.latutslab_00000053580.recycler.MenuUserAdapter;
+import com.latutslab_00000053580.recycler.MerchantAdapter;
 import com.latutslab_00000053580.recycler.OrderAdapter;
 import com.latutslab_00000053580.sqlite.DbUser;
 
@@ -179,7 +182,7 @@ public class APIHandler {
     }
 
     // list semua merchant
-    public void getAllMerchant(Context context) {
+    public void getAllMerchant(Context context, RecyclerView recyclerView) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllMerchant.php", new Response.Listener<String>() {
             @Override
@@ -203,11 +206,17 @@ public class APIHandler {
                                         a.getInt("role_id"),
                                         a.getInt("active"),
                                         a.getString("image")
-
                                 )
                         );
                     }
 
+                    MerchantAdapter merchantAdapter = new MerchantAdapter(users);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(merchantAdapter);
+
+                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                    Log.i("VOLLEYDONE", "DONE");
 
 //                    if(isInit){
 //                        Intent i = new Intent().setClass(context, MainActivity.class);
@@ -474,6 +483,14 @@ public class APIHandler {
                             merchantJson.getInt("active"),
                             merchantJson.getString("image")
                     );
+
+                    MenuUserAdapter menuUserAdapter = new MenuUserAdapter(foods);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                    foodRV.setLayoutManager(new GridLayoutManager(context, 2));
+                    foodRV.setAdapter(menuUserAdapter);
+
+                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                    Log.i("VOLLEYDONE", "DONE");
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");

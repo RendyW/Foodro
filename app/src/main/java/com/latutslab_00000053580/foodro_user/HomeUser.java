@@ -3,11 +3,13 @@ package com.latutslab_00000053580.foodro_user;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro_home.R;
 
 /**
@@ -61,6 +63,12 @@ public class HomeUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.user_home, container, false);
+        View view = inflater.inflate(R.layout.user_home, container, false);
+
+        RecyclerView userRV = view.findViewById(R.id.userRV);
+        APIHandler handler = new APIHandler();
+        handler.getAllMerchant(view.getContext(), userRV);
+
+        return view;
     }
 }

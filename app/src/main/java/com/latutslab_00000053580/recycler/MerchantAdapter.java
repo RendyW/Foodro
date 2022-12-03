@@ -1,6 +1,8 @@
 package com.latutslab_00000053580.recycler;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.R;
+import com.squareup.picasso.Picasso;
+
 import android.net.Uri;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class MerchantAdapter extends RecyclerView.Adapter<MerchantAdapter.ViewHolder> {
 
     private final ArrayList<User> userArrList;
+    Context context;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -42,6 +50,7 @@ public class MerchantAdapter extends RecyclerView.Adapter<MerchantAdapter.ViewHo
 
     public MerchantAdapter(ArrayList<User> userArrList) {
         this.userArrList = userArrList;
+//        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -62,8 +71,8 @@ public class MerchantAdapter extends RecyclerView.Adapter<MerchantAdapter.ViewHo
         // contents of the view with that element
         User model = userArrList.get(position);
         viewHolder.merchantName.setText(model.getFullName());
-        Uri imageURI = Uri.parse(model.getImage());
-        viewHolder.merchantImg.setImageURI(imageURI);
+
+        Picasso.get().load(model.getImage()).into(viewHolder.merchantImg);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
