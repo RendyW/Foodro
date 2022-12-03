@@ -497,6 +497,53 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    // get details per food (diliat sama merchant+user)
+    public void getFoodById(Context context, int food_id) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodById.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Successfully get food details", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject a = data.getJSONObject(0);
+                    Food food = new Food(
+                            a.getInt("food_id"),
+                            a.getString("food_name"),
+                            a.getInt("food_price"),
+                            a.getString("food_image"),
+                            a.getInt("merchant_id"),
+                            a.getInt("listed")
+                    );
+                    // TODO: Update ui disini
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to get food = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("food_id", Integer.toString(food_id));
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
+
+
     // bikin listing makanan baru (diliat sama merchant)
     public void createFood(Context context, String name, int price, String image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
