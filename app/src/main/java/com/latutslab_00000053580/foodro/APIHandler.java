@@ -471,7 +471,7 @@ public class APIHandler {
                     //String success = respObj.getString("success");
                     JSONObject data = respObj.getJSONObject("data");
                     JSONArray foodJson = data.getJSONArray("food");
-                    JSONObject merchantJson = respObj.getJSONObject("merchant");
+                    JSONObject merchantJson = data.getJSONObject("merchant");
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject a = foodJson.getJSONObject(i);
 
