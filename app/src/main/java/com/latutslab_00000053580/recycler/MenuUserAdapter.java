@@ -4,8 +4,10 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
         private final TextView menuAddHarga;
         private final TextView menuAddNama;
         private final ImageView menuAddImg;
+        private final Button btnAdd;
 
         public ViewHolder(View view) {
             super(view);
@@ -35,6 +38,7 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
             menuAddNama = (TextView) view.findViewById(R.id.menuAddName);
             menuAddHarga = (TextView) view.findViewById(R.id.menuAddPrice);
             menuAddImg = (ImageView) view.findViewById(R.id.menuAddImg);
+            btnAdd = view.findViewById(R.id.btnAdd);
         }
     }
 
@@ -61,7 +65,13 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
         Food model = foodArrayList.get(position);
         viewHolder.menuAddNama.setText(model.getName());
         viewHolder.menuAddHarga.setText(Integer.toString(model.getPrice()));
-
+        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Update pilihan ke db
+                Toast.makeText(v.getContext(), "Food add to cart", Toast.LENGTH_SHORT).show();
+            }
+        });
         Picasso.get().load(model.getImage()).into(viewHolder.menuAddImg);
     }
 

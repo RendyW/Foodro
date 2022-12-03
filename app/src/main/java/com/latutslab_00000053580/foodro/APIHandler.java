@@ -64,6 +64,7 @@ public class APIHandler {
                     DbUser dbUser = new DbUser(context);
                     dbUser.open();
                     dbUser.addUser(user);
+                    dbUser.close();
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
@@ -491,24 +492,21 @@ public class APIHandler {
 
                     }
                     // klo butu aja
-                    User merchant = new User(
-                            merchantJson.getInt("user_id"),
-                            merchantJson.getString("firstname"),
-                            merchantJson.getString("lastname"),
-                            merchantJson.getString("email"),
-                            2,
-                            merchantJson.getInt("active"),
-                            merchantJson.getString("image")
-                    );
+//                    User merchant = new User(
+//                            merchantJson.getInt("user_id"),
+//                            merchantJson.getString("firstname"),
+//                            merchantJson.getString("lastname"),
+//                            merchantJson.getString("email"),
+//                            2,
+//                            merchantJson.getInt("active"),
+//                            merchantJson.getString("image")
+//                    );
 
                     MenuUserAdapter menuUserAdapter = new MenuUserAdapter(foods);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     foodRV.setLayoutManager(new GridLayoutManager(context, 2));
                     foodRV.setAdapter(menuUserAdapter);
 
-
-                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-                    Log.i("VOLLEYDONE", "DONE");
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");

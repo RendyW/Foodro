@@ -20,7 +20,7 @@ public class MenuUser extends AppCompatActivity {
         setContentView(R.layout.activity_menu_user);
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0) + 1;
+        int id = intent.getIntExtra("id", 0);
         String name = intent.getStringExtra("name");
         String image = intent.getStringExtra("image");
 

@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.latutslab_00000053580.foodro_home.databinding.HomeMainBinding;
 import com.latutslab_00000053580.foodro_merchant.HomeMerchant;
 import com.latutslab_00000053580.foodro_user.HomeUser;
@@ -27,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = getIntent();
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            DbUser dbuser = new DbUser(getBaseContext());
-            dbuser.open();
-            int user_role = dbuser.getRole();
 
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
-                    DbUser dbUser = new DbUser(getBaseContext());
-                    switch(user_role){
+                    DbUser dbuser = new DbUser(getBaseContext());
+                    dbuser.open();
+                    int user_role = dbuser.getRole();
+                    dbuser.close();
+                    switch (user_role) {
                         case 1:
                             replaceFragment(new HomeUser());
                             break;
@@ -42,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
                             replaceFragment(new HomeMerchant());
                             break;
                         default:
-                            dbUser.open();
-                            dbUser.logout();
+                            Log.e("DEFAULTSWITCH", "fail");
+                            Log.e("DEFAULTSWITCH", Integer.toString(user_role));
+                            dbuser.open();
+                            dbuser.logout();
+                            dbuser.close();
                     }
                     break;
                 case R.id.order:
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);

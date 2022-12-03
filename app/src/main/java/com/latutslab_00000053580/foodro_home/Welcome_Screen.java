@@ -23,6 +23,7 @@ public class Welcome_Screen extends AppCompatActivity {
         dbUser.logout();
 
         User user = dbUser.Authenticate();
+        dbUser.close();
 
         if (user != null) {
             int role = user.getRole();
