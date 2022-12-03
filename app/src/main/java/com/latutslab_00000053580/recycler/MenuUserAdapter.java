@@ -60,7 +60,7 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
         // contents of the view with that element
         Food model = foodArrayList.get(position);
         viewHolder.menuAddNama.setText(model.getName());
-        viewHolder.menuAddHarga.setText(model.getPrice());
+        viewHolder.menuAddHarga.setText(Integer.toString(model.getPrice()));
 
         Picasso.get().load(model.getImage()).into(viewHolder.menuAddImg);
     }
