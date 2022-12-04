@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "foodro";
 
     //DATABASE VERSION
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     //USERS TABLE
     //TABLE NAME
@@ -37,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //CART TABLE
     //TABLE NAME
     public static final String TABLE_CART = "carts";
+    public static final String CART_MERCHANT_ID = "merchantID";
     public static final String CART_ITEM_ID = "itemID";
     public static final String CART_ITEM_NAME = "name";
     public static final String CART_ITEM_PRICE = "price";
@@ -47,8 +48,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + CART_ITEM_ID + " INTEGER PRIMARY KEY, "
             + CART_QUANTITY + " INTEGER, "
             + CART_ITEM_NAME + " TEXT, "
-            + CART_ITEM_PRICE + "INTEGER, "
-            + CART_IMAGE + "TEXT "
+            + CART_ITEM_PRICE + " INTEGER, "
+            + CART_IMAGE + " TEXT, "
+            + CART_MERCHANT_ID + " INTEGER"
             + " ) ";
 
 
@@ -66,8 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //drop table to create new one if database version updated
-        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_USERS);
-        sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS " + TABLE_CART);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CART);
         onCreate(sqLiteDatabase);
     }
 

@@ -74,7 +74,7 @@ public class ProfileUser extends Fragment {
                 dbUser.open();
                 dbUser.logout();
                 dbUser.close();
-                getActivity().finish();
+                startActivity(new Intent(view.getContext(), Account_Setup.class));
             }
         });
 

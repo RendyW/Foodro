@@ -1,5 +1,6 @@
 package com.latutslab_00000053580.foodro_user;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.User;
+import com.latutslab_00000053580.foodro_home.BasketUser;
 import com.latutslab_00000053580.foodro_home.R;
 
 import java.util.ArrayList;
@@ -69,6 +72,16 @@ public class HomeUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.user_home, container, false);
+
+        FloatingActionButton fabCart = (FloatingActionButton) view.findViewById(R.id.fabCart);
+        fabCart.bringToFront();
+        fabCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCart = new Intent(view.getContext(), BasketUser.class);
+                startActivity(intentCart);
+            }
+        });
 
         RecyclerView userRV = view.findViewById(R.id.userRV);
         APIHandler handler = new APIHandler();

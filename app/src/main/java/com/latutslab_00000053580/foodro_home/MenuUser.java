@@ -5,11 +5,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.latutslab_00000053580.foodro.APIHandler;
-import com.latutslab_00000053580.foodro_home.R;
 import com.squareup.picasso.Picasso;
 
 public class MenuUser extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class MenuUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_user);
+
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
@@ -34,5 +36,7 @@ public class MenuUser extends AppCompatActivity {
 
         APIHandler handler = new APIHandler();
         handler.getFoodByMerchant(getApplicationContext(), id, menuUserRV);
+
+
     }
 }

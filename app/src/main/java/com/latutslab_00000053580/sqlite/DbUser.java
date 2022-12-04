@@ -72,13 +72,18 @@ public class DbUser {
     }
 
     public String getName(){
-        String query = String.format("SELECT %s, %s FROM %s LIMIT 1", db.USER_FIRSTNAME, db.USER_LASTNAME, db.TABLE_USERS);
-        Cursor cursor = database.rawQuery(query, null);
-        return String.format("%s %s",cursor.getString(0), cursor.getString(1));
+        Cursor cursor = database.query(db.TABLE_USERS, new String[] {db.USER_FIRSTNAME, db.USER_LASTNAME}, null, null, null, null, null, null);
+
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                return String.format("%s %s",cursor.getString(0), cursor.getString(1));
+            }
+        }
+
+        return null;
     }
 
     public int getRole(){
-        String query = String.format("SELECT %s FROM %s LIMIT 1", db.USER_ROLE, db.TABLE_USERS);
         Cursor cursor = database.query(db.TABLE_USERS, new String[] {db.USER_ROLE}, null, null, null, null, null, null);
 
         if(cursor != null){

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.latutslab_00000053580.sqlite.DbUser;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OrderNavigation#newInstance} factory method to
@@ -61,6 +63,19 @@ public class OrderNavigation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.home_order_navigation, container, false);
+        View view = inflater.inflate(R.layout.home_order_navigation, container, false);
+
+        DbUser dbUser = new DbUser(view.getContext());
+        dbUser.open();
+        int role  = dbUser.getRole();
+
+        switch(role){
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+
+        return view;
     }
 }

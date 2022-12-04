@@ -9,12 +9,13 @@ public class Cart {
     int price;
     String image;
 
-    public Cart(int itemID, int quantity, String name, int price, String image) {
+    public Cart(int itemID, int quantity, String name, int price, String image, int merchantID) {
         this.itemID = itemID;
         this.quantity = quantity;
         this.name = name;
         this.price = price;
         this.image = image;
+        this.merchantID = merchantID;
     }
 
     public String getName() {
@@ -27,6 +28,14 @@ public class Cart {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getMerchantID() {
+        return merchantID;
+    }
+
+    public void setMerchantID(int merchantID) {
+        this.merchantID = merchantID;
     }
 
     public void setPrice(int price) {

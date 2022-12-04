@@ -1,5 +1,6 @@
 package com.latutslab_00000053580.recycler;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,19 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.latutslab_00000053580.foodro.Cart;
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.sqlite.DbCart;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHolder>{
 
+    private final Context context;
     private final ArrayList<Food> foodArrayList;
+    private final int merchantID;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -42,7 +47,9 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
         }
     }
 
-    public MenuUserAdapter(ArrayList<Food> foodArrayList) {
+    public MenuUserAdapter(Context context, int merchantID, ArrayList<Food> foodArrayList) {
+        this.context = context;
+        this.merchantID = merchantID;
         this.foodArrayList = foodArrayList;
     }
 
@@ -69,7 +76,12 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 //TODO: Update pilihan ke db
-                Toast.makeText(v.getContext(), "Food add to cart", Toast.LENGTH_SHORT).show();
+                Food food = foodArrayList.get(position);
+                Cart cart = new Cart(food.getId(), 1, food.getName(), food.getPrice(), food.getImage(), merchantID);
+
+                DbCart dbCart = new DbCart(context);
+                dbCart.open();
+                dbCart.addCart(cart);
             }
         });
         Picasso.get().load(model.getImage()).into(viewHolder.menuAddImg);

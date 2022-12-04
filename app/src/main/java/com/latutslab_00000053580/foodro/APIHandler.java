@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -318,6 +319,10 @@ public class APIHandler {
 //                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 //                        context.startActivity(i);
 //                    }
+                    if(orders.isEmpty()){
+
+                    }
+
                     OrderAdapter orderAdapter = new OrderAdapter(orders);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     merchantRV.setLayoutManager(linearLayoutManager);
@@ -502,7 +507,7 @@ public class APIHandler {
 //                            merchantJson.getString("image")
 //                    );
 
-                    MenuUserAdapter menuUserAdapter = new MenuUserAdapter(foods);
+                    MenuUserAdapter menuUserAdapter = new MenuUserAdapter(context, merchant_id, foods);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     foodRV.setLayoutManager(new GridLayoutManager(context, 2));
                     foodRV.setAdapter(menuUserAdapter);
