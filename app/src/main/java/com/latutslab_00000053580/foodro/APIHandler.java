@@ -3,6 +3,8 @@ package com.latutslab_00000053580.foodro;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.latutslab_00000053580.foodro_home.MainActivity;
+import com.latutslab_00000053580.recycler.MenuAdapter;
 import com.latutslab_00000053580.recycler.MenuUserAdapter;
 import com.latutslab_00000053580.recycler.MerchantAdapter;
 import com.latutslab_00000053580.recycler.OrderAdapter;
@@ -464,7 +467,7 @@ public class APIHandler {
     }
 
     // list semua makanan yg ada dijual merchant tertentu (diliat sama customer)
-    public void getFoodByMerchant(Context context, int merchant_id, RecyclerView foodRV) {
+    public void getFoodByMerchant(Context context, int merchant_id, RecyclerView foodRV, int role) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getFoodByMerchant.php?merchant_id=" + merchant_id, new Response.Listener<String>() {
             ArrayList<Food> foods = new ArrayList<Food>();
@@ -507,14 +510,28 @@ public class APIHandler {
 //                            merchantJson.getString("image")
 //                    );
 
-                    MenuUserAdapter menuUserAdapter = new MenuUserAdapter(context, merchant_id, foods);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                    foodRV.setLayoutManager(new GridLayoutManager(context, 2));
-                    foodRV.setAdapter(menuUserAdapter);
+                    if(foods.isEmpty()) {
+                        foodRV.setVisibility(View.GONE);
+                        return;
+                    };
+
+                    if(role == 1){
+                        MenuUserAdapter menuUserAdapter = new MenuUserAdapter(context, merchant_id, foods);
+                        foodRV.setLayoutManager(new GridLayoutManager(context, 2));
+                        foodRV.setAdapter(menuUserAdapter);
 
 
-                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-                    Log.i("VOLLEYDONE", "DONE");
+                        Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                        Log.i("VOLLEYDONE", "DONE");
+                    } else if(role ==2){
+
+
+                        MenuAdapter menuAdapter = new MenuAdapter(context, foods);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                        foodRV.setLayoutManager(linearLayoutManager);
+                        foodRV.setAdapter(menuAdapter);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.i("VOLLEYERROCATCH", e.toString());

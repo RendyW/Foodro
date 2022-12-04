@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.latutslab_00000053580.foodro_home">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodro_Home">
-
+        <activity android:name=".MerchantAddMenu"></activity>
+        <activity android:name=".MerchantEditMenu" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -32,13 +32,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="MapsLocation"
-            android:label="@string/title_activity_maps_location"></activity>
-        <activity android:name="Location" />
-        <activity android:name="BasketUser" />
-        <activity android:name="SignUpMenu" />
-        <activity android:name="MenuUser" />
-        <activity android:name="SplashActivity">
+            android:name=".MapsLocation"
+            android:label="@string/title_activity_maps_location" />
+        <activity android:name=".Location" />
+        <activity android:name=".BasketUser" />
+        <activity android:name=".SignUpMenu" />
+        <activity android:name=".MenuUser" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,10 +46,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="AboutUs"
-            android:parentActivityName="MainActivity" />
-        <activity android:name="Account_Setup" />
-        <activity android:name="MainActivity" />
+            android:name=".AboutUs"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".Account_Setup" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
