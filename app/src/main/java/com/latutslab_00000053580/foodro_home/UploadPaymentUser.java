@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.latutslab_00000053580.foodro.APIHandler;
+import com.latutslab_00000053580.foodro.Cart;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.sqlite.DbCart;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UploadPaymentUser extends AppCompatActivity {
 
@@ -45,7 +48,12 @@ public class UploadPaymentUser extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: isi createOrder
+                DbCart dbCart = new DbCart(getApplicationContext());
+
+                dbCart.open();
+                ArrayList<Cart> cartArrayList = dbCart.getCartList();
+                // TODO: use for loop to iterate cartArrayList
+                // TODO: isi createOrder
 //                handler.createOrder(getApplicationContext(), );
             }
         });
