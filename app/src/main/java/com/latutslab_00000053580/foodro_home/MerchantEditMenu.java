@@ -21,7 +21,7 @@ public class MerchantEditMenu extends AppCompatActivity {
         EditText editName = (EditText) findViewById(R.id.addName);
         EditText editPrice = (EditText) findViewById(R.id.addPrice);
         ImageView editImage = (ImageView) findViewById(R.id.addImage);
-        Button btnConfirm = (Button) findViewById(R.id.btnAddMenu);
+        Button btnConfirm = (Button) findViewById(R.id.btnImage);
 
         Intent intent = getIntent();
         editName.setText(intent.getStringExtra("name"));

@@ -2,6 +2,8 @@ package com.latutslab_00000053580.foodro;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -296,6 +299,7 @@ public class APIHandler {
                             orderDetails.add(new OrderDetail(
                                     a.getInt("order_id"),
                                     food,
+                                    detail.getInt("status_id"),
                                     detail.getInt("quantity")
                             ));
                         }
@@ -403,6 +407,7 @@ public class APIHandler {
                             orderDetails.add(new OrderDetail(
                                     a.getInt("order_id"),
                                     food,
+                                    a.getInt("status_id"),
                                     detail.getInt("quantity")
                             ));
                         }
@@ -601,9 +606,9 @@ public class APIHandler {
 
 
     // bikin listing makanan baru (diliat sama merchant)
-    public void createFood(Context context, String name, int price, String image, int merchant_id) {
+    public void createFood(Context context, String name, int price, Bitmap image, int merchant_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
-
+        String encoded = encodeImage(image);
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createFood.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -638,7 +643,7 @@ public class APIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("food_name", name);
                 params.put("food_price", Integer.toString(price));
-                params.put("food_image", image);
+                params.put("food_image", encoded);
                 params.put("merchant_id", Integer.toString(merchant_id));
                 return params;
             }
@@ -786,7 +791,7 @@ public class APIHandler {
                     //String success = respObj.getString("success");
 //                    JSONArray data = respObj.getJSONArray("data");
 //                    JSONObject a = data.getJSONObject(0);
-//
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -816,6 +821,13 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    public String encodeImage(Bitmap bm){
+        ByteArrayOutputStream ba = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, ba);
+        byte[] imgByte = ba.toByteArray();
+        String encode = Base64.encodeToString(imgByte,Base64.DEFAULT);
+        return encode;
+    }
 }
 
 

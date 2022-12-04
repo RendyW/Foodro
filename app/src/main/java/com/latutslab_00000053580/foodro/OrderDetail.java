@@ -3,19 +3,13 @@ package com.latutslab_00000053580.foodro;
 public class OrderDetail {
     private int id;
     private Food food;
-    private Status status;
+    private int status;
     private int quantity;
 
-    public enum Status{
-        PREPARING,
-        READY,
-        COMPLETED
-    }
-
-    public OrderDetail(int id, Food food, int quantity){
+    public OrderDetail(int id, Food food, int status, int quantity){
         this.id = id;
         this.food = food;
-        this.status = Status.PREPARING;
+        this.status = status;
         this.quantity = quantity;
     }
 
@@ -27,7 +21,7 @@ public class OrderDetail {
         return food;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -35,7 +29,7 @@ public class OrderDetail {
         return quantity;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

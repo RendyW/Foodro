@@ -36,7 +36,5 @@ public class MenuUser extends AppCompatActivity {
 
         APIHandler handler = new APIHandler();
         handler.getFoodByMerchant(getApplicationContext(), id, menuUserRV, 1);
-
-
     }
 }
