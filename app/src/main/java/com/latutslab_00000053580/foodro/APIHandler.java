@@ -774,9 +774,9 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public void updateFood(Context context, int food_id, String name, int price, String image) {
+    public void updateFood(Context context, int food_id, String name, int price, Bitmap image) {
         RequestQueue queue = Volley.newRequestQueue(context);
-
+        String img = encodeImage(image);
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "updateFood.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -811,7 +811,7 @@ public class APIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("food_name", name);
                 params.put("food_price", Integer.toString(price));
-                params.put("food_image", image);
+                params.put("food_image", img);
                 params.put("food_id", Integer.toString(food_id));
                 return params;
             }
