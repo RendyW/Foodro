@@ -774,6 +774,58 @@ public class APIHandler {
         queue.add(sr);
     }
 
+    public void updateFood(Context context, int food_id, String name, int price, String image) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "updateFood.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "New food is successfully listed", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject respObj = new JSONObject(response);
+
+                    //String success = respObj.getString("success");
+                    JSONArray data = respObj.getJSONArray("data");
+                    JSONObject a = data.getJSONObject(0);
+//                    TODO: Ga tau ini data diapain
+//                    a.getInt("food_id"),
+//                            a.getString("food_name"),
+//                            a.getInt("food_price"),
+//                            a.getString("food_image"),
+//                            a.getInt("merchant_id"),
+//                    a.getInt("listed")
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("food_name", name);
+                params.put("food_price", Integer.toString(price));
+                params.put("food_image", image);
+                params.put("food_id", Integer.toString(food_id));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
+
     // delete makanan (untuk merchant)
     public void deleteFood(Context context, int food_id) {
         RequestQueue queue = Volley.newRequestQueue(context);
