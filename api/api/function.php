@@ -177,7 +177,7 @@ function getFoodByMerchant($connection, $merchant_id)
             ];
             array_push($data, $food);
         }
-        
+
         $response["data"] = [
             "food" => $data,
             "merchant" => $user,
@@ -633,12 +633,16 @@ function deleteFood($connection, $food_id)
 
 function processImage($image, $path, $name)
 {
+    if (empty(trim($image)) || $image == "\"\"" || $image == ''  || $image == '\'\'') {
+        $image = file_get_contents("whiteBase64.txt");
+    }
+
     $dir = $_SERVER["DOCUMENT_ROOT"] . $path;
     if (!file_exists($dir)) {
         mkdir($dir, 0777, true);
     }
-    list($type, $image) = explode(';', $image);
-    list(, $image) = explode(',', $image);
+    // list($type, $image) = explode(';', $image);
+    // list(, $image) = explode(',', $image);
     $img = str_replace(' ', '+', $image);
     $filename = $name . ".jpg";
     $dir = $dir . "/" . $filename;
