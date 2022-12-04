@@ -160,13 +160,12 @@ public class APIHandler {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("role", String.format("%d", role));
+                params.put("role", Integer.toString(role));
                 params.put("firstname", firstname);
                 params.put("lastname", lastname);
                 params.put("email", email);
                 params.put("password", password);
                 params.put("image", "");
-
 
                 return params;
             }
