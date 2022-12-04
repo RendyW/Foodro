@@ -659,9 +659,9 @@ public class APIHandler {
     }
 
     // bikin orderan  baru (diliat sama customer)
-    public void createOrder(Context context, int userid, ArrayList<Integer> foodsid, ArrayList<Integer> quantity, String proof) {
+    public void createOrder(Context context, int userid, ArrayList<Integer> foodsid, ArrayList<Integer> quantity, Bitmap proof) {
         RequestQueue queue = Volley.newRequestQueue(context);
-
+        String img = encodeImage(proof);
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createOrder.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -705,7 +705,7 @@ public class APIHandler {
                     params.put("food_id[]", Integer.toString(foodsid.get(i)));
                     params.put("quantity[]", Integer.toString(quantity.get(i)));
                 }
-                params.put("proof", proof);
+                params.put("proof", img);
                 return params;
             }
 

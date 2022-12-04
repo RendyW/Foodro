@@ -4,20 +4,28 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro_home.R;
+
+import java.io.IOException;
 
 public class UploadPaymentUser extends AppCompatActivity {
 
     private final int GALLERY_REQ_CODE = 1000;
 
     ImageView uploadImage;
-
+    Bitmap photo;
+    Button btnConfirm;
+    APIHandler handler = new APIHandler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +33,7 @@ public class UploadPaymentUser extends AppCompatActivity {
 
         uploadImage = (ImageView)findViewById(R.id.uploadImage);
         Button btnUpload = (Button)findViewById(R.id.btnOpenGallery);
-
+        btnConfirm = findViewById(R.id.btnConfirm);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,19 +42,26 @@ public class UploadPaymentUser extends AppCompatActivity {
                 startActivityForResult(i, GALLERY_REQ_CODE);
             }
         });
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: isi createOrder
+//                handler.createOrder(getApplicationContext(), );
+            }
+        });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode==RESULT_OK){
-
-            if(requestCode==GALLERY_REQ_CODE){
-                // for gallery
-
-                uploadImage.setImageURI(data.getData());
-
+        if(requestCode == GALLERY_REQ_CODE && resultCode == RESULT_OK && data != null){
+            Uri path = data.getData();
+            try{
+                photo = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                uploadImage.setImageBitmap(photo);
+                btnConfirm.setEnabled(true);
+            }catch(IOException e){
+                Log.e("CHOOSEIMG",  e.toString());
             }
         }
     }
