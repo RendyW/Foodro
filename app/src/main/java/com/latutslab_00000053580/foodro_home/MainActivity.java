@@ -24,18 +24,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = HomeMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeUser());
 
+        DbUser dbuser = new DbUser(getBaseContext());
+        dbuser.open();
+        int user_role = dbuser.getRole();
+        dbuser.close();
+
+        Log.i("SQLite", "ROLE: " + user_role);
+
+        if(user_role == 1){
+            replaceFragment(new HomeUser());
+        } else if(user_role == 2 ){
+            replaceFragment(new HomeMerchant());
+        }
 //        Intent intent = getIntent();
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.home:
-                    DbUser dbuser = new DbUser(getBaseContext());
-                    dbuser.open();
-                    int user_role = dbuser.getRole();
-                    dbuser.close();
+
                     switch (user_role) {
                         case 1:
                             replaceFragment(new HomeUser());

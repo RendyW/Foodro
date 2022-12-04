@@ -7,12 +7,17 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orderUserRV"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="53dp" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/orderUserRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="57dp"
+            tools:layout_editor_absoluteY="53dp" />
+    </ScrollView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/orderUserCardview"

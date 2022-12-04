@@ -35,7 +35,7 @@ public class MenuUser extends AppCompatActivity {
         RecyclerView menuUserRV = (RecyclerView) findViewById(R.id.menuUserRV);
 
         APIHandler handler = new APIHandler();
-        handler.getFoodByMerchant(getApplicationContext(), id, menuUserRV);
+        handler.getFoodByMerchant(getApplicationContext(), id, menuUserRV, 1);
 
 
     }

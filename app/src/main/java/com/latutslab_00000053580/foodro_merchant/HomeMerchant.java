@@ -1,25 +1,24 @@
 package com.latutslab_00000053580.foodro_merchant;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.latutslab_00000053580.foodro.APIHandler;
-import com.latutslab_00000053580.foodro.User;
+import com.latutslab_00000053580.foodro_home.MerchantAddMenu;
 import com.latutslab_00000053580.foodro_home.R;
-
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,9 +81,24 @@ public class HomeMerchant extends Fragment {
 
         View view = inflater.inflate(R.layout.merchant_home, container, false);
 
-        RecyclerView merchantRV = view.findViewById(R.id.orderRV);
+        RecyclerView merchantRV = view.findViewById(R.id.menuRV);
         APIHandler handler = new APIHandler();
-        handler.getOrderMerchant(getContext(), 5, merchantRV);
+        handler.getFoodByMerchant(getContext(), 5, merchantRV, 2);
+
+        TextView txtNoFood = (TextView) view.findViewById(R.id.txtNoFood);
+        txtNoFood.setVisibility(View.GONE);
+
+        if(merchantRV.getVisibility() == View.GONE){
+            txtNoFood.setVisibility(View.VISIBLE);
+        }
+
+        Button btnAddmenu = (Button) view.findViewById(R.id.buttonAddMenu);
+        btnAddmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.getContext().startActivity(new Intent(getContext(), MerchantAddMenu.class));
+            }
+        });
 
         return view;
     }

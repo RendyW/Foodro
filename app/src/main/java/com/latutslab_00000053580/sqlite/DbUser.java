@@ -71,6 +71,18 @@ public class DbUser {
         }
     }
 
+    public int getID(){
+        Cursor cursor = database.query(db.TABLE_USERS, new String[] {db.USER_ID}, null, null, null, null, null, null);
+
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                return cursor.getInt(0);
+            }
+        }
+
+        return -1;
+    }
+
     public String getName(){
         Cursor cursor = database.query(db.TABLE_USERS, new String[] {db.USER_FIRSTNAME, db.USER_LASTNAME}, null, null, null, null, null, null);
 

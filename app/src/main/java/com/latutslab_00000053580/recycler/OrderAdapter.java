@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             orderItem = (TextView) view.findViewById(R.id.orderItem);
             orderID = (TextView) view.findViewById(R.id.historyId);
             orderTotal = (TextView) view.findViewById(R.id.orderTotal);
-            btnReady = (Button) view.findViewById(R.id.btnReady);
+            btnReady = (Button) view.findViewById(R.id.btnDelete);
 
         }
     }

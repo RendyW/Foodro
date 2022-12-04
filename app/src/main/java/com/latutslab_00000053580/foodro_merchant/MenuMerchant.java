@@ -68,18 +68,18 @@ public class MenuMerchant extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.merchant_menu, container, false);
-
-        RecyclerView menuRV = view.findViewById(R.id.menuMerchantRV);
-        ArrayList<Food> foodArrayList = new ArrayList<Food>();
-
-//        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
-//        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
-
-        MenuAdapter menuAdapter = new MenuAdapter(foodArrayList);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext() , LinearLayoutManager.VERTICAL, false);
-        menuRV.setLayoutManager(linearLayoutManager);
-        menuRV.setAdapter(menuAdapter);
+//
+//        RecyclerView menuRV = view.findViewById(R.id.menuMerchantRV);
+//        ArrayList<Food> foodArrayList = new ArrayList<Food>();
+//
+////        foodArrayList.add(new Food(1, "Nasi Goreng", 15000, "0", null, 0 ));
+////        foodArrayList.add(new Food(2, "Nasi Bakar", 21000, "0", null, 0 ));
+//
+//        MenuAdapter menuAdapter = new MenuAdapter(foodArrayList);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext() , LinearLayoutManager.VERTICAL, false);
+//        menuRV.setLayoutManager(linearLayoutManager);
+//        menuRV.setAdapter(menuAdapter);
 
         return view;
     }
