@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.latutslab_00000053580.foodro.Cart;
-import com.latutslab_00000053580.foodro_home.R;
 import com.latutslab_00000053580.recycler.CartAdapter;
 import com.latutslab_00000053580.sqlite.DbCart;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -54,5 +52,14 @@ public class BasketUser extends AppCompatActivity {
         cartRV.setAdapter(cartAdapter);
 
         txtTotal.setText(String.valueOf(dbCart.getTotal()));
+
+        btnCO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UploadPaymentUser.class);
+                intent.putExtra("total", txtTotal.getText());
+                startActivity(intent);
+            }
+        });
     }
 }

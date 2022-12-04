@@ -1,4 +1,4 @@
-package com.latutslab_00000053580.foodro_user;
+package com.latutslab_00000053580.foodro_home;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

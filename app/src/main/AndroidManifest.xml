@@ -38,6 +38,7 @@
         <activity android:name=".BasketUser" />
         <activity android:name=".SignUpMenu" />
         <activity android:name=".MenuUser" />
+        <activity android:name=".UploadPaymentUser" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

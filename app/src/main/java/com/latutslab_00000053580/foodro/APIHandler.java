@@ -322,7 +322,7 @@ public class APIHandler {
 //                        context.startActivity(i);
 //                    }
                     if(orders.isEmpty()){
-
+                        merchantRV.setVisibility(View.GONE);
                     }
 
                     OrderAdapter orderAdapter = new OrderAdapter(orders);
@@ -332,6 +332,8 @@ public class APIHandler {
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
+
+
                 } catch (JSONException e) {
                     Log.i("JALAN", "3");
                     e.printStackTrace();
