@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Cart;
@@ -36,8 +37,15 @@ public class UploadPaymentUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_payment_user);
 
+        DbCart dbCart = new DbCart(getApplicationContext());
+        dbCart.open();
+
+
         uploadImage = (ImageView)findViewById(R.id.uploadImage);
         Button btnUpload = (Button)findViewById(R.id.btnOpenGallery);
+        TextView txtTotalBayar = (TextView) findViewById(R.id.txtTotalBayar);
+        txtTotalBayar.setText(String.valueOf(dbCart.getTotal()));
+
         btnConfirm = findViewById(R.id.btnConfirm);
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,18 +58,12 @@ public class UploadPaymentUser extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbCart dbCart = new DbCart(getApplicationContext());
-
-                dbCart.open();
                 ArrayList<Cart> cartArrayList = dbCart.getCartList();
 
                 DbUser dbUser = new DbUser(getApplicationContext());
                 dbUser.open();
                 int userID = dbUser.getID();
                 dbUser.close();
-                // TODO: use for loop to iterate cartArrayList
-                // TODO: isi createOrder
-
                 dbCart.clearCart();
                 dbCart.close();
 

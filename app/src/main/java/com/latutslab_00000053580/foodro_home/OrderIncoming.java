@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.sqlite.DbUser;
@@ -81,12 +82,14 @@ public class OrderIncoming extends Fragment {
         if(user_role == 1){
             handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV, false);
         } else if(user_role == 2){
-            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV, false);
+            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV, false, orderIncomingCard);
         }
 
-        if(orderIncomingRV.getVisibility() == View.GONE){
-            orderIncomingCard.setVisibility(View.VISIBLE);
-        }
+//
+//        if(orderIncomingRV.getVisibility() == View.GONE){
+//            Toast.makeText(view.getContext(), "MASUK GAN", Toast.LENGTH_SHORT).show();
+//            orderIncomingCard.setVisibility(View.VISIBLE);
+//        }
 
         return view;
     }

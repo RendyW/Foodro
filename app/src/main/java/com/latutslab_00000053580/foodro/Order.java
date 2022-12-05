@@ -36,6 +36,20 @@ public class Order {
         return this.getOrderDetails().get(0).getStatus();
     }
 
+    public String getStatusString(){
+        int status = getStatus();
+        switch(status){
+            case 1:
+                return "Prepare Food";
+            case 2:
+                return "Food Ready To Pickup";
+            case 3:
+                return "Order Finished";
+            default:
+                return null;
+        }
+    }
+
     public String getOrderDetailStr(){
 
         StringBuilder orderStr = new StringBuilder();

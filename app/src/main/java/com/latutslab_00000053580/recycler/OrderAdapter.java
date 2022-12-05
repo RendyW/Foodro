@@ -21,6 +21,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     private final ArrayList<Order> orderArrayList;
     private final Context context;
     APIHandler handler = new APIHandler();
+    private final int role;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -32,6 +33,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         private final TextView orderID;
         private final TextView orderTotal;
         private final Button btnReady;
+        private final TextView txtUserStatus;
 
         public ViewHolder(View view) {
             super(view);
@@ -42,13 +44,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             orderID = (TextView) view.findViewById(R.id.historyId);
             orderTotal = (TextView) view.findViewById(R.id.orderTotal);
             btnReady = (Button) view.findViewById(R.id.btnDelete);
+            txtUserStatus = (TextView) view.findViewById(R.id.txtUserStatus);
 
         }
     }
 
-    public OrderAdapter(Context context, ArrayList<Order> orderArrayList) {
+    public OrderAdapter(Context context, ArrayList<Order> orderArrayList, int role) {
         this.context = context;
         this.orderArrayList = orderArrayList;
+        this.role = role;
     }
 
     // Create new views (invoked by the layout manager)
@@ -67,19 +71,27 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+
         Order model = orderArrayList.get(viewHolder.getBindingAdapterPosition());
         viewHolder.orderBuyer.setText(model.getCustomer().getFullName());
         viewHolder.orderItem.setText(model.getOrderDetailStr());
         viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
         viewHolder.orderID.setText(Integer.toString(model.getId()));
+        viewHolder.btnReady.setText(model.getStatusString());
+        viewHolder.btnReady.setVisibility(View.GONE);
 
         //todo rubah nama button sesuai order status
+        if(role == 1){
+            viewHolder.btnReady.setVisibility(View.GONE);
+            viewHolder.txtUserStatus.setVisibility(View.VISIBLE);
+            viewHolder.txtUserStatus.setText(model.getStatusString());
+        }
+
 
         viewHolder.btnReady.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handler.updateStatus(context, model.getId(), model.getOrderDetails().get(0).getFood().getId(), model.getStatus()+1);
-
             }
         });
     }
