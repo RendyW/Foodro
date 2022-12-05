@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.latutslab_00000053580.sqlite.DbUser;
@@ -71,6 +72,9 @@ public class OrderNavigation extends Fragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         ViewPager2 viewPager2 = (ViewPager2) view.findViewById(R.id.viewPager2);
 
+        tabLayout.addTab(tabLayout.newTab().setText("Incoming"));
+        tabLayout.addTab(tabLayout.newTab().setText("History"));
+
         FragmentManager fragmentManager = getParentFragmentManager();
         OrderNavigationAdapter adapter = new OrderNavigationAdapter(fragmentManager, getLifecycle());
         viewPager2.setAdapter(adapter);
@@ -98,17 +102,6 @@ public class OrderNavigation extends Fragment {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
-
-        DbUser dbUser = new DbUser(view.getContext());
-        dbUser.open();
-        int role  = dbUser.getRole();
-
-        switch(role){
-            case 1:
-                break;
-            case 2:
-                break;
-        }
 
         return view;
     }

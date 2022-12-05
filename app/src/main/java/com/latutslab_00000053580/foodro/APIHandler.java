@@ -288,6 +288,7 @@ public class APIHandler {
                         for (int j = 0; j < details.length(); j++) {
                             JSONObject detail = details.getJSONObject(j);
                             JSONObject foodJson = detail.getJSONObject("food");
+
                             Food food = new Food(
                                     foodJson.getInt("food_id"),
                                     foodJson.getString("food_name"),
@@ -314,22 +315,19 @@ public class APIHandler {
                                 null
                         );
 
-                        orders.add(new Order(a.getInt("order_id"),
+                        orders.add(new Order(
+                                a.getInt("order_id"),
                                 customer,
                                 a.getString("orderDate"),
                                 orderDetails
                         ));
                     }
-//                    if(isInit){
-//                        Intent i = new Intent().setClass(context, MainActivity.class);
-//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-//                        context.startActivity(i);
-//                    }
+
                     if(orders.isEmpty()){
                         merchantRV.setVisibility(View.GONE);
                     }
 
-                    OrderAdapter orderAdapter = new OrderAdapter(orders);
+                    OrderAdapter orderAdapter = new OrderAdapter(context, orders);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     merchantRV.setLayoutManager(linearLayoutManager);
                     merchantRV.setAdapter(orderAdapter);
@@ -373,7 +371,7 @@ public class APIHandler {
     }
 
     // list semua order yang dibikin oleh customer (diliat sama customer)
-    public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV) {
+    public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV, boolean history) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderByCustomer.php", new Response.Listener<String>() {
@@ -394,22 +392,45 @@ public class APIHandler {
                         JSONArray details = a.getJSONArray("orderDetail");
 
                         for (int j = 0; j < details.length(); j++) {
+
                             JSONObject detail = details.getJSONObject(j);
                             JSONObject foodJson = detail.getJSONObject("food");
-                            Food food = new Food(
-                                    foodJson.getInt("food_id"),
-                                    foodJson.getString("food_name"),
-                                    foodJson.getInt("food_price"),
-                                    foodJson.getString("food_image"),
-                                    foodJson.getInt("merchant_id"),
-                                    foodJson.getInt("listed")
-                            );
-                            orderDetails.add(new OrderDetail(
-                                    a.getInt("order_id"),
-                                    food,
-                                    detail.getInt("status_id"),
-                                    detail.getInt("quantity")
-                            ));
+
+                            if(history == true){
+                                if(detail.getInt("status_id") == 3){
+                                    Food food = new Food(
+                                            foodJson.getInt("food_id"),
+                                            foodJson.getString("food_name"),
+                                            foodJson.getInt("food_price"),
+                                            foodJson.getString("food_image"),
+                                            foodJson.getInt("merchant_id"),
+                                            foodJson.getInt("listed")
+                                    );
+                                    orderDetails.add(new OrderDetail(
+                                            a.getInt("order_id"),
+                                            food,
+                                            detail.getInt("status_id"),
+                                            detail.getInt("quantity")
+                                    ));
+                                }
+                            }else {
+                                if(detail.getInt("status_id") == 2 || detail.getInt("status_id") == 1){
+                                    Food food = new Food(
+                                            foodJson.getInt("food_id"),
+                                            foodJson.getString("food_name"),
+                                            foodJson.getInt("food_price"),
+                                            foodJson.getString("food_image"),
+                                            foodJson.getInt("merchant_id"),
+                                            foodJson.getInt("listed")
+                                    );
+                                    orderDetails.add(new OrderDetail(
+                                            a.getInt("order_id"),
+                                            food,
+                                            detail.getInt("status_id"),
+                                            detail.getInt("quantity")
+                                    ));
+                                }
+                            }
                         }
                         JSONObject user = a.getJSONObject("merchant");
                         User customer = new User(
@@ -433,7 +454,13 @@ public class APIHandler {
 //                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 //                        context.startActivity(i);
 //                    }
-                    OrderAdapter orderAdapter = new OrderAdapter(orders);
+
+                    if(orders.isEmpty()){
+                        orderRV.setVisibility(View.GONE);
+                        return;
+                    }
+
+                    OrderAdapter orderAdapter = new OrderAdapter(context, orders);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     orderRV.setLayoutManager(linearLayoutManager);
                     orderRV.setAdapter(orderAdapter);
@@ -659,7 +686,7 @@ public class APIHandler {
     }
 
     // bikin orderan  baru (diliat sama customer)
-    public void createOrder(Context context, int userid, ArrayList<Integer> foodsid, ArrayList<Integer> quantity, Bitmap proof) {
+    public void createOrder(Context context, int userid, ArrayList<Cart> cartArrayList, Bitmap proof) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String img = encodeImage(proof);
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createOrder.php", new Response.Listener<String>() {
@@ -685,6 +712,8 @@ public class APIHandler {
 //                        a.getInt("orderDate")
 //                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                        Date birthDate = sdf.parse(a.getString("orderDate"));
+
+                    Toast.makeText(context, "Thanks you for your purchase!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -701,9 +730,11 @@ public class APIHandler {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", Integer.toString(userid));
-                for (int i = 0; i < foodsid.size(); i++) {
-                    params.put("food_id[]", Integer.toString(foodsid.get(i)));
-                    params.put("quantity[]", Integer.toString(quantity.get(i)));
+                for (int i = 0; i < cartArrayList.size(); i++) {
+                    Cart curCart = cartArrayList.get(i);
+
+                    params.put("food_id[]", Integer.toString(curCart.getItemID()));
+                    params.put("quantity[]", Integer.toString(curCart.getQuantity()));
                 }
                 params.put("proof", img);
                 return params;

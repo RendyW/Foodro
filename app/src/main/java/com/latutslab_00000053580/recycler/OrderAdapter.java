@@ -1,5 +1,6 @@
 package com.latutslab_00000053580.recycler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
     private final ArrayList<Order> orderArrayList;
+    private final Context context;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -42,7 +44,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         }
     }
 
-    public OrderAdapter(ArrayList<Order> orderArrayList) {
+    public OrderAdapter(Context context, ArrayList<Order> orderArrayList) {
+        this.context = context;
         this.orderArrayList = orderArrayList;
     }
 
@@ -67,6 +70,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         viewHolder.orderItem.setText(model.getOrderDetailStr());
         viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
         viewHolder.orderID.setText(Integer.toString(model.getId()));
+
+        //todo rubah nama button sesuai order status
+
+        viewHolder.btnReady.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

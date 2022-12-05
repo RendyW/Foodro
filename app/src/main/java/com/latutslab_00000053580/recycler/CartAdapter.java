@@ -1,8 +1,10 @@
 package com.latutslab_00000053580.recycler;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.latutslab_00000053580.foodro.Cart;
 import com.latutslab_00000053580.foodro.Food;
 import com.latutslab_00000053580.foodro.OrderDetail;
+import com.latutslab_00000053580.foodro_home.BasketUser;
 import com.latutslab_00000053580.foodro_home.R;
 import com.latutslab_00000053580.sqlite.DbCart;
 import com.squareup.picasso.Picasso;
@@ -117,7 +120,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 alert.show();
                 }
 
-                viewHolder.basketQty.setText(String.valueOf(dbCart.getQty(model.getItemID())));
+                int updatedQty = dbCart.getQty(model.getItemID());
+
+                viewHolder.basketQty.setText(String.valueOf(updatedQty));
+                viewHolder.basketTotal.setText(String.valueOf(updatedQty * model.getPrice()));
             }
         });
 
@@ -125,8 +131,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 dbCart.addCartQty(model.getItemID());
-                viewHolder.basketQty.setText(String.valueOf(dbCart.getQty(model.getItemID())));
-//                notifyDataSetChanged();
+                int updatedQty = dbCart.getQty(model.getItemID());
+
+                viewHolder.basketQty.setText(String.valueOf(updatedQty));
+                viewHolder.basketTotal.setText(String.valueOf(updatedQty * model.getPrice()));
             }
         });
 

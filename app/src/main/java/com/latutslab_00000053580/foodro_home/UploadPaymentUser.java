@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Cart;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.foodro_user.HomeUser;
 import com.latutslab_00000053580.sqlite.DbCart;
+import com.latutslab_00000053580.sqlite.DbUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,9 +54,21 @@ public class UploadPaymentUser extends AppCompatActivity {
 
                 dbCart.open();
                 ArrayList<Cart> cartArrayList = dbCart.getCartList();
+
+                DbUser dbUser = new DbUser(getApplicationContext());
+                dbUser.open();
+                int userID = dbUser.getID();
+                dbUser.close();
                 // TODO: use for loop to iterate cartArrayList
                 // TODO: isi createOrder
-//                handler.createOrder(getApplicationContext(), );
+
+                dbCart.clearCart();
+                dbCart.close();
+
+                handler.createOrder(getApplicationContext(), userID, cartArrayList,  photo);
+
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
     }
