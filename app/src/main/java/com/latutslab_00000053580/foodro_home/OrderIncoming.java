@@ -80,7 +80,7 @@ public class OrderIncoming extends Fragment {
         APIHandler handler = new APIHandler();
 
         if(user_role == 1){
-            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV, false);
+            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV, false, orderIncomingCard);
         } else if(user_role == 2){
             handler.getOrderMerchant(getContext(), user_id, orderIncomingRV, false, orderIncomingCard);
         }

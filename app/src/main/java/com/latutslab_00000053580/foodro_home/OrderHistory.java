@@ -79,14 +79,11 @@ public class OrderHistory extends Fragment {
         APIHandler handler = new APIHandler();
 
         if(user_role == 1){
-            handler.getOrderByCustomer(getContext(), user_id, orderHistoryRV, true);
+            handler.getOrderByCustomer(getContext(), user_id, orderHistoryRV, true, orderHistoryCard);
         } else if(user_role == 2){
             handler.getOrderMerchant(getContext(), user_id, orderHistoryRV, true, orderHistoryCard);
         }
 
-        if(orderHistoryRV.getVisibility() == View.GONE){
-            orderHistoryCard.setVisibility(View.VISIBLE);
-        }
 
         return view;    }
 }

@@ -48,7 +48,6 @@ public class APIHandler {
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "login.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
                     int isSuccess = respObj.getInt("success");
@@ -150,9 +149,7 @@ public class APIHandler {
 //                            a.getInt("role_id"),
 //                            a.getInt("active")
 
-                    if (isSuccess == 1) {
 
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -161,7 +158,8 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error, please check your connection" + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Nullable
@@ -194,7 +192,6 @@ public class APIHandler {
         StringRequest sr = new StringRequest(Request.Method.GET, endpoint + "getAllMerchant.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
                     //String success = respObj.getString("success");
@@ -237,9 +234,6 @@ public class APIHandler {
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapter);
 
-                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-                    Log.i("VOLLEYDONE", "DONE");
-
 //                    if(isInit){
 //                        Intent i = new Intent().setClass(context, MainActivity.class);
 //                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -258,7 +252,9 @@ public class APIHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Error, please check your connection", Toast.LENGTH_SHORT).show();
+
             }
         });
         queue.add(sr);
@@ -271,7 +267,6 @@ public class APIHandler {
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
                 ArrayList<Order> orders = new ArrayList<Order>();
                 try {
                     Log.i("JALAN", "2");
@@ -345,7 +340,7 @@ public class APIHandler {
                                         orderDetails
                                 ));
                             }
-                        }else {
+                        } else {
                             if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
                                 JSONObject user = a.getJSONObject("user");
                                 User customer = new User(
@@ -385,7 +380,6 @@ public class APIHandler {
                             orderRV.setAdapter(orderAdapter);
                         }
 
-                        Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                         Log.i("VOLLEYDONE", "DONE");
                     }
 
@@ -400,7 +394,13 @@ public class APIHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                if (error.networkResponse.statusCode == 404) {
+                    Toast.makeText(context, "You don't have any order yet", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_SHORT).show();
+                }
+
             }
         }) {
             @Nullable
@@ -422,13 +422,13 @@ public class APIHandler {
     }
 
     // list semua order yang dibikin oleh customer (diliat sama customer)
-    public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV, boolean history) {
+    public void getOrderByCustomer(Context context, int user_id, RecyclerView orderRV, boolean history, CardView cardView) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderByCustomer.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
                 ArrayList<Order> orders = new ArrayList<Order>();
                 try {
                     Log.i("JALAN", "2");
@@ -502,7 +502,7 @@ public class APIHandler {
                                         orderDetails
                                 ));
                             }
-                        }else {
+                        } else {
                             if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
                                 JSONObject user = a.getJSONObject("merchant");
                                 User customer = new User(
@@ -526,6 +526,7 @@ public class APIHandler {
 
                     if (orders.isEmpty()) {
                         orderRV.setVisibility(View.GONE);
+                        cardView.setVisibility(View.VISIBLE);
                         return;
                     }
 
@@ -544,7 +545,7 @@ public class APIHandler {
                         orderRV.setAdapter(orderAdapter);
                     }
 
-                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {
                     Log.i("JALAN", "3");
@@ -557,7 +558,11 @@ public class APIHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                if (error.networkResponse.statusCode == 404) {
+                    Toast.makeText(context, "You don't have any order yet", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                }
             }
         }) {
             @Nullable
@@ -649,17 +654,15 @@ public class APIHandler {
                     e.printStackTrace();
                     Log.i("VOLLEYERROCATCH", e.toString());
                 }
-                // TODO: seting recyclerviewnya
-//                OrderAdapter orderAdapter = new OrderAdapter(foods);
-//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-//                foodRV.setLayoutManager(linearLayoutManager);
-//                foodRV.setAdapter(orderAdapter);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_SHORT).show();
+
             }
         });
         queue.add(sr);
@@ -741,7 +744,7 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Fail!, Please check your connection" + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Nullable
@@ -772,7 +775,7 @@ public class APIHandler {
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "createOrder.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Order is placed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Order is placed", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject respObj = new JSONObject(response);
 
@@ -802,7 +805,7 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Fail to create food = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Fail!, Please check your connection" + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Nullable
@@ -963,7 +966,7 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Fail to delete food: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Fail!, Please check your connection" + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Nullable
