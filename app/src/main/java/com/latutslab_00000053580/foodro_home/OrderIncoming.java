@@ -78,15 +78,15 @@ public class OrderIncoming extends Fragment {
         dbUser.close();
         APIHandler handler = new APIHandler();
 
-//        if(user_role == 1){
-//            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV);
-//        } else if(user_role == 2){
-//            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV);
-//        }
-//
-//        if(orderIncomingRV.getVisibility() == View.GONE){
-//            orderIncomingCard.setVisibility(View.VISIBLE);
-//        }
+        if(user_role == 1){
+            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV);
+        } else if(user_role == 2){
+            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV);
+        }
+
+        if(orderIncomingRV.getVisibility() == View.GONE){
+            orderIncomingCard.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

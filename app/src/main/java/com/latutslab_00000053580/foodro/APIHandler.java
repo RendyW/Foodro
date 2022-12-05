@@ -411,7 +411,7 @@ public class APIHandler {
                                     detail.getInt("quantity")
                             ));
                         }
-                        JSONObject user = a.getJSONObject("user");
+                        JSONObject user = a.getJSONObject("merchant");
                         User customer = new User(
                                 user.getInt("user_id"),
                                 user.getString("firstname"),
