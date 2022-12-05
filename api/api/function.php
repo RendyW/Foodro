@@ -195,7 +195,7 @@ function getFoodByMerchant($connection, $merchant_id)
 }
 
 function getFoodById($connection, $food_id)
-{
+{   
     $result = mysqli_query($connection, "SELECT * FROM Food WHERE food_id=$food_id");
     $response = array();
     if (mysqli_num_rows($result) > 0) {
@@ -546,13 +546,13 @@ function updateFood($connection, $food_id, $food_name, $food_price, $food_image)
         $q = $connection->prepare("UPDATE Food SET
         food_name = ?,
         food_price = ?,
-        food_image = ?,
+        food_image = ?
         WHERE food_id = ?");
         $q->bind_param("sisi", $food_name, $food_price, $serverdir, $food_id);
         $q->execute();
         // mysqli_query($connection, "INSERT INTO Food VALUES (NULL, '$food_name', $food_price, '$food_image', $merchant_id)");
         if ($q->affected_rows > 0) {
-            return getFoodById($connection, $food_id);
+            return getFoodById($connection, intval($food_id));
         } else {
             throw new Exception("No data updated", 520);
         }
@@ -560,7 +560,7 @@ function updateFood($connection, $food_id, $food_name, $food_price, $food_image)
         $response["success"] = 0;
         $response["message"] = $e->getMessage();
         $response["code"] = $e->getCode();
-        http_response_code($e->getCode());
+        // http_response_code($e->getCode());
         return json_encode($response);
     }
 }
@@ -612,7 +612,7 @@ function deleteUser($connection, $user_id)
 function deleteFood($connection, $food_id)
 {
     try {
-        mysqli_query($connection, "UPDATE food SET listed = FALSE WHERE food_id = $food_id AND listed = TRUE");
+        mysqli_query($connection, "UPDATE food SET listed = 0 WHERE food_id = $food_id AND listed = 1");
         if (mysqli_affected_rows($connection)) {
             $response["success"] = 1;
             $response["message"] = "OK";
