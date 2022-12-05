@@ -1,5 +1,6 @@
 package com.latutslab_00000053580.recycler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
 
@@ -17,7 +19,8 @@ import java.util.ArrayList;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private final ArrayList<Order> orderArrayList;
-
+    private final Context context;
+    APIHandler handler = new APIHandler();
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -41,7 +44,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         }
     }
 
-    public HistoryAdapter(ArrayList<Order> orderArrayList) {
+    public HistoryAdapter(Context context,ArrayList<Order> orderArrayList) {
+        this.context = context;
         this.orderArrayList = orderArrayList;
     }
 
@@ -61,12 +65,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Order model = orderArrayList.get(position);
-
-        viewHolder.orderBuyer.setText(model.getCustomer().getFirstname() + " " + model.getCustomer().getLastname());
+        Order model = orderArrayList.get(viewHolder.getBindingAdapterPosition());
+        viewHolder.orderBuyer.setText(model.getCustomer().getFullName());
         viewHolder.orderItem.setText(model.getOrderDetailStr());
-        viewHolder.orderTotal.setText("Total: Rp" + model.getOrderDetailTotal());
-        viewHolder.orderID.setText(model.getId());
+        viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
+        viewHolder.orderID.setText(Integer.toString(model.getId()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

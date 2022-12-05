@@ -32,6 +32,10 @@ public class Order {
         return orderDetails;
     }
 
+    public int getStatus(){
+        return this.getOrderDetails().get(0).getStatus();
+    }
+
     public String getOrderDetailStr(){
 
         StringBuilder orderStr = new StringBuilder();

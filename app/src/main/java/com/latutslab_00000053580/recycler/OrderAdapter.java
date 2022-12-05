@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
 
@@ -19,6 +20,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     private final ArrayList<Order> orderArrayList;
     private final Context context;
+    APIHandler handler = new APIHandler();
 
     /**
      * Provide a reference to the type of views that you are using
@@ -65,7 +67,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Order model = orderArrayList.get(position);
+        Order model = orderArrayList.get(viewHolder.getBindingAdapterPosition());
         viewHolder.orderBuyer.setText(model.getCustomer().getFullName());
         viewHolder.orderItem.setText(model.getOrderDetailStr());
         viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
@@ -76,6 +78,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         viewHolder.btnReady.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.updateStatus(context, model.getId(), model.getOrderDetails().get(0).getFood().getId(), model.getStatus()+1);
 
             }
         });

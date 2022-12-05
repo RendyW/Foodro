@@ -79,9 +79,9 @@ public class OrderIncoming extends Fragment {
         APIHandler handler = new APIHandler();
 
         if(user_role == 1){
-            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV, true);
+            handler.getOrderByCustomer(getContext(), user_id, orderIncomingRV, false);
         } else if(user_role == 2){
-            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV);
+            handler.getOrderMerchant(getContext(), user_id, orderIncomingRV, false);
         }
 
         if(orderIncomingRV.getVisibility() == View.GONE){

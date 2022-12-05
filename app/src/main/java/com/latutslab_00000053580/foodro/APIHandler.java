@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.latutslab_00000053580.foodro_home.MainActivity;
+import com.latutslab_00000053580.recycler.HistoryAdapter;
 import com.latutslab_00000053580.recycler.MenuAdapter;
 import com.latutslab_00000053580.recycler.MenuUserAdapter;
 import com.latutslab_00000053580.recycler.MerchantAdapter;
@@ -264,15 +265,14 @@ public class APIHandler {
     }
 
     // list semua incoming order (diliat sama merchant)
-    public void getOrderMerchant(Context context, int merchant_id, RecyclerView merchantRV) {
+    public void getOrderMerchant(Context context, int merchant_id, RecyclerView orderRV, boolean history) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        Log.i("JALAN", "1");
-        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
-            ArrayList<Order> orders = new ArrayList<Order>();
 
+        StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+                ArrayList<Order> orders = new ArrayList<Order>();
                 try {
                     Log.i("JALAN", "2");
                     JSONObject respObj = new JSONObject(response);
@@ -286,56 +286,104 @@ public class APIHandler {
                         JSONArray details = a.getJSONArray("orderDetail");
 
                         for (int j = 0; j < details.length(); j++) {
+
                             JSONObject detail = details.getJSONObject(j);
                             JSONObject foodJson = detail.getJSONObject("food");
 
-                            Food food = new Food(
-                                    foodJson.getInt("food_id"),
-                                    foodJson.getString("food_name"),
-                                    foodJson.getInt("food_price"),
-                                    foodJson.getString("food_image"),
-                                    foodJson.getInt("merchant_id"),
-                                    foodJson.getInt("listed")
-                            );
-                            orderDetails.add(new OrderDetail(
-                                    a.getInt("order_id"),
-                                    food,
-                                    detail.getInt("status_id"),
-                                    detail.getInt("quantity")
-                            ));
+                            if (history) {
+                                if (details.getJSONObject(0).getInt("status_id") == 3) {
+                                    Food food = new Food(
+                                            foodJson.getInt("food_id"),
+                                            foodJson.getString("food_name"),
+                                            foodJson.getInt("food_price"),
+                                            foodJson.getString("food_image"),
+                                            foodJson.getInt("merchant_id"),
+                                            foodJson.getInt("listed")
+                                    );
+                                    orderDetails.add(new OrderDetail(
+                                            a.getInt("order_id"),
+                                            food,
+                                            detail.getInt("status_id"),
+                                            detail.getInt("quantity")
+                                    ));
+                                }
+                            } else {
+                                if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
+                                    Food food = new Food(
+                                            foodJson.getInt("food_id"),
+                                            foodJson.getString("food_name"),
+                                            foodJson.getInt("food_price"),
+                                            foodJson.getString("food_image"),
+                                            foodJson.getInt("merchant_id"),
+                                            foodJson.getInt("listed")
+                                    );
+                                    orderDetails.add(new OrderDetail(
+                                            a.getInt("order_id"),
+                                            food,
+                                            detail.getInt("status_id"),
+                                            detail.getInt("quantity")
+                                    ));
+                                }
+                            }
                         }
-                        JSONObject user = a.getJSONObject("user");
-                        User customer = new User(
-                                user.getInt("user_id"),
-                                user.getString("firstname"),
-                                user.getString("lastname"),
-                                user.getString("email"),
-                                1,
-                                user.getInt("active"),
-                                null
-                        );
 
-                        orders.add(new Order(
-                                a.getInt("order_id"),
-                                customer,
-                                a.getString("orderDate"),
-                                orderDetails
-                        ));
+                        if (history) {
+                            if (details.getJSONObject(0).getInt("status_id") == 3) {
+                                JSONObject user = a.getJSONObject("user");
+                                User customer = new User(
+                                        user.getInt("user_id"),
+                                        user.getString("firstname"),
+                                        user.getString("lastname"),
+                                        user.getString("email"),
+                                        1,
+                                        user.getInt("active"),
+                                        null
+                                );
+                                orders.add(new Order(a.getInt("order_id"),
+                                        customer,
+                                        a.getString("orderDate"),
+                                        orderDetails
+                                ));
+                            }
+                        }else {
+                            if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
+                                JSONObject user = a.getJSONObject("user");
+                                User customer = new User(
+                                        user.getInt("user_id"),
+                                        user.getString("firstname"),
+                                        user.getString("lastname"),
+                                        user.getString("email"),
+                                        1,
+                                        user.getInt("active"),
+                                        null
+                                );
+                                orders.add(new Order(a.getInt("order_id"),
+                                        customer,
+                                        a.getString("orderDate"),
+                                        orderDetails
+                                ));
+                            }
+                        }
+                    }
+                    if (orders.isEmpty()) {
+                        Log.i("NOORDER", "NOORDER");
+                        orderRV.setVisibility(View.GONE);
+                        return;
                     }
 
-                    if(orders.isEmpty()){
-                        merchantRV.setVisibility(View.GONE);
-                    }
-
-                    OrderAdapter orderAdapter = new OrderAdapter(context, orders);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                    merchantRV.setLayoutManager(linearLayoutManager);
-                    merchantRV.setAdapter(orderAdapter);
+                    orderRV.setLayoutManager(linearLayoutManager);
+
+                    if (history) {
+                        HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
+                        orderRV.setAdapter(historyAdapter);
+                    } else {
+                        OrderAdapter orderAdapter = new OrderAdapter(context, orders);
+                        orderRV.setAdapter(orderAdapter);
+                    }
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
-
-
                 } catch (JSONException e) {
                     Log.i("JALAN", "3");
                     e.printStackTrace();
@@ -346,10 +394,8 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("JALAN", "4");
-
-//                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                Toast.makeText(context, "Fail to get response = " + error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Nullable
@@ -396,8 +442,8 @@ public class APIHandler {
                             JSONObject detail = details.getJSONObject(j);
                             JSONObject foodJson = detail.getJSONObject("food");
 
-                            if(history == true){
-                                if(detail.getInt("status_id") == 3){
+                            if (history) {
+                                if (details.getJSONObject(0).getInt("status_id") == 3) {
                                     Food food = new Food(
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
@@ -413,8 +459,8 @@ public class APIHandler {
                                             detail.getInt("quantity")
                                     ));
                                 }
-                            }else {
-                                if(detail.getInt("status_id") == 2 || detail.getInt("status_id") == 1){
+                            } else {
+                                if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
                                     Food food = new Food(
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
@@ -432,38 +478,62 @@ public class APIHandler {
                                 }
                             }
                         }
-                        JSONObject user = a.getJSONObject("merchant");
-                        User customer = new User(
-                                user.getInt("user_id"),
-                                user.getString("firstname"),
-                                user.getString("lastname"),
-                                user.getString("email"),
-                                1,
-                                user.getInt("active"),
-                                null
-                        );
 
-                        orders.add(new Order(a.getInt("order_id"),
-                                customer,
-                                a.getString("orderDate"),
-                                orderDetails
-                        ));
+                        if (history) {
+                            if (details.getJSONObject(0).getInt("status_id") == 3) {
+                                JSONObject user = a.getJSONObject("merchant");
+                                User customer = new User(
+                                        user.getInt("user_id"),
+                                        user.getString("firstname"),
+                                        user.getString("lastname"),
+                                        user.getString("email"),
+                                        1,
+                                        user.getInt("active"),
+                                        null
+                                );
+                                orders.add(new Order(a.getInt("order_id"),
+                                        customer,
+                                        a.getString("orderDate"),
+                                        orderDetails
+                                ));
+                            }
+                        }else {
+                            if (details.getJSONObject(0).getInt("status_id") == 2 || details.getJSONObject(0).getInt("status_id") == 1) {
+                                JSONObject user = a.getJSONObject("merchant");
+                                User customer = new User(
+                                        user.getInt("user_id"),
+                                        user.getString("firstname"),
+                                        user.getString("lastname"),
+                                        user.getString("email"),
+                                        1,
+                                        user.getInt("active"),
+                                        null
+                                );
+                                orders.add(new Order(a.getInt("order_id"),
+                                        customer,
+                                        a.getString("orderDate"),
+                                        orderDetails
+                                ));
+                            }
+                        }
+
                     }
-//                    if(isInit){
-//                        Intent i = new Intent().setClass(context, MainActivity.class);
-//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-//                        context.startActivity(i);
-//                    }
 
-                    if(orders.isEmpty()){
+                    if (orders.isEmpty()) {
                         orderRV.setVisibility(View.GONE);
                         return;
                     }
 
-                    OrderAdapter orderAdapter = new OrderAdapter(context, orders);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                     orderRV.setLayoutManager(linearLayoutManager);
-                    orderRV.setAdapter(orderAdapter);
+
+                    if (history) {
+                        HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
+                        orderRV.setAdapter(historyAdapter);
+                    } else {
+                        OrderAdapter orderAdapter = new OrderAdapter(context, orders);
+                        orderRV.setAdapter(orderAdapter);
+                    }
 
                     Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                     Log.i("VOLLEYDONE", "DONE");
@@ -543,12 +613,13 @@ public class APIHandler {
 //                            merchantJson.getString("image")
 //                    );
 
-                    if(foods.isEmpty()) {
+                    if (foods.isEmpty()) {
                         foodRV.setVisibility(View.GONE);
                         return;
-                    };
+                    }
+                    ;
 
-                    if(role == 1){
+                    if (role == 1) {
                         MenuUserAdapter menuUserAdapter = new MenuUserAdapter(context, merchant_id, foods);
                         foodRV.setLayoutManager(new GridLayoutManager(context, 2));
                         foodRV.setAdapter(menuUserAdapter);
@@ -556,7 +627,7 @@ public class APIHandler {
 
                         Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
                         Log.i("VOLLEYDONE", "DONE");
-                    } else if(role ==2){
+                    } else if (role == 2) {
 
 
                         MenuAdapter menuAdapter = new MenuAdapter(context, foods);
@@ -904,11 +975,11 @@ public class APIHandler {
         queue.add(sr);
     }
 
-    public String encodeImage(Bitmap bm){
+    public String encodeImage(Bitmap bm) {
         ByteArrayOutputStream ba = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, ba);
         byte[] imgByte = ba.toByteArray();
-        String encode = Base64.encodeToString(imgByte,Base64.DEFAULT);
+        String encode = Base64.encodeToString(imgByte, Base64.DEFAULT);
         return encode;
     }
 }
