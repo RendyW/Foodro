@@ -407,7 +407,7 @@ public class APIHandler {
                             orderDetails.add(new OrderDetail(
                                     a.getInt("order_id"),
                                     food,
-                                    a.getInt("status_id"),
+                                    detail.getInt("status_id"),
                                     detail.getInt("quantity")
                             ));
                         }
