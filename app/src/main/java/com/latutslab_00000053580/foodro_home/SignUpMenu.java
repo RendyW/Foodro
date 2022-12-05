@@ -26,7 +26,7 @@ public class SignUpMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 APIHandler handler = new APIHandler();
-                handler.register(getBaseContext(), 2,
+                handler.register(getBaseContext(), 1,
                         txtFirst.getText().toString(),
                         txtLast.getText().toString(),
                         txtPassword.getText().toString(),

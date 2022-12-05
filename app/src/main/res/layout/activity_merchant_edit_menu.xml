@@ -26,13 +26,6 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/addImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/nasigorengayam" />
-
         <EditText
             android:id="@+id/addName"
             android:layout_width="wrap_content"
@@ -52,8 +45,21 @@
             android:hint="Add Price"
             android:inputType="textPersonName" />
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="259dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <Button
             android:id="@+id/btnImage"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Choose Image" />
+
+        <Button
+            android:id="@+id/btnAddMenu2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
