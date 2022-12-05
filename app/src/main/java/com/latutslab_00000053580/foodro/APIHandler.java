@@ -265,7 +265,7 @@ public class APIHandler {
     }
 
     // list semua incoming order (diliat sama merchant)
-    public void getOrderMerchant(Context context, int merchant_id, RecyclerView orderRV, boolean history) {
+    public void getOrderMerchant(Context context, int merchant_id, RecyclerView orderRV, boolean history, CardView cardView) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, endpoint + "getOrderMerchant.php", new Response.Listener<String>() {
@@ -367,23 +367,28 @@ public class APIHandler {
                     }
                     if (orders.isEmpty()) {
                         Log.i("NOORDER", "NOORDER");
+                        cardView.setVisibility(View.VISIBLE);
                         orderRV.setVisibility(View.GONE);
-                        return;
-                    }
-
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-                    orderRV.setLayoutManager(linearLayoutManager);
-
-                    if (history) {
-                        HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
-                        orderRV.setAdapter(historyAdapter);
                     } else {
-                        OrderAdapter orderAdapter = new OrderAdapter(context, orders);
-                        orderRV.setAdapter(orderAdapter);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                        orderRV.setLayoutManager(linearLayoutManager);
+
+                        if (history) {
+                            HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
+                            orderRV.setAdapter(historyAdapter);
+                        } else {
+                            DbUser dbUser = new DbUser(context);
+                            dbUser.open();
+                            int role = dbUser.getRole();
+                            dbUser.close();
+                            OrderAdapter orderAdapter = new OrderAdapter(context, orders, role);
+                            orderRV.setAdapter(orderAdapter);
+                        }
+
+                        Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
+                        Log.i("VOLLEYDONE", "DONE");
                     }
 
-                    Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-                    Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {
                     Log.i("JALAN", "3");
                     e.printStackTrace();
@@ -531,7 +536,11 @@ public class APIHandler {
                         HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
                         orderRV.setAdapter(historyAdapter);
                     } else {
-                        OrderAdapter orderAdapter = new OrderAdapter(context, orders);
+                        DbUser dbUser = new DbUser(context);
+                        dbUser.open();
+                        int role = dbUser.getRole();
+                        dbUser.close();
+                        OrderAdapter orderAdapter = new OrderAdapter(context, orders, role);
                         orderRV.setAdapter(orderAdapter);
                     }
 

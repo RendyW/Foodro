@@ -94,6 +94,13 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtUserStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Foods being prepared in kitchen." />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

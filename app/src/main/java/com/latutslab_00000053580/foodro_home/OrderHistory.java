@@ -81,7 +81,7 @@ public class OrderHistory extends Fragment {
         if(user_role == 1){
             handler.getOrderByCustomer(getContext(), user_id, orderHistoryRV, true);
         } else if(user_role == 2){
-            handler.getOrderMerchant(getContext(), user_id, orderHistoryRV, true);
+            handler.getOrderMerchant(getContext(), user_id, orderHistoryRV, true, orderHistoryCard);
         }
 
         if(orderHistoryRV.getVisibility() == View.GONE){
