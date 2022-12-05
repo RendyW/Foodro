@@ -40,8 +40,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class APIHandler {
-    private String endpoint = "https://rajasaweek11.000webhostapp.com/api/";
-
+    private String endpoint = "https://foodro.000webhostapp.com/api/";
+    private String imageUrl = "https://foodro.000webhostapp.com/";
 
     public void login(Context context, String email, String password) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -66,7 +66,7 @@ public class APIHandler {
                             a.getString("email"),
                             a.getInt("role_id"),
                             a.getInt("active"),
-                            a.getString("image")
+                            imageUrl + a.getString("image")
                     );
 
                     DbUser dbUser = new DbUser(context);
@@ -212,7 +212,7 @@ public class APIHandler {
                                         a.getString("email"),
                                         a.getInt("role_id"),
                                         a.getInt("active"),
-                                        a.getString("image")
+                                        imageUrl + a.getString("image")
                                 )
                         );
                     }
@@ -296,7 +296,7 @@ public class APIHandler {
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
                                             foodJson.getInt("food_price"),
-                                            foodJson.getString("food_image"),
+                                            imageUrl + foodJson.getString("food_image"),
                                             foodJson.getInt("merchant_id"),
                                             foodJson.getInt("listed")
                                     );
@@ -313,7 +313,7 @@ public class APIHandler {
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
                                             foodJson.getInt("food_price"),
-                                            foodJson.getString("food_image"),
+                                            imageUrl + foodJson.getString("food_image"),
                                             foodJson.getInt("merchant_id"),
                                             foodJson.getInt("listed")
                                     );
@@ -453,7 +453,7 @@ public class APIHandler {
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
                                             foodJson.getInt("food_price"),
-                                            foodJson.getString("food_image"),
+                                            imageUrl + foodJson.getString("food_image"),
                                             foodJson.getInt("merchant_id"),
                                             foodJson.getInt("listed")
                                     );
@@ -470,7 +470,7 @@ public class APIHandler {
                                             foodJson.getInt("food_id"),
                                             foodJson.getString("food_name"),
                                             foodJson.getInt("food_price"),
-                                            foodJson.getString("food_image"),
+                                            imageUrl + foodJson.getString("food_image"),
                                             foodJson.getInt("merchant_id"),
                                             foodJson.getInt("listed")
                                     );
@@ -603,7 +603,7 @@ public class APIHandler {
                                             a.getInt("food_id"),
                                             a.getString("food_name"),
                                             a.getInt("food_price"),
-                                            a.getString("food_image"),
+                                            imageUrl + a.getString("food_image"),
                                             a.getInt("merchant_id"),
                                             a.getInt("listed")
                                     )
@@ -683,7 +683,7 @@ public class APIHandler {
                             a.getInt("food_id"),
                             a.getString("food_name"),
                             a.getInt("food_price"),
-                            a.getString("food_image"),
+                            imageUrl + a.getString("food_image"),
                             a.getInt("merchant_id"),
                             a.getInt("listed")
                     );

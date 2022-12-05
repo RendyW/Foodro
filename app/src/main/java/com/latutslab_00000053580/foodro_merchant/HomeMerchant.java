@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro_home.MerchantAddMenu;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.sqlite.DbUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,9 +82,14 @@ public class HomeMerchant extends Fragment {
 
         View view = inflater.inflate(R.layout.merchant_home, container, false);
 
+        DbUser dbuser = new DbUser(getContext());
+        dbuser.open();
+        int user_id = dbuser.getID();
+        dbuser.close();
+
         RecyclerView merchantRV = view.findViewById(R.id.menuRV);
         APIHandler handler = new APIHandler();
-        handler.getFoodByMerchant(getContext(), 5, merchantRV, 2);
+        handler.getFoodByMerchant(getContext(), user_id, merchantRV, 2);
 
         TextView txtNoFood = (TextView) view.findViewById(R.id.txtNoFood);
         txtNoFood.setVisibility(View.GONE);

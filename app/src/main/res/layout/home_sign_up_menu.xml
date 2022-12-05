@@ -138,6 +138,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <CheckBox
+                android:id="@+id/checkMerchant"
+                android:layout_width="379dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:text="Sign Up As Merchant" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSignup"
                 android:layout_width="match_parent"

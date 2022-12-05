@@ -21,7 +21,7 @@ CREATE TABLE Users (
     email VARCHAR(255) NOT NULL,
     image VARCHAR(255),
     role_id INT NOT NULL,
-    active BOOLEAN NOT NULL,
+    active TINYINT(1) NOT NULL,
     PRIMARY KEY (user_id),
     FOREIGN KEY (role_id) REFERENCES Roles(role_id),
     UNIQUE(email)
@@ -32,7 +32,7 @@ CREATE TABLE Food (
     food_price INT NOT NULL,
     food_image VARCHAR(300) NOT NULL,
     merchant_id INT NOT NULL,
-    listed BOOLEAN NOT NULL,
+    listed TINYINT(1) NOT NULL,
     PRIMARY KEY (food_id),
     FOREIGN KEY (merchant_id) REFERENCES Users(user_id)
 );
@@ -77,57 +77,57 @@ VALUES (NULL, "Admin");
 INSERT INTO Users
 VALUES (
         NULL,
-        "customer1",
-        "last",
+        "Rendy",
+        "W",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a.com",
         NULL,
         1,
-        TRUE
+        1
     );
 INSERT INTO Users
 VALUES (
         NULL,
-        "Customer2",
-        "last2",
+        "Darren",
+        "T",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a1.com",
         NULL,
         1,
-        TRUE
+        1
     );
 INSERT INTO Users
 VALUES (
         NULL,
-        "Customer3",
-        "last3",
+        "Vincent",
+        "C",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@a2.com",
         NULL,
         1,
-        TRUE
+        1
     );
 INSERT INTO Users
 VALUES (
         NULL,
-        "Merchant1",
-        "last4",
+        "Kantin",
+        "1",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@merchant.com",
         NULL,
         2,
-        TRUE
+        1
     );
 INSERT INTO Users
 VALUES (
         NULL,
-        "Merchant2",
-        "last5",
+        "Kantin",
+        "2",
         "1234567890qwertyuiopasdfghjkl;zxcvbnm,./1234567890-123456789",
         "email@merchant2.com",
         NULL,
         2,
-        TRUE
+        1
     );
 INSERT INTO Users
 VALUES (
@@ -138,7 +138,7 @@ VALUES (
         "email@admin.com",
         NULL,
         3,
-        TRUE
+        1
     );
 INSERT INTO Status
 VALUES (NULL, "Pending");
@@ -154,25 +154,25 @@ VALUES (
         "2000",
         "images/1.jpg",
         4,
-        TRUE
+        1
     );
 INSERT INTO Food
 VALUES (
         NULL,
-        "Bakso kiloan",
+        "Bakso Kuah",
         "9000",
         "images/2.jpg",
         5,
-        TRUE
+        1
     );
 INSERT INTO Food
 VALUES (
         NULL,
-        "Nasi Rebus",
+        "Nasi Goreng",
         "15000",
         "images/3.jpg",
         4,
-        TRUE
+        1
     );
 
 INSERT INTO Orders VALUES (NULL, 1, NOW());

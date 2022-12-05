@@ -1,8 +1,10 @@
 package com.latutslab_00000053580.foodro_home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -70,11 +72,24 @@ public class ProfileUser extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbUser dbUser = new DbUser(view.getContext());
-                dbUser.open();
-                dbUser.logout();
-                dbUser.close();
-                startActivity(new Intent(view.getContext(), Account_Setup.class));
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Logout?")
+                        .setMessage("Are you sure you want to log out?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                DbUser dbUser = new DbUser(view.getContext());
+                                dbUser.open();
+                                dbUser.logout();
+                                dbUser.close();
+                                startActivity(new Intent(view.getContext(), Account_Setup.class));
+                            }
+                        })
+
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
             }
         });
 
