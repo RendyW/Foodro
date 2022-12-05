@@ -34,12 +34,12 @@ public class MerchantAddMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_add_menu);
-        btnAdd.setEnabled(false);
         EditText addName = (EditText) findViewById(R.id.addName);
         EditText addPrice = (EditText) findViewById(R.id.addPrice);
         image = (ImageView) findViewById(R.id.image);
         Button btnChoose = findViewById(R.id.btnImage);
         btnAdd = (Button) findViewById(R.id.btnAddMenu2);
+        btnAdd.setEnabled(false);
 
         DbUser dbUser = new DbUser(getApplicationContext());
         dbUser.open();

@@ -6,8 +6,8 @@
     tools:context=".OrderIncoming">
 
 <!--    <ScrollView-->
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
     <ScrollView
         android:layout_width="match_parent"
