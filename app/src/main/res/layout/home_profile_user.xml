@@ -140,19 +140,6 @@
 
 
             <Button
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:background="#FFFFFF"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/btnEditProfile"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Edit Profile"
-                android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
-                />
-
-            <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
