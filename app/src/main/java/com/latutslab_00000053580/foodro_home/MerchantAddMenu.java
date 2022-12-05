@@ -26,18 +26,20 @@ public class MerchantAddMenu extends AppCompatActivity {
     Bitmap photo;
     APIHandler handler = new APIHandler();
     ImageView image;
+    Button btnAdd;
     private final int IMG_REQUEST = 1111;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant_add_menu);
-
+        btnAdd.setEnabled(false);
         EditText addName = (EditText) findViewById(R.id.addName);
         EditText addPrice = (EditText) findViewById(R.id.addPrice);
         image = (ImageView) findViewById(R.id.image);
         Button btnChoose = findViewById(R.id.btnImage);
-        Button btnAdd = (Button) findViewById(R.id.btnAddMenu2);
+        btnAdd = (Button) findViewById(R.id.btnAddMenu2);
 
         DbUser dbUser = new DbUser(getApplicationContext());
         dbUser.open();
@@ -79,6 +81,7 @@ public class MerchantAddMenu extends AppCompatActivity {
             try{
                 photo = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
                 image.setImageBitmap(photo);
+                btnAdd.setEnabled(true);
             }catch(IOException e){
                 Log.e("CHOOSEIMG",  e.toString());
             }
