@@ -639,8 +639,6 @@ public class APIHandler {
                         foodRV.setAdapter(menuUserAdapter);
 
 
-                        Toast.makeText(context, "Complete", Toast.LENGTH_SHORT).show();
-                        Log.i("VOLLEYDONE", "DONE");
                     } else if (role == 2) {
 
 
@@ -649,7 +647,7 @@ public class APIHandler {
                         foodRV.setLayoutManager(linearLayoutManager);
                         foodRV.setAdapter(menuAdapter);
                     }
-
+                    Log.i("VOLLEYDONE", "DONE");
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.i("VOLLEYERROCATCH", e.toString());
@@ -661,8 +659,11 @@ public class APIHandler {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
 //                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_SHORT).show();
-
+                if (error.networkResponse.statusCode == 404) {
+                    Toast.makeText(context, "No food yet", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                }
             }
         });
         queue.add(sr);
