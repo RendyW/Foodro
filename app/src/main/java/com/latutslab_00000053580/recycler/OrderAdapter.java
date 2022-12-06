@@ -87,6 +87,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             viewHolder.txtUserStatus.setVisibility(View.VISIBLE);
             viewHolder.txtUserStatus.setText(model.getStatusString());
         }else{
+            viewHolder.txtUserStatus.setVisibility(View.GONE );
             viewHolder.btnReady.setText(model.getStatusStringMerchant());
         }
 

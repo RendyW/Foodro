@@ -836,12 +836,15 @@ public class APIHandler {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", Integer.toString(userid));
+
+
                 for (int i = 0; i < cartArrayList.size(); i++) {
                     Cart curCart = cartArrayList.get(i);
 
-                    params.put("food_id[]", Integer.toString(curCart.getItemID()));
-                    params.put("quantity[]", Integer.toString(curCart.getQuantity()));
+                    params.put("food_id["+i+"]", Integer.toString(curCart.getItemID()));
+                    params.put("quantity["+i+"]", Integer.toString(curCart.getQuantity()));
                 }
+
                 params.put("proof", img);
                 return params;
             }

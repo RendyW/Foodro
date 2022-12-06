@@ -37,7 +37,7 @@ public class OrderDetail implements Serializable {
 
 
     public int calculateTotalPayment(){
-        return quantity* this.getFood().getPrice();
+        return quantity * this.getFood().getPrice();
     }
 }
 
