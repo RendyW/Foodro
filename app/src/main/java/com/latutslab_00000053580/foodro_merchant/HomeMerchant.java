@@ -81,10 +81,12 @@ public class HomeMerchant extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.merchant_home, container, false);
+        TextView txtUser = view.findViewById(R.id.textUsername);
 
         DbUser dbuser = new DbUser(getContext());
         dbuser.open();
         int user_id = dbuser.getID();
+        txtUser.setText(dbuser.getName());
         dbuser.close();
 
         RecyclerView merchantRV = view.findViewById(R.id.menuRV);

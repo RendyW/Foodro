@@ -11,6 +11,8 @@ import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 public class DetailTransactionUser extends AppCompatActivity {
 
     @Override
@@ -30,6 +32,7 @@ public class DetailTransactionUser extends AppCompatActivity {
         TextView detailName = (TextView) findViewById(R.id.detailName);
         TextView detailPrice = (TextView) findViewById(R.id.detailPrice);
         TextView detailTotal = (TextView) findViewById(R.id.detailTotal);
+        TextView detailDate = findViewById(R.id.txtDate);
 
         detailMerchant.setText(order.getCustomer().getFullName());
         detailStatus.setText(order.getStatusString());
@@ -37,5 +40,6 @@ public class DetailTransactionUser extends AppCompatActivity {
         detailName.setText(order.getOrderName());
         detailPrice.setText(order.getOrderPrice());
         detailTotal.setText(String.valueOf(order.getOrderDetailTotal()));
+        detailDate.setText(order.getDateTime());
     }
 }

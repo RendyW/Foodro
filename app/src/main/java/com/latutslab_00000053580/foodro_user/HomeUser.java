@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.User;
 import com.latutslab_00000053580.foodro_home.BasketUser;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.sqlite.DbUser;
 
 import java.util.ArrayList;
 
@@ -72,7 +74,12 @@ public class HomeUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.user_home, container, false);
+        DbUser dbUser = new DbUser(getContext());
+        dbUser.open();
 
+        TextView txtUser = view.findViewById(R.id.textUsername);
+        txtUser.setText(dbUser.getName());
+        dbUser.close();
         FloatingActionButton fabCart = (FloatingActionButton) view.findViewById(R.id.fabCart);
         fabCart.bringToFront();
         fabCart.setOnClickListener(new View.OnClickListener() {
