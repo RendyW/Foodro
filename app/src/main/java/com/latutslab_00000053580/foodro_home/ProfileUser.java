@@ -8,10 +8,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.latutslab_00000053580.sqlite.DbUser;
 
@@ -67,6 +69,13 @@ public class ProfileUser extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.home_profile_user, container, false);
+
+        TextView fullname = view.findViewById(R.id.fullname);
+        DbUser dbuser = new DbUser(getContext());
+        dbuser.open();
+        String name = dbuser.getName();
+        dbuser.close();
+        fullname.setText(name);
 
         Button btnLogout = (Button) view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
