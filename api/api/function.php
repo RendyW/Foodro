@@ -278,7 +278,8 @@ function getOrderByCustomer($connection, $user_id)
     Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.image, Users.active FROM Orders
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
     INNER JOIN Food ON OrderDetail.food_id = Food.food_id 
-    INNER JOIN Users ON Food.merchant_id = Users.user_id WHERE Orders.user_id = $user_id");
+    INNER JOIN Users ON Food.merchant_id = Users.user_id WHERE Orders.user_id = $user_id
+    ORDER BY Orders.order_id ASC");
 
     $response = array();
 
@@ -347,7 +348,8 @@ function getOrderMerchant($connection, $merchant_id)
     Orders.user_id, Orders.orderDate, Users.firstname, Users.lastname, Users.email, Users.active FROM Orders
     INNER JOIN Users ON Orders.user_id = Users.user_id
     INNER JOIN OrderDetail ON Orders.order_id = OrderDetail.order_id
-    INNER JOIN Food ON OrderDetail.food_id = Food.food_id WHERE Food.merchant_id = $merchant_id");
+    INNER JOIN Food ON OrderDetail.food_id = Food.food_id WHERE Food.merchant_id = $merchant_id
+    ORDER BY Orders.order_id ASC");
 
     $response = array();
 

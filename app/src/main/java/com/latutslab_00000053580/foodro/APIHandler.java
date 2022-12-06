@@ -674,9 +674,10 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
 //                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
                 try{
+                    Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+
                     if (error.networkResponse.statusCode == 404) {
                         Toast.makeText(context, "No food yet", Toast.LENGTH_SHORT).show();
                     } else {
