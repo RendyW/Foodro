@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
+import com.squareup.picasso.Picasso;
 
 public class DetailTransactionUser extends AppCompatActivity {
 
@@ -18,6 +20,9 @@ public class DetailTransactionUser extends AppCompatActivity {
 
         Intent intent = getIntent();
         Order order = (Order) intent.getSerializableExtra("order");
+
+        ImageView detailImage = (ImageView) findViewById(R.id.detailImage);
+        Picasso.get().load(order.getCustomer().getImage()).fit().centerCrop().into(detailImage);
 
         TextView detailMerchant = (TextView) findViewById(R.id.detailMerchant);
         TextView detailStatus = (TextView) findViewById(R.id.detailStatus);
