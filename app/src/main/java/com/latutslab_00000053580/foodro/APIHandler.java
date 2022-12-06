@@ -256,9 +256,14 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+                try{
+                    Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
 //                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-                Toast.makeText(context, "Error, please check your connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error, please check your connection", Toast.LENGTH_SHORT).show();
+
+                }catch (Exception e){
+                    Toast.makeText(context, "Unknow Error: " + error, Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -398,12 +403,15 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-//                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-                if (error.networkResponse.statusCode == 404) {
-                    Toast.makeText(context, "You don't have any order yet", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_SHORT).show();
+                try {
+
+                    if (error.networkResponse.statusCode == 400) {
+                        Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    } else if (error.networkResponse.statusCode == 401) {
+                        Toast.makeText(context, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Uknown Error:" + e, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -562,12 +570,17 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
-                if (error.networkResponse.statusCode == 404) {
-                    Toast.makeText(context, "You don't have any order yet", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                try{
+                    Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
+                    if (error.networkResponse.statusCode == 404) {
+                        Toast.makeText(context, "You don't have any order yet", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(context, "Unknown Error" + error.toString(), Toast.LENGTH_LONG).show();
                 }
+
             }
         }) {
             @Nullable
@@ -663,12 +676,16 @@ public class APIHandler {
             public void onErrorResponse(VolleyError error) {
                 Log.i("VOLLEY", String.valueOf(error.networkResponse.statusCode));
 //                Toast.makeText(context, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-
-                if (error.networkResponse.statusCode == 404) {
-                    Toast.makeText(context, "No food yet", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                try{
+                    if (error.networkResponse.statusCode == 404) {
+                        Toast.makeText(context, "No food yet", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Please check your connection" + error, Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(context, "Unknow Error: " + error, Toast.LENGTH_LONG).show();
                 }
+
             }
         });
         queue.add(sr);
