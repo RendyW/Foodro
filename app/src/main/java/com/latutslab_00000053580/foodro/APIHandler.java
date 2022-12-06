@@ -95,13 +95,18 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error.networkResponse.statusCode == 400) {
-                    Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show();
-                } else if (error.networkResponse.statusCode == 401) {
-                    Toast.makeText(context, "Wrong email or password", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Uknown Error:" + error.toString(), Toast.LENGTH_SHORT).show();
+                try {
+
+                    if (error.networkResponse.statusCode == 400) {
+                        Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    } else if (error.networkResponse.statusCode == 401) {
+                        Toast.makeText(context, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Uknown Error:" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         }) {
             @Nullable
@@ -372,11 +377,11 @@ public class APIHandler {
                             HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
                             orderRV.setAdapter(historyAdapter);
                         } else {
-                            DbUser dbUser = new DbUser(context);
-                            dbUser.open();
-                            int role = dbUser.getRole();
-                            dbUser.close();
-                            OrderAdapter orderAdapter = new OrderAdapter(context, orders, role);
+//                            DbUser dbUser = new DbUser(context);
+//                            dbUser.open();
+//                            int role = dbUser.getRole();
+//                            dbUser.close();
+                            OrderAdapter orderAdapter = new OrderAdapter(context, orders, 2);
                             orderRV.setAdapter(orderAdapter);
                         }
 
@@ -537,11 +542,11 @@ public class APIHandler {
                         HistoryAdapter historyAdapter = new HistoryAdapter(context, orders);
                         orderRV.setAdapter(historyAdapter);
                     } else {
-                        DbUser dbUser = new DbUser(context);
-                        dbUser.open();
-                        int role = dbUser.getRole();
-                        dbUser.close();
-                        OrderAdapter orderAdapter = new OrderAdapter(context, orders, role);
+//                        DbUser dbUser = new DbUser(context);
+//                        dbUser.open();
+//                        int role = dbUser.getRole();
+//                        dbUser.close();
+                        OrderAdapter orderAdapter = new OrderAdapter(context, orders, 1);
                         orderRV.setAdapter(orderAdapter);
                     }
 

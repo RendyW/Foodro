@@ -1,6 +1,7 @@
 package com.latutslab_00000053580.recycler;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,14 +78,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         viewHolder.orderItem.setText(model.getOrderDetailStr());
         viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
         viewHolder.orderID.setText(Integer.toString(model.getId()));
-        viewHolder.btnReady.setText(model.getStatusString());
-        viewHolder.btnReady.setVisibility(View.GONE);
 
         //todo rubah nama button sesuai order status
+        Log.i("ISUSER", Integer.toString(role));
         if(role == 1){
+            Log.i("ISUSER", Integer.toString(role));
             viewHolder.btnReady.setVisibility(View.GONE);
             viewHolder.txtUserStatus.setVisibility(View.VISIBLE);
             viewHolder.txtUserStatus.setText(model.getStatusString());
+        }else{
+            viewHolder.btnReady.setText(model.getStatusStringMerchant());
         }
 
 

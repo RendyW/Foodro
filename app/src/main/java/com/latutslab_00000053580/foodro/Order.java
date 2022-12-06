@@ -51,6 +51,20 @@ public class Order implements Serializable {
         }
     }
 
+    public String getStatusStringMerchant(){
+        int status = getStatus();
+        switch(status){
+            case 1:
+                return "Food Ready To Pickup";
+            case 2:
+                return "Finish Order";
+            case 3:
+                return "Order Finished";
+            default:
+                return null;
+        }
+    }
+
 
 
     public String getOrderDetailStr(){
