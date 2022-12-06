@@ -69,7 +69,6 @@ public class UploadPaymentUser extends AppCompatActivity {
 
                 handler.createOrder(getApplicationContext(), userID, cartArrayList,  photo);
 
-                finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });

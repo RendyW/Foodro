@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.latutslab_00000053580.foodro.Order;
-
 public class OrderNavigationAdapter extends FragmentStateAdapter {
     public OrderNavigationAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
