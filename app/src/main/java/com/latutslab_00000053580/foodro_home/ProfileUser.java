@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.latutslab_00000053580.sqlite.DbCart;
 import com.latutslab_00000053580.sqlite.DbUser;
 
 /**
@@ -90,6 +91,12 @@ public class ProfileUser extends Fragment {
                                 dbUser.open();
                                 dbUser.logout();
                                 dbUser.close();
+
+                                // clear cart
+                                DbCart dbCart = new DbCart(view.getContext());
+                                dbCart.open();
+                                dbCart.clearCart();
+                                dbCart.close();
                                 startActivity(new Intent(view.getContext(), Account_Setup.class));
                             }
                         })
