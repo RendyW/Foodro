@@ -30,7 +30,7 @@ public class MenuUser extends AppCompatActivity {
         menuResto.setText(name);
 
         ImageView menuRestoGambar = (ImageView) findViewById(R.id.menuRestoGambar);
-        Picasso.get().load(image).into(menuRestoGambar);
+        Picasso.get().load(image).fit().centerCrop().into(menuRestoGambar);
 
         RecyclerView menuUserRV = (RecyclerView) findViewById(R.id.menuUserRV);
 

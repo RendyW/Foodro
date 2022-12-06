@@ -1,9 +1,10 @@
 package com.latutslab_00000053580.foodro;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private int id;
     private String firstname;

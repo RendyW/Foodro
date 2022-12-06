@@ -1,9 +1,10 @@
 package com.latutslab_00000053580.foodro;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Order {
+public class Order implements Serializable {
     private int id;
     private User customer;
     private String dateTime;
@@ -50,6 +51,8 @@ public class Order {
         }
     }
 
+
+
     public String getOrderDetailStr(){
 
         StringBuilder orderStr = new StringBuilder();
@@ -69,6 +72,36 @@ public class Order {
         }
 
         return total;
+    }
+
+    public String getOrderQty(){
+        StringBuilder orderStr = new StringBuilder();
+        for(int i=0; i<orderDetails.size(); i++){
+            String qty = String.format("%dx \n", orderDetails.get(i).getQuantity());
+            orderStr.append(qty);
+        }
+
+        return orderStr.toString();
+    }
+
+    public String getOrderName(){
+        StringBuilder orderStr = new StringBuilder();
+        for(int i=0; i<orderDetails.size(); i++){
+            String name = String.format("%s \n", orderDetails.get(i).getFood().getName());
+            orderStr.append(name);
+        }
+
+        return orderStr.toString();
+    }
+
+    public String getOrderPrice(){
+        StringBuilder orderStr = new StringBuilder();
+        for(int i=0; i<orderDetails.size(); i++){
+            String price = String.format("Rp.%d \n", orderDetails.get(i).getFood().getPrice());
+            orderStr.append(price);
+        }
+
+        return orderStr.toString();
     }
 }
 

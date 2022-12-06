@@ -84,7 +84,7 @@ public class MenuUserAdapter extends RecyclerView.Adapter<MenuUserAdapter.ViewHo
                 dbCart.addCart(cart);
             }
         });
-        Picasso.get().load(model.getImage()).into(viewHolder.menuAddImg);
+        Picasso.get().load(model.getImage()).fit().centerCrop().into(viewHolder.menuAddImg);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

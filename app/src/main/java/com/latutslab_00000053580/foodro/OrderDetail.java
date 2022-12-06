@@ -1,6 +1,8 @@
 package com.latutslab_00000053580.foodro;
 
-public class OrderDetail {
+import java.io.Serializable;
+
+public class OrderDetail implements Serializable {
     private int id;
     private Food food;
     private int status;

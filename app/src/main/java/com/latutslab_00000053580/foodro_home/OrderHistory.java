@@ -70,7 +70,6 @@ public class OrderHistory extends Fragment {
         RecyclerView orderHistoryRV = (RecyclerView) view.findViewById(R.id.orderHistoryRV);
         orderHistoryCard.setVisibility(View.GONE);
 
-
         DbUser dbUser = new DbUser(getContext());
         dbUser.open();
         int user_role = dbUser.getRole();

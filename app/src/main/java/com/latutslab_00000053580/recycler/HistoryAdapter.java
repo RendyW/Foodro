@@ -1,6 +1,8 @@
 package com.latutslab_00000053580.recycler;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.latutslab_00000053580.foodro.APIHandler;
 import com.latutslab_00000053580.foodro.Order;
 import com.latutslab_00000053580.foodro_home.R;
+import com.latutslab_00000053580.foodro_user.DetailTransactionUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> implements Serializable {
 
     private final ArrayList<Order> orderArrayList;
     private final Context context;
@@ -70,6 +74,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         viewHolder.orderItem.setText(model.getOrderDetailStr());
         viewHolder.orderTotal.setText("Total: Rp." + model.getOrderDetailTotal());
         viewHolder.orderID.setText(Integer.toString(model.getId()));
+
+        viewHolder.btnReady.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailTransactionUser.class);
+                intent.putExtra("order", model);
+                context.startActivity(intent);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
