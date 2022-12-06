@@ -77,7 +77,7 @@ public class HomeUser extends Fragment {
         DbUser dbUser = new DbUser(getContext());
         dbUser.open();
 
-        TextView txtUser = view.findViewById(R.id.textUsername);
+        TextView txtUser = view.findViewById(R.id.txtUsername);
         txtUser.setText(dbUser.getName());
         dbUser.close();
         FloatingActionButton fabCart = (FloatingActionButton) view.findViewById(R.id.fabCart);

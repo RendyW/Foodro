@@ -9,11 +9,11 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.latutslab_00000053580.foodro.APIHandler;
@@ -81,13 +81,15 @@ public class HomeMerchant extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.merchant_home, container, false);
-        TextView txtUser = view.findViewById(R.id.textUsername);
+        TextView txtUser = view.findViewById(R.id.txtName);
 
         DbUser dbuser = new DbUser(getContext());
         dbuser.open();
         int user_id = dbuser.getID();
-        txtUser.setText(dbuser.getName());
+        String name = dbuser.getName();
+        Log.i("NAMA", name);
         dbuser.close();
+        txtUser.setText("Hello, "+name);
 
         RecyclerView merchantRV = view.findViewById(R.id.menuRV);
         APIHandler handler = new APIHandler();
