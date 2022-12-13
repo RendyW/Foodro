@@ -35,6 +35,9 @@ public class MerchantEditMenu extends AppCompatActivity {
 
         EditText addName = (EditText) findViewById(R.id.addName);
         EditText addPrice = (EditText) findViewById(R.id.addPrice);
+        addName.setText(i.getStringExtra("name"));
+        addPrice.setText(String.valueOf(i.getIntExtra("price", 0)));
+
         image = (ImageView) findViewById(R.id.image);
         Button btnChoose = findViewById(R.id.btnImage);
         btnEdit = (Button) findViewById(R.id.btnAddMenu2);

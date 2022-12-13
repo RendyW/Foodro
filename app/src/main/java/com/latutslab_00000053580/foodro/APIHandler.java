@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.latutslab_00000053580.foodro_home.Account_Setup;
 import com.latutslab_00000053580.foodro_home.MainActivity;
 import com.latutslab_00000053580.recycler.HistoryAdapter;
 import com.latutslab_00000053580.recycler.MenuAdapter;
@@ -142,6 +143,9 @@ public class APIHandler {
                     int isSuccess = respObj.getInt("success");
                     if (isSuccess == 1) {
                         Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, Account_Setup.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent);
                     }
                     //String success = respObj.getString("success");
 //                    JSONArray data = respObj.getJSONArray("data");
